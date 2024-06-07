@@ -1,10 +1,12 @@
 #!/usr/bin/env sh
-
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+NC='\033[0m'
 changed_files=$(git diff --name-only HEAD HEAD~ -- '*.ts' '*.js')
 if [ -n "$changed_files" ]; then
-  echo "Running tests due to changes in the following TS/JS files:"
+  echo "${BLUE}Running tests due to changes in the following TS/JS files:${NC}"
   echo "$changed_files"
   pnpm test
 else
-  echo "No TS/JS files have been changed. Skipping tests."
+  echo "${GREEN}No TS/JS files have been changed. Skipping tests.${NC}"
 fi
