@@ -54,3 +54,10 @@ pids
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# VuePress default temp directory
+docs/.vuepress/.temp
+# VuePress default cache directory
+docs/.vuepress/.cache
+# VuePress default build output directory
+docs/.vuepress/dist
