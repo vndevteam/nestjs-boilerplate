@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+changed_files=$(git diff --name-only HEAD HEAD~ -- '*.ts' '*.js')
+if [ -n "$changed_files" ]; then
+  echo "Running tests due to changes in the following TS/JS files:"
+  echo "$changed_files"
+  pnpm test
+else
+  echo "No TS/JS files have been changed. Skipping tests."
+fi
