@@ -70,11 +70,11 @@
     "tsconfig-paths": "4.2.0",
     "typescript": "5.4.5",
     "typescript-eslint": "7.13.0",
-    "vue": "3.4.27",
+    "vue": "3.4.29",
     "vuepress": "2.0.0-rc.13"
   },
   "peerDependencies": {
-    "vue": "3.4.27"
+    "vue": "3.4.29"
   },
   "jest": {
     "moduleFileExtensions": [
