@@ -31,8 +31,4 @@ export const AppDataSource = new DataSource({
           cert: process.env.DATABASE_CERT ?? undefined,
         }
       : undefined,
-  // cli: {
-  //   entitiesDir: 'src',
-  //   subscribersDir: 'subscriber',
-  // },
 } as DataSourceOptions);
