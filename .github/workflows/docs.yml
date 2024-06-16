@@ -4,6 +4,11 @@ on:
   # trigger deployment on every push to main branch
   push:
     branches: [main]
+    paths:
+      - 'docs/**'
+      - '!src/**'
+      - '!test/**'
+      - '!README.md'
   # trigger deployment manually
   workflow_dispatch:
 
