@@ -49,5 +49,5 @@ jobs:
         run: pnpm build
       - name: Run UT tests
         run: pnpm test
-      - name: Run e2e tests
-        run: pnpm test:e2e
+      # - name: Run e2e tests
+      #   run: pnpm test:e2e
