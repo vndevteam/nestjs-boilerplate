@@ -1,4 +1,7 @@
 {
+  "ts-node": {
+    "require": ["tsconfig-paths/register"] // configuration for typeorm migration
+  },
   "compilerOptions": {
     "module": "commonjs",
     "declaration": true,
@@ -16,6 +19,22 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@/api/*": ["src/api/*"],
+      "@/common/*": ["src/common/*"],
+      "@/config/*": ["src/config/*"],
+      "@/constants/*": ["src/constants/*"],
+      "@/database/*": ["src/database/*"],
+      "@/decorators/*": ["src/decorators/*"],
+      "@/exceptions/*": ["src/exceptions/*"],
+      "@/filters/*": ["src/filters/*"],
+      "@/guards/*": ["src/guards/*"],
+      "@/interceptors/*": ["src/interceptors/*"],
+      "@/interfaces/*": ["src/interfaces/*"],
+      "@/shared/*": ["src/shared/*"],
+      "@/utils/*": ["src/utils/*"],
+      "@/validators/*": ["src/validators/*"]
+    }
   }
 }
