@@ -18,6 +18,10 @@ export default defineUserConfig({
     ],
     sidebar: [
       {
+        text: 'Database',
+        link: '/database.md',
+      },
+      {
         text: 'Convention',
         children: [
           '/convention/ts-coding-convention.md',
