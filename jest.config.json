@@ -1,0 +1,40 @@
+{
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "ts"
+  ],
+  "rootDir": "src",
+  "testRegex": ".*\\.spec\\.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "collectCoverageFrom": [
+    "**/*.(t|j)s",
+    "!**/*.spec.(t|j)s"
+  ],
+  "coverageDirectory": "../coverage",
+  "testEnvironment": "node",
+  "moduleNameMapper": {
+    "^@/api(.*)$": "<rootDir>/api$1",
+    "^@/common(.*)$": "<rootDir>/common$1",
+    "^@/config(.*)$": "<rootDir>/config$1",
+    "^@/constants(.*)$": "<rootDir>/constants$1",
+    "^@/database(.*)$": "<rootDir>/database$1",
+    "^@/decorators(.*)$": "<rootDir>/decorators$1",
+    "^@/exceptions(.*)$": "<rootDir>/exceptions$1",
+    "^@/filters(.*)$": "<rootDir>/filters$1",
+    "^@/guards(.*)$": "<rootDir>/guards$1",
+    "^@/interceptors(.*)$": "<rootDir>/api$1",
+    "^@/interfaces(.*)$": "<rootDir>/interfaces$1",
+    "^@/shared(.*)$": "<rootDir>/shared$1",
+    "^@/types(.*)$": "<rootDir>/types$1",
+    "^@/utils(.*)$": "<rootDir>/utils$1",
+    "^@/validators(.*)$": "<rootDir>/validators$1"
+  },
+  "setupFiles": [
+    "../setup-jest.mjs"
+  ],
+  "cacheDirectory": "../.jest-cache",
+  "testTimeout": 120000
+}

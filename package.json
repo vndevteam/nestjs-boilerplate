@@ -31,17 +31,18 @@
   },
   "dependencies": {
     "@nestjs/common": "10.3.9",
-    "@nestjs/config": "^3.2.2",
+    "@nestjs/config": "3.2.2",
     "@nestjs/core": "10.3.9",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "10.3.9",
     "@nestjs/typeorm": "10.0.2",
-    "class-transformer": "^0.5.1",
-    "class-validator": "^0.14.1",
+    "argon2": "0.40.3",
+    "class-transformer": "0.5.1",
+    "class-validator": "0.14.1",
     "pg": "8.12.0",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.1",
-    "typeorm": "^0.3.20"
+    "typeorm": "0.3.20"
   },
   "devDependencies": {
     "@commitlint/cli": "19.3.0",
@@ -80,22 +81,5 @@
   },
   "peerDependencies": {
     "vue": "3.4.29"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src",
-    "testRegex": ".*\\.spec\\.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
-    ],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
   }
 }
