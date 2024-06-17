@@ -1,8 +1,8 @@
-name: "Build & run test"
+name: Build & run test
 on:
   workflow_dispatch:
   push:
-    branches: [ "main" ]
+    branches: [ 'main' ]
     paths:
       - 'src/**'
       - 'test/**'
@@ -11,7 +11,7 @@ on:
       - '!**/README*.md'
       - '!docs/**'
   pull_request:
-    branches: [ "main" ]
+    branches: [ 'main' ]
     paths:
       - 'src/**'
       - 'test/**'
