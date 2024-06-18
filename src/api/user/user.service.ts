@@ -6,6 +6,7 @@ import { UserEntity } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { plainToInstance } from 'class-transformer';
 import { UserDto } from './dto/user.dto';
+import { I18nContext } from 'nestjs-i18n';
 
 @Injectable()
 export class UserService {
@@ -14,6 +15,8 @@ export class UserService {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
   async create(dto: CreateUserDto): Promise<UserDto> {
+    const i18n = I18nContext.current();
+
     const { username, email, password } = dto;
 
     // check uniqueness of username/email
@@ -29,7 +32,7 @@ export class UserService {
     });
 
     if (user) {
-      throw new Error('User already exists');
+      throw new Error(i18n.t('validation.user.errors.userAlreadyExists'));
     }
 
     const newUser = new UserEntity({

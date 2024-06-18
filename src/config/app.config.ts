@@ -29,10 +29,6 @@ class EnvironmentVariablesValidator {
   @IsString()
   @IsOptional()
   APP_FALLBACK_LANGUAGE: string;
-
-  @IsString()
-  @IsOptional()
-  APP_HEADER_LANGUAGE: string;
 }
 
 export default registerAs<AppConfig>('app', () => {
@@ -47,7 +43,6 @@ export default registerAs<AppConfig>('app', () => {
         ? parseInt(process.env.PORT, 10)
         : 3000,
     apiPrefix: process.env.API_PREFIX || 'api',
-    fallbackLanguage: process.env.FALLBACK_LANGUAGE || 'en',
-    headerLanguage: process.env.HEADER_LANGUAGE || 'x-lang',
+    fallbackLanguage: process.env.APP_FALLBACK_LANGUAGE || 'en',
   };
 });
