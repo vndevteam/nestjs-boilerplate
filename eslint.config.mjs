@@ -14,7 +14,7 @@ export default tsEslint.config(
         sourceType: 'module',
       },
     },
-    ignores: ['eslint.config.mjs'],
+    ignores: ['eslint.config.mjs', 'docs/.vuepress/config.mjs'],
     rules: {
       '@typescript-eslint/interface-name-prefix': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
