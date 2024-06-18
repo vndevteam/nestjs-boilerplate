@@ -24,11 +24,11 @@ export default defineUserConfig({
       {
         text: 'Convention',
         children: [
-          '/docs/conventions/base-coding-conventions.md',
-          '/docs/conventions/ts-coding-conventions.md',
-          '/docs/conventions/branch-conventions.md',
-          '/docs/conventions/code-formatter.md',
-          '/docs/conventions/commit-conventions.md',
+          '/conventions/base-coding-conventions.md',
+          '/conventions/ts-coding-conventions.md',
+          '/conventions/branch-conventions.md',
+          '/conventions/code-formatter.md',
+          '/conventions/commit-conventions.md',
         ],
       },
     ],
