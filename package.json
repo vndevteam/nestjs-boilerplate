@@ -58,8 +58,8 @@
     "@types/node": "20.14.4",
     "@types/supertest": "6.0.2",
     "@vuepress/bundler-vite": "2.0.0-rc.13",
-    "@vuepress/plugin-search": "2.0.0-rc.34",
-    "@vuepress/theme-default": "2.0.0-rc.35",
+    "@vuepress/plugin-search": "2.0.0-rc.36",
+    "@vuepress/theme-default": "2.0.0-rc.36",
     "env-cmd": "10.1.0",
     "eslint": "9.5.0",
     "eslint-config-prettier": "9.1.0",
@@ -78,7 +78,7 @@
     "typescript": "5.4.5",
     "typescript-eslint": "7.13.1",
     "vue": "3.4.29",
-    "vuepress": "2.0.0-rc.13"
+    "vuepress": "2.0.0-rc.14"
   },
   "peerDependencies": {
     "vue": "3.4.29"
