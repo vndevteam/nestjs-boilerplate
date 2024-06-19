@@ -10,12 +10,16 @@ export default defineUserConfig({
   base: '/nestjs-boilerplate/',
   bundler: viteBundler(),
   theme: defaultTheme({
+    repo: 'vndevteam/nestjs-boilerplate',
+    docsBranch: 'main',
+    docsDir: 'docs',
     navbar: [
       {
         text: 'Home',
         link: '/',
       },
     ],
+    sidebarDepth: 1,
     sidebar: [
       {
         text: 'Database',
