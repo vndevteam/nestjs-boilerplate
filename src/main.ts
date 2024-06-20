@@ -4,17 +4,21 @@ import { ConfigService } from '@nestjs/config';
 import { AllConfigType } from './config/config.type';
 import {
   ClassSerializerInterceptor,
-  INestApplication,
+  type INestApplication,
   ValidationPipe,
   VersioningType,
 } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import validationOptions from './utils/validation-options';
+import { HttpExceptionFilter } from './filters/bad-request.filter';
+import { QueryFailedFilter } from './filters/query-failed.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const configService = app.get(ConfigService<AllConfigType>);
 
+  // Use global prefix if you don't have subdomain
   app.setGlobalPrefix(
     configService.getOrThrow('app.apiPrefix', { infer: true }),
     {
@@ -26,9 +30,15 @@ async function bootstrap() {
     type: VersioningType.URI,
   });
 
-  app.useGlobalPipes(new ValidationPipe());
+  const reflector = app.get(Reflector);
+
+  app.useGlobalFilters(
+    new HttpExceptionFilter(reflector),
+    new QueryFailedFilter(reflector),
+  );
+  app.useGlobalPipes(new ValidationPipe(validationOptions));
   app.useGlobalInterceptors(
-    new ClassSerializerInterceptor(app.get(Reflector), {
+    new ClassSerializerInterceptor(reflector, {
       strategy: 'excludeAll',
       excludeExtraneousValues: true,
     }),

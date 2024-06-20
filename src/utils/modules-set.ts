@@ -13,7 +13,7 @@ import {
   QueryResolver,
 } from 'nestjs-i18n';
 import { AllConfigType } from '@/config/config.type';
-import * as path from 'path';
+import path from 'path';
 
 function generateModulesSet() {
   const imports: ModuleMetadata['imports'] = [
