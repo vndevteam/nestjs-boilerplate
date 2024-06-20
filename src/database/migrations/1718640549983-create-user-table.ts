@@ -21,21 +21,21 @@ export class CreateUserTable1718640549983 implements MigrationInterface {
             )
         `);
     await queryRunner.query(`
-            CREATE UNIQUE INDEX "UQ_IDX_user_username" ON "user" ("username")
+            CREATE UNIQUE INDEX "UQ_user_username" ON "user" ("username")
             WHERE "deleted_at" IS NULL
         `);
     await queryRunner.query(`
-            CREATE UNIQUE INDEX "UQ_IDX_user_email" ON "user" ("email")
+            CREATE UNIQUE INDEX "UQ_user_email" ON "user" ("email")
             WHERE "deleted_at" IS NULL
         `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
-            DROP INDEX "public"."UQ_IDX_user_email"
+            DROP INDEX "public"."UQ_user_email"
         `);
     await queryRunner.query(`
-            DROP INDEX "public"."UQ_IDX_user_username"
+            DROP INDEX "public"."UQ_user_username"
         `);
     await queryRunner.query(`
             DROP TABLE "user"

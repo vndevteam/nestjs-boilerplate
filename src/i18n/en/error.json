@@ -1,0 +1,6 @@
+{
+  "unique": {
+    "username": "User already exists",
+    "email": "User already exists"
+  }
+}
