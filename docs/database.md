@@ -1,7 +1,5 @@
 # Work with database
 
-## Table of Contents
-
 - [Working with database entity (TypeORM)](#working-with-database-entity-typeorm)
   - [Generate migration](#generate-migration)
   - [Show migration](#show-migration)
