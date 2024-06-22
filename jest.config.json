@@ -24,6 +24,7 @@
     "^@/decorators(.*)$": "<rootDir>/decorators$1",
     "^@/exceptions(.*)$": "<rootDir>/exceptions$1",
     "^@/filters(.*)$": "<rootDir>/filters$1",
+    "^@/generated(.*)$": "<rootDir>/generated$1",
     "^@/guards(.*)$": "<rootDir>/guards$1",
     "^@/interceptors(.*)$": "<rootDir>/api$1",
     "^@/interfaces(.*)$": "<rootDir>/interfaces$1",

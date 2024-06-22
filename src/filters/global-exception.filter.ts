@@ -15,9 +15,9 @@ import { STATUS_CODES } from 'http';
 import { constraintErrors } from './constraint-errors';
 import { I18nContext } from 'nestjs-i18n';
 import { QueryFailedError } from 'typeorm';
-import { I18nTranslations } from 'src/generated/i18n.generated';
 import { ConfigService } from '@nestjs/config';
 import { AllConfigType } from '@/config/config.type';
+import { I18nTranslations } from '@/generated/i18n.generated';
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {

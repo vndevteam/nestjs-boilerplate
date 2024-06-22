@@ -31,6 +31,7 @@
       "@/decorators/*": ["src/decorators/*"],
       "@/exceptions/*": ["src/exceptions/*"],
       "@/filters/*": ["src/filters/*"],
+      "@/generated/*": ["src/generated/*"],
       "@/guards/*": ["src/guards/*"],
       "@/interceptors/*": ["src/interceptors/*"],
       "@/interfaces/*": ["src/interfaces/*"],
