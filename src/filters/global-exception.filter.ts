@@ -120,7 +120,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
         : undefined,
     } as unknown as ErrorDto;
 
-    this.logger.debug(this.logMsg(errorRes, error));
+    this.logger.error(this.logMsg(errorRes, error));
 
     return errorRes;
   }
