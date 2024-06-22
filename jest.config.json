@@ -27,9 +27,7 @@
     "^@/generated(.*)$": "<rootDir>/generated$1",
     "^@/guards(.*)$": "<rootDir>/guards$1",
     "^@/interceptors(.*)$": "<rootDir>/api$1",
-    "^@/interfaces(.*)$": "<rootDir>/interfaces$1",
     "^@/shared(.*)$": "<rootDir>/shared$1",
-    "^@/types(.*)$": "<rootDir>/types$1",
     "^@/utils(.*)$": "<rootDir>/utils$1",
     "^@/validators(.*)$": "<rootDir>/validators$1"
   },

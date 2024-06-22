@@ -4,17 +4,24 @@
 import { Path } from "nestjs-i18n";
 /* prettier-ignore */
 export type I18nTranslations = {
-    "error": {
+    "common": {
+        "validation": {
+            "error": string;
+        };
+    };
+    "user": {
         "unique": {
             "username": string;
             "email": string;
         };
-    };
-    "validation": {
-        "user": {
-            "errors": {
-                "userAlreadyExists": string;
-            };
+        "validation": {
+            "is_empty": string;
+        };
+        "error": {
+            "username_or_email_exists": string;
+            "not_found": string;
+            "invalid_password": string;
+            "invalid_token": string;
         };
     };
 };
