@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { plainToInstance } from 'class-transformer';
 import { UserDto } from './dto/user.dto';
 import { I18nContext } from 'nestjs-i18n';
+import { I18nTranslations } from 'src/generated/i18n.generated';
 
 @Injectable()
 export class UserService {
@@ -15,7 +16,7 @@ export class UserService {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
   async create(dto: CreateUserDto): Promise<UserDto> {
-    const i18n = I18nContext.current();
+    const i18n = I18nContext.current<I18nTranslations>();
 
     const { username, email, password } = dto;
 

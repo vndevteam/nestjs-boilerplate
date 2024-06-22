@@ -14,6 +14,7 @@ import {
 } from 'nestjs-i18n';
 import { AllConfigType } from '@/config/config.type';
 import path from 'path';
+import { Environment } from '@/constants/app.constant';
 
 function generateModulesSet() {
   const imports: ModuleMetadata['imports'] = [
@@ -44,7 +45,8 @@ function generateModulesSet() {
     ],
     useFactory: (configService: ConfigService<AllConfigType>) => {
       const isDevelopment =
-        configService.get('app.nodeEnv', { infer: true }) === 'development';
+        configService.get('app.nodeEnv', { infer: true }) ===
+        Environment.DEVELOPMENT;
       return {
         fallbackLanguage: configService.getOrThrow('app.fallbackLanguage', {
           infer: true,
@@ -53,7 +55,12 @@ function generateModulesSet() {
           path: path.join(__dirname, '/../i18n/'),
           watch: isDevelopment,
         },
-        logging: isDevelopment,
+        typesOutputPath: path.join(
+          __dirname,
+          '../../src/generated/i18n.generated.ts',
+        ),
+        throwOnMissingKey: isDevelopment, // throw an error if a key is missing
+        logging: isDevelopment, // log info on missing keys
       };
     },
     inject: [ConfigService],
