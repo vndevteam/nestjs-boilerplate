@@ -57,7 +57,7 @@
     "@types/express": "4.17.21",
     "@types/jest": "29.5.12",
     "@types/lodash": "4.17.5",
-    "@types/node": "20.14.6",
+    "@types/node": "20.14.8",
     "@types/supertest": "6.0.2",
     "@vuepress/bundler-vite": "2.0.0-rc.14",
     "@vuepress/plugin-search": "2.0.0-rc.37",
