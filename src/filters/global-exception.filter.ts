@@ -18,6 +18,8 @@ import { QueryFailedError } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
 import { AllConfigType } from '@/config/config.type';
 import { I18nTranslations } from '@/generated/i18n.generated';
+import { ValidationException } from '@/exceptions/validation.exception';
+import { ErrorCode } from '@/constants/error-code.constant';
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
@@ -37,6 +39,8 @@ export class GlobalExceptionFilter implements ExceptionFilter {
 
     if (exception instanceof UnprocessableEntityException) {
       error = this.handleUnprocessableEntityException(exception);
+    } else if (exception instanceof ValidationException) {
+      error = this.handleValidationException(exception);
     } else if (exception instanceof HttpException) {
       error = this.handleHttpException(exception);
     } else if (exception instanceof QueryFailedError) {
@@ -72,6 +76,29 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       error: STATUS_CODES[statusCode],
       message: 'Validation failed',
       details: this.extractValidationErrorDetails(r.message),
+    };
+
+    this.logger.debug(this.logMsg(errorRes, exception));
+
+    return errorRes;
+  }
+
+  private handleValidationException(exception: ValidationException): ErrorDto {
+    const r = exception.getResponse() as {
+      errorCode: ErrorCode;
+      message: string;
+    };
+    const statusCode = exception.getStatus();
+
+    const errorRes = {
+      timestamp: new Date().toISOString(),
+      statusCode,
+      error: STATUS_CODES[statusCode],
+      errorCode:
+        Object.keys(ErrorCode)[Object.values(ErrorCode).indexOf(r.errorCode)],
+      message:
+        r.message ||
+        this.i18n.t(r.errorCode as unknown as keyof I18nTranslations),
     };
 
     this.logger.debug(this.logMsg(errorRes, exception));

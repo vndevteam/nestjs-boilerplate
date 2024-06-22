@@ -2,5 +2,8 @@
   "unique": {
     "username": "Người dùng đã tồn tại",
     "email": "Người dùng đã tồn tại"
+  },
+  "validation": {
+    "is_empty": "Trường này không được để trống"
   }
 }

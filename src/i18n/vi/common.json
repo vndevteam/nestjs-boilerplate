@@ -1,1 +1,5 @@
-{}
+{
+  "validation": {
+    "error": "Common validation"
+  }
+}

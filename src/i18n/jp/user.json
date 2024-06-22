@@ -2,5 +2,8 @@
   "unique": {
     "username": "このユーザーは既に存在します",
     "email": "このユーザーは既に存在します"
+  },
+  "validation": {
+    "is_empty": "は必須です"
   }
 }

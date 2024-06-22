@@ -1,7 +1,0 @@
-{
-  "user": {
-    "errors": {
-      "userAlreadyExists": "このユーザーは既に存在します"
-    }
-  }
-}

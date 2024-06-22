@@ -34,9 +34,7 @@
       "@/generated/*": ["src/generated/*"],
       "@/guards/*": ["src/guards/*"],
       "@/interceptors/*": ["src/interceptors/*"],
-      "@/interfaces/*": ["src/interfaces/*"],
       "@/shared/*": ["src/shared/*"],
-      "@/types/*": ["src/types/*"],
       "@/utils/*": ["src/utils/*"],
       "@/validators/*": ["src/validators/*"]
     }

@@ -59,7 +59,6 @@ function generateModulesSet() {
           __dirname,
           '../../src/generated/i18n.generated.ts',
         ),
-        throwOnMissingKey: isDevelopment, // throw an error if a key is missing
         logging: isDevelopment, // log info on missing keys
       };
     },

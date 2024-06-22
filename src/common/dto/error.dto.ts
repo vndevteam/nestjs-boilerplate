@@ -11,6 +11,9 @@ export class ErrorDto {
   @ApiProperty()
   error: string;
 
+  @ApiPropertyOptional()
+  errorCode?: string;
+
   @ApiProperty()
   message: string;
 
