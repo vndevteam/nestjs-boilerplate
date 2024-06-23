@@ -12,14 +12,14 @@ import {
 } from '@nestjs/common';
 import { type Response } from 'express';
 import { STATUS_CODES } from 'http';
-import { constraintErrors } from './constraint-errors';
 import { I18nContext } from 'nestjs-i18n';
-import { QueryFailedError } from 'typeorm';
+import { EntityNotFoundError, QueryFailedError } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
 import { AllConfigType } from '@/config/config.type';
 import { I18nTranslations } from '@/generated/i18n.generated';
 import { ValidationException } from '@/exceptions/validation.exception';
 import { ErrorCode } from '@/constants/error-code.constant';
+import { constraintErrors } from '@/constants/constraint-errors';
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
@@ -45,6 +45,8 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       error = this.handleHttpException(exception);
     } else if (exception instanceof QueryFailedError) {
       error = this.handleQueryFailedError(exception);
+    } else if (exception instanceof EntityNotFoundError) {
+      error = this.handleEntityNotFoundError(exception);
     } else {
       error = this.handleError(exception);
     }
@@ -83,6 +85,11 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     return errorRes;
   }
 
+  /**
+   * Handles validation errors
+   * @param exception ValidationException
+   * @returns ErrorDto
+   */
   private handleValidationException(exception: ValidationException): ErrorDto {
     const r = exception.getResponse() as {
       errorCode: ErrorCode;
@@ -148,6 +155,25 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     } as unknown as ErrorDto;
 
     this.logger.error(this.logMsg(errorRes, error));
+
+    return errorRes;
+  }
+
+  /**
+   * Handles EntityNotFoundError when using findOrFail() or findOneOrFail() from TypeORM
+   * @param error EntityNotFoundError
+   * @returns ErrorDto
+   */
+  private handleEntityNotFoundError(error: EntityNotFoundError): ErrorDto {
+    const status = HttpStatus.NOT_FOUND;
+    const errorRes = {
+      timestamp: new Date().toISOString(),
+      statusCode: status,
+      error: STATUS_CODES[status],
+      message: this.i18n.t('common.error.entity_not_found'),
+    } as unknown as ErrorDto;
+
+    this.logger.debug(this.logMsg(errorRes, error));
 
     return errorRes;
   }

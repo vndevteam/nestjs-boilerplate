@@ -1,5 +1,6 @@
 import { BaseEntity, BeforeUpdate, Column, DataSource } from 'typeorm';
 import { Order, getOrder } from '../decorators/order.decorator';
+import { plainToInstance } from 'class-transformer';
 
 export abstract class AbstractEntity extends BaseEntity {
   @Order(9999)
@@ -39,6 +40,10 @@ export abstract class AbstractEntity extends BaseEntity {
   @BeforeUpdate()
   changeUpdatedAt() {
     this.updatedAt = new Date();
+  }
+
+  toDto<Dto>(dtoClass: new () => Dto): Dto {
+    return plainToInstance(dtoClass, this, { excludeExtraneousValues: true });
   }
 
   static useDataSource(dataSource: DataSource) {

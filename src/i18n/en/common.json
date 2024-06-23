@@ -1,5 +1,8 @@
 {
   "validation": {
     "error": "Common validation"
+  },
+  "error": {
+    "entity_not_found": "Entity not found"
   }
 }
