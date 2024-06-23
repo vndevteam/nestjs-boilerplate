@@ -1,13 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { Repository } from 'typeorm';
+import { CreateUserReqDto } from './dto/create-user.req.dto';
+import { UpdateUserReqDto } from './dto/update-user.req.dto';
+import { FindOptionsOrder, Repository } from 'typeorm';
 import { UserEntity } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { plainToInstance } from 'class-transformer';
-import { UserDto } from './dto/user.dto';
+import { UserResDto } from './dto/user.res.dto';
 import { ErrorCode } from '@/constants/error-code.constant';
 import { ValidationException } from '@/exceptions/validation.exception';
+import { ListUserReqDto } from './dto/list-user.req.dto';
+import { PaginatedDto } from '@/common/dto/paginated.dto';
+import { PageBasedPaginationDto } from '@/common/dto/page-based-pagination/pagination.dto';
+import { SYSTEM_USER_ID } from '@/constants/app.constant';
 
 @Injectable()
 export class UserService {
@@ -15,7 +19,7 @@ export class UserService {
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
   ) {}
-  async create(dto: CreateUserDto): Promise<UserDto> {
+  async create(dto: CreateUserReqDto): Promise<UserResDto> {
     const { username, email, password } = dto;
 
     // check uniqueness of username/email
@@ -38,24 +42,37 @@ export class UserService {
       username,
       email,
       password,
-      createdBy: 'system',
-      updatedBy: 'system',
+      createdBy: SYSTEM_USER_ID,
+      updatedBy: SYSTEM_USER_ID,
     });
 
     const savedUser = await this.userRepository.save(newUser);
 
-    return plainToInstance(UserDto, savedUser);
+    return plainToInstance(UserResDto, savedUser);
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async findAll(reqDto: ListUserReqDto): Promise<PaginatedDto<UserResDto>> {
+    let order: FindOptionsOrder<UserEntity> = { createdAt: 'DESC' };
+    if (reqDto.orderBy && reqDto.order) {
+      order = { [reqDto.orderBy]: reqDto.order, ...order };
+    }
+    const [users, count] = await this.userRepository.findAndCount({
+      order,
+      skip: reqDto.offset,
+      take: reqDto.limit,
+    });
+
+    const pageDto = new PageBasedPaginationDto(count, reqDto);
+    return new PaginatedDto(plainToInstance(UserResDto, users), pageDto);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number): Promise<UserResDto> {
+    const user = await this.userRepository.findOneByOrFail({ id });
+
+    return user.toDto(UserResDto);
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  update(id: number, updateUserDto: UpdateUserReqDto) {
     console.log(updateUserDto);
     return `This action updates a #${id} user`;
   }

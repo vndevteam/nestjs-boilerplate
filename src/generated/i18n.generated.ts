@@ -8,6 +8,9 @@ export type I18nTranslations = {
         "validation": {
             "error": string;
         };
+        "error": {
+            "entity_not_found": string;
+        };
     };
     "user": {
         "unique": {

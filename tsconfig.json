@@ -35,8 +35,7 @@
       "@/guards/*": ["src/guards/*"],
       "@/interceptors/*": ["src/interceptors/*"],
       "@/shared/*": ["src/shared/*"],
-      "@/utils/*": ["src/utils/*"],
-      "@/validators/*": ["src/validators/*"]
+      "@/utils/*": ["src/utils/*"]
     }
   }
 }

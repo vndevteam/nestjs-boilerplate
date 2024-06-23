@@ -4,20 +4,21 @@ import { ConfigService } from '@nestjs/config';
 import { type AllConfigType } from './config/config.type';
 import {
   ClassSerializerInterceptor,
-  type INestApplication,
   ValidationPipe,
   VersioningType,
   HttpStatus,
   ValidationError,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { GlobalExceptionFilter } from './filters/global-exception.filter';
+import setupSwagger from './utils/setup-swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const configService = app.get(ConfigService<AllConfigType>);
+  const isDevelopment =
+    configService.getOrThrow('app.nodeEnv', { infer: true }) === 'development';
 
   // Use global prefix if you don't have subdomain
   app.setGlobalPrefix(
@@ -49,9 +50,7 @@ async function bootstrap() {
     }),
   );
 
-  if (
-    configService.getOrThrow('app.nodeEnv', { infer: true }) === 'development'
-  ) {
+  if (isDevelopment) {
     setupSwagger(app);
   }
 
@@ -60,16 +59,6 @@ async function bootstrap() {
   console.info(`Server running on ${await app.getUrl()}`);
 
   return app;
-}
-
-function setupSwagger(app: INestApplication) {
-  const config = new DocumentBuilder()
-    .setTitle('NestJS Boilerplate API')
-    .setDescription('A boilerplate project')
-    .setVersion('1.0')
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
 }
 
 void bootstrap();

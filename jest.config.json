@@ -28,8 +28,7 @@
     "^@/guards(.*)$": "<rootDir>/guards$1",
     "^@/interceptors(.*)$": "<rootDir>/api$1",
     "^@/shared(.*)$": "<rootDir>/shared$1",
-    "^@/utils(.*)$": "<rootDir>/utils$1",
-    "^@/validators(.*)$": "<rootDir>/validators$1"
+    "^@/utils(.*)$": "<rootDir>/utils$1"
   },
   "setupFiles": [
     "../setup-jest.mjs"
