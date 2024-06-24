@@ -2,6 +2,8 @@ import { viteBundler } from '@vuepress/bundler-vite';
 import { defaultTheme } from '@vuepress/theme-default';
 import { searchPlugin } from '@vuepress/plugin-search';
 import { defineUserConfig } from 'vuepress';
+import { en as enThemeConfig } from './config/theme/en.config.mjs';
+import { vi as viThemeConfig } from './config/theme/vi.config.mjs';
 
 export default defineUserConfig({
   lang: 'en-US',
@@ -9,33 +11,24 @@ export default defineUserConfig({
   description: 'NestJS boilerplate',
   base: '/nestjs-boilerplate/',
   bundler: viteBundler(),
+  locales: {
+    '/': {
+      lang: 'en-US',
+      title: 'NestJS boilerplate',
+    },
+    '/vi/': {
+      lang: 'vi-VN',
+      title: 'NestJS boilerplate',
+    },
+  },
   theme: defaultTheme({
     repo: 'vndevteam/nestjs-boilerplate',
     docsBranch: 'main',
     docsDir: 'docs',
-    navbar: [
-      {
-        text: 'Home',
-        link: '/',
-      },
-    ],
-    sidebarDepth: 1,
-    sidebar: [
-      {
-        text: 'Database',
-        link: '/database.md',
-      },
-      {
-        text: 'Convention',
-        children: [
-          '/conventions/base-coding-conventions.md',
-          '/conventions/ts-coding-conventions.md',
-          '/conventions/branch-conventions.md',
-          '/conventions/code-formatter.md',
-          '/conventions/commit-conventions.md',
-        ],
-      },
-    ],
+    locales: {
+      '/': enThemeConfig,
+      '/vi/': viThemeConfig,
+    },
   }),
   plugins: [
     searchPlugin({
@@ -44,6 +37,9 @@ export default defineUserConfig({
       locales: {
         '/': {
           placeholder: 'Search',
+        },
+        '/vi/': {
+          placeholder: 'Tìm kiếm',
         },
       },
     }),
