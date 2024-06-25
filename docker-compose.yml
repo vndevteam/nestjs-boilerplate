@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: Dockerfile
     env_file:
-      - .env
+      - .env.docker
     ports:
       - "3000:3000"
     networks:
@@ -25,7 +25,7 @@ services:
       POSTGRES_PASSWORD: postgres
       TZ: "UTC"
     ports:
-      - "15432:5432"
+      - "25432:5432"
     networks:
       - nestjs-boilerplate-network
 
