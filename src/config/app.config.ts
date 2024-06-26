@@ -1,7 +1,5 @@
+import { Environment } from '@/constants/app.constant';
 import { registerAs } from '@nestjs/config';
-import { AppConfig } from './app-config.type';
-import validateConfig from '../utils/validate-config';
-import process from 'node:process';
 import {
   IsBoolean,
   IsEnum,
@@ -11,7 +9,9 @@ import {
   Max,
   Min,
 } from 'class-validator';
-import { Environment } from '@/constants/app.constant';
+import process from 'node:process';
+import validateConfig from '../utils/validate-config';
+import { AppConfig } from './app-config.type';
 
 class EnvironmentVariablesValidator {
   @IsEnum(Environment)

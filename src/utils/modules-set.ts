@@ -1,20 +1,20 @@
+import { AllConfigType } from '@/config/config.type';
+import { Environment } from '@/constants/app.constant';
 import { ModuleMetadata } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ApiModule } from '../api/api.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import appConfig from '../config/app.config';
-import { TypeOrmConfigService } from '../database/typeorm-config.service';
-import { DataSource, DataSourceOptions } from 'typeorm';
-import databaseConfig from '../database/config/database.config';
 import {
   AcceptLanguageResolver,
   HeaderResolver,
   I18nModule,
   QueryResolver,
 } from 'nestjs-i18n';
-import { AllConfigType } from '@/config/config.type';
 import path from 'path';
-import { Environment } from '@/constants/app.constant';
+import { DataSource, DataSourceOptions } from 'typeorm';
+import { ApiModule } from '../api/api.module';
+import appConfig from '../config/app.config';
+import databaseConfig from '../database/config/database.config';
+import { TypeOrmConfigService } from '../database/typeorm-config.service';
 
 function generateModulesSet() {
   const imports: ModuleMetadata['imports'] = [

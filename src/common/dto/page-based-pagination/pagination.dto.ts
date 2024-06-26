@@ -1,8 +1,8 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { PaginationDto } from '../pagination.dto';
-import { Expose } from 'class-transformer';
-import { PageBasedOptions } from './page-options';
 import { DEFAULT_CURRENT_PAGE } from '@/constants/app.constant';
+import { ApiProperty } from '@nestjs/swagger';
+import { Expose } from 'class-transformer';
+import { PaginationDto } from '../pagination.dto';
+import { PageBasedOptions } from './page-options';
 
 export class PageBasedPaginationDto extends PaginationDto {
   @ApiProperty()
