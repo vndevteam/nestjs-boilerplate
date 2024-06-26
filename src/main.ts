@@ -12,9 +12,12 @@ import {
 } from '@nestjs/common';
 import { GlobalExceptionFilter } from './filters/global-exception.filter';
 import setupSwagger from './utils/setup-swagger';
+import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  app.use(helmet());
 
   const configService = app.get(ConfigService<AllConfigType>);
   const isDevelopment =
