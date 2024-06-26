@@ -1,25 +1,25 @@
 import { ErrorDetailDto } from '@/common/dto/error-detail.dto';
 import { ErrorDto } from '@/common/dto/error.dto';
+import { AllConfigType } from '@/config/config.type';
+import { constraintErrors } from '@/constants/constraint-errors';
+import { ErrorCode } from '@/constants/error-code.constant';
+import { ValidationException } from '@/exceptions/validation.exception';
+import { I18nTranslations } from '@/generated/i18n.generated';
 import {
   type ArgumentsHost,
   Catch,
   type ExceptionFilter,
-  UnprocessableEntityException,
-  ValidationError,
   HttpException,
   HttpStatus,
   Logger,
+  UnprocessableEntityException,
+  ValidationError,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { type Response } from 'express';
 import { STATUS_CODES } from 'http';
 import { I18nContext } from 'nestjs-i18n';
 import { EntityNotFoundError, QueryFailedError } from 'typeorm';
-import { ConfigService } from '@nestjs/config';
-import { AllConfigType } from '@/config/config.type';
-import { I18nTranslations } from '@/generated/i18n.generated';
-import { ValidationException } from '@/exceptions/validation.exception';
-import { ErrorCode } from '@/constants/error-code.constant';
-import { constraintErrors } from '@/constants/constraint-errors';
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {

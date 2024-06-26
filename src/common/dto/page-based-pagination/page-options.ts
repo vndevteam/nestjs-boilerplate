@@ -1,9 +1,9 @@
 import { DEFAULT_CURRENT_PAGE } from '@/constants/app.constant';
+import { ListUserSort } from '@/constants/sort.enum';
 import { ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import { IsEnum, IsInt, IsOptional, Min } from 'class-validator';
 import { PageOptions } from '../page-options';
-import { Type } from 'class-transformer';
-import { ListUserSort } from '@/constants/sort.enum';
 
 export class PageBasedOptions extends PageOptions {
   @ApiPropertyOptional()

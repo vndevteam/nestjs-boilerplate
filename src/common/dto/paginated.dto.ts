@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { PaginationDto } from './pagination.dto';
 import { Expose } from 'class-transformer';
+import { PaginationDto } from './pagination.dto';
 
 export class PaginatedDto<TData> {
   @ApiProperty({ type: [Object] })

@@ -1,17 +1,16 @@
+import { ErrorDto } from '@/common/dto/error.dto';
+import { PaginatedDto } from '@/common/dto/paginated.dto';
+import { ApiPaginatedResponse } from '@/decorators/swagger.decorator';
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
   Query,
 } from '@nestjs/common';
-import { UserService } from './user.service';
-import { CreateUserReqDto } from './dto/create-user.req.dto';
-import { UpdateUserReqDto } from './dto/update-user.req.dto';
-import { UserResDto } from './dto/user.res.dto';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
@@ -20,10 +19,11 @@ import {
   ApiTags,
   ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
-import { ErrorDto } from '@/common/dto/error.dto';
-import { ApiPaginatedResponse } from '@/decorators/swagger.decorator';
+import { CreateUserReqDto } from './dto/create-user.req.dto';
 import { ListUserReqDto } from './dto/list-user.req.dto';
-import { PaginatedDto } from '@/common/dto/paginated.dto';
+import { UpdateUserReqDto } from './dto/update-user.req.dto';
+import { UserResDto } from './dto/user.res.dto';
+import { UserService } from './user.service';
 
 @ApiTags('users')
 @ApiInternalServerErrorResponse({
