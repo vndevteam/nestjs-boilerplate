@@ -3,6 +3,7 @@
     "error": "Common validation"
   },
   "error": {
+    "internal_server_error": "Has occurred an internal server error",
     "entity_not_found": "Entity not found"
   }
 }

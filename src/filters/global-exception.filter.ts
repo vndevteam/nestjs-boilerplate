@@ -139,19 +139,25 @@ export class GlobalExceptionFilter implements ExceptionFilter {
    */
   private handleQueryFailedError(error: QueryFailedError): ErrorDto {
     const r = error as QueryFailedError & { constraint?: string };
-    const status = r.constraint?.startsWith('UQ')
-      ? HttpStatus.CONFLICT
-      : HttpStatus.INTERNAL_SERVER_ERROR;
+    const { status, message } = r.constraint?.startsWith('UQ')
+      ? {
+          status: HttpStatus.CONFLICT,
+          message: r.constraint
+            ? this.i18n.t(
+                (constraintErrors[r.constraint] ||
+                  r.constraint) as keyof I18nTranslations,
+              )
+            : undefined,
+        }
+      : {
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          message: this.i18n.t('common.error.internal_server_error'),
+        };
     const errorRes = {
       timestamp: new Date().toISOString(),
       statusCode: status,
       error: STATUS_CODES[status],
-      message: r.constraint
-        ? this.i18n.t(
-            (constraintErrors[r.constraint] ||
-              r.constraint) as keyof I18nTranslations,
-          )
-        : undefined,
+      message,
     } as unknown as ErrorDto;
 
     this.logger.error(this.logMsg(errorRes, error));
@@ -233,7 +239,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
   }
 
   private logMsg(error: ErrorDto, exception: Error) {
-    const logMessage = `${exception.constructor.name} occurred at ${error.timestamp} - Status: ${error.statusCode}, Message: ${error.message}`;
+    const logMessage = `${exception.constructor.name} occurred at ${error.timestamp} - Status: ${error.statusCode}, Message: ${exception.message}`;
 
     if (this.debug) {
       return [logMessage, exception.stack];
