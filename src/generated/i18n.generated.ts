@@ -9,6 +9,7 @@ export type I18nTranslations = {
             "error": string;
         };
         "error": {
+            "internal_server_error": string;
             "entity_not_found": string;
         };
     };
