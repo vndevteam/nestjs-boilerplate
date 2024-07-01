@@ -9,12 +9,14 @@ import {
   I18nModule,
   QueryResolver,
 } from 'nestjs-i18n';
+import { LoggerModule } from 'nestjs-pino';
 import path from 'path';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { ApiModule } from '../api/api.module';
 import appConfig from '../config/app.config';
 import databaseConfig from '../database/config/database.config';
 import { TypeOrmConfigService } from '../database/typeorm-config.service';
+import loggerFactory from './logger-factory';
 
 function generateModulesSet() {
   const imports: ModuleMetadata['imports'] = [
@@ -44,35 +46,41 @@ function generateModulesSet() {
       new HeaderResolver(['x-lang']),
     ],
     useFactory: (configService: ConfigService<AllConfigType>) => {
-      const isDevelopment =
-        configService.get('app.nodeEnv', { infer: true }) ===
-        Environment.DEVELOPMENT;
+      const env = configService.get('app.nodeEnv', { infer: true });
+      const isLocal = env === Environment.LOCAL;
+      const isDevelopment = env === Environment.DEVELOPMENT;
       return {
         fallbackLanguage: configService.getOrThrow('app.fallbackLanguage', {
           infer: true,
         }),
         loaderOptions: {
           path: path.join(__dirname, '/../i18n/'),
-          watch: isDevelopment,
+          watch: isLocal,
         },
         typesOutputPath: path.join(
           __dirname,
           '../../src/generated/i18n.generated.ts',
         ),
-        logging: isDevelopment, // log info on missing keys
+        logging: isLocal || isDevelopment, // log info on missing keys
       };
     },
     inject: [ConfigService],
+  });
+
+  const loggerModule = LoggerModule.forRootAsync({
+    imports: [ConfigModule],
+    inject: [ConfigService],
+    useFactory: loggerFactory,
   });
 
   const modulesSet = process.env.MODULES_SET || 'monolith';
 
   switch (modulesSet) {
     case 'monolith':
-      customModules = [ApiModule, dbModule, i18nModule];
+      customModules = [ApiModule, dbModule, i18nModule, loggerModule];
       break;
     case 'api':
-      customModules = [ApiModule, dbModule, i18nModule];
+      customModules = [ApiModule, dbModule, i18nModule, loggerModule];
       break;
     default:
       console.error(`Unsupported modules set: ${modulesSet}`);
