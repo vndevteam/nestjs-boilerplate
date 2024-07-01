@@ -15,7 +15,7 @@ import { UserEntity } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
-  public readonly logger = new Logger(UserService.name);
+  private readonly logger = new Logger(UserService.name);
 
   constructor(
     @InjectRepository(UserEntity)
@@ -49,6 +49,7 @@ export class UserService {
     });
 
     const savedUser = await this.userRepository.save(newUser);
+    this.logger.debug(savedUser);
 
     return plainToInstance(UserResDto, savedUser);
   }
