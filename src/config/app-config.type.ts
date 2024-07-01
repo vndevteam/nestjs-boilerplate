@@ -5,4 +5,6 @@ export type AppConfig = {
   debug: boolean;
   apiPrefix: string;
   fallbackLanguage: string;
+  logLevel: string;
+  logPretty: boolean;
 };

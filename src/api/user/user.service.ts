@@ -49,6 +49,7 @@ export class UserService {
     });
 
     const savedUser = await this.userRepository.save(newUser);
+    this.logger.debug(savedUser);
 
     return plainToInstance(UserResDto, savedUser);
   }

@@ -39,6 +39,14 @@ class EnvironmentVariablesValidator {
   @IsString()
   @IsOptional()
   APP_FALLBACK_LANGUAGE: string;
+
+  @IsString()
+  @IsOptional()
+  APP_LOG_LEVEL: string;
+
+  @IsBoolean()
+  @IsOptional()
+  APP_LOG_PRETTY: boolean;
 }
 
 export default registerAs<AppConfig>('app', () => {
@@ -55,5 +63,7 @@ export default registerAs<AppConfig>('app', () => {
     debug: process.env.APP_DEBUG === 'true',
     apiPrefix: process.env.API_PREFIX || 'api',
     fallbackLanguage: process.env.APP_FALLBACK_LANGUAGE || 'en',
+    logLevel: process.env.APP_LOG_LEVEL || 'warn',
+    logPretty: process.env.APP_LOG_PRETTY === 'true',
   };
 });
