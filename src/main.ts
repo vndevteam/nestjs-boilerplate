@@ -10,7 +10,6 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
 import helmet from 'helmet';
-import morgan from 'morgan';
 import { Logger } from 'nestjs-pino';
 import { AppModule } from './app.module';
 import { type AllConfigType } from './config/config.type';
@@ -26,13 +25,6 @@ async function bootstrap() {
 
   // Setup security headers
   app.use(helmet());
-
-  // Log incoming requests
-  app.use(
-    morgan(
-      ':remote-addr - :remote-user [:date[iso]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" - :response-time ms',
-    ),
-  );
 
   const configService = app.get(ConfigService<AllConfigType>);
   const isDevelopment =
