@@ -91,10 +91,10 @@
     "tslib": "2.6.3",
     "typescript": "5.5.2",
     "typescript-eslint": "7.15.0",
-    "vue": "3.4.30",
+    "vue": "3.4.31",
     "vuepress": "2.0.0-rc.14"
   },
   "peerDependencies": {
-    "vue": "3.4.30"
+    "vue": "3.4.31"
   }
 }
