@@ -6,5 +6,5 @@ export type AppConfig = {
   apiPrefix: string;
   fallbackLanguage: string;
   logLevel: string;
-  logPretty: boolean;
+  logService: string;
 };

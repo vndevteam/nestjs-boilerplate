@@ -25,6 +25,10 @@ permissions:
 
 jobs:
   build-and-test:
+    # skip ci if PR has label 'skip-ci' or 'skip-actions'
+    if: |
+      !contains(github.event.pull_request.labels.*.name, 'skip-ci') &&
+      !contains(github.event.pull_request.labels.*.name, 'skip-actions')
     runs-on: ubuntu-latest
     defaults:
       run:
