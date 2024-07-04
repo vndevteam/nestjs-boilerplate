@@ -8,6 +8,7 @@ import {
   Get,
   Logger,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   Query,
@@ -63,17 +64,21 @@ export class UserController {
 
   @Get(':id')
   @ApiOkResponse({ type: UserResDto })
-  async findOne(@Param('id') id: string): Promise<UserResDto> {
-    return await this.userService.findOne(+id);
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<UserResDto> {
+    return await this.userService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() UpdateUserReqDto: UpdateUserReqDto) {
-    return this.userService.update(+id, UpdateUserReqDto);
+  @ApiOkResponse({ type: UserResDto })
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() UpdateUserReqDto: UpdateUserReqDto,
+  ) {
+    return this.userService.update(id, UpdateUserReqDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.remove(id);
   }
 }

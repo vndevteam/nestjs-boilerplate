@@ -41,7 +41,7 @@ export class UserEntity extends AbstractEntity {
 
   @DeleteDateColumn({
     name: 'deleted_at',
-    type: 'timestamp',
+    type: 'timestamptz',
     default: null,
   })
   deletedAt: Date;

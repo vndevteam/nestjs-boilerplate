@@ -6,7 +6,7 @@ export abstract class AbstractEntity extends BaseEntity {
   @Order(9999)
   @Column({
     name: 'created_at',
-    type: 'timestamp',
+    type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
     nullable: false,
   })
@@ -23,7 +23,7 @@ export abstract class AbstractEntity extends BaseEntity {
   @Order(9999)
   @Column({
     name: 'updated_at',
-    type: 'timestamp',
+    type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
     nullable: false,
   })
