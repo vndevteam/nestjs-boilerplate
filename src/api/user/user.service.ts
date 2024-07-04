@@ -21,8 +21,9 @@ export class UserService {
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
   ) {}
+
   async create(dto: CreateUserReqDto): Promise<UserResDto> {
-    const { username, email, password } = dto;
+    const { username, email, password, bio, image } = dto;
 
     // check uniqueness of username/email
     const user = await this.userRepository.findOne({
@@ -44,6 +45,8 @@ export class UserService {
       username,
       email,
       password,
+      bio,
+      image,
       createdBy: SYSTEM_USER_ID,
       updatedBy: SYSTEM_USER_ID,
     });
@@ -75,12 +78,19 @@ export class UserService {
     return user.toDto(UserResDto);
   }
 
-  update(id: number, updateUserDto: UpdateUserReqDto) {
-    console.log(updateUserDto);
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserReqDto) {
+    const user = await this.userRepository.findOneByOrFail({ id });
+
+    user.bio = updateUserDto.bio;
+    user.image = updateUserDto.image;
+    user.password = updateUserDto.password;
+    user.updatedBy = SYSTEM_USER_ID;
+
+    await this.userRepository.save(user);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number) {
+    await this.userRepository.findOneByOrFail({ id });
+    await this.userRepository.softDelete(id);
   }
 }

@@ -1,7 +1,7 @@
 import { lowerCaseTransformer } from '@/utils/transformers/lower-case.transformer';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsEmail, IsNotEmpty } from 'class-validator';
+import { Allow, IsEmail, IsNotEmpty } from 'class-validator';
 
 export class CreateUserReqDto {
   @ApiProperty()
@@ -18,4 +18,12 @@ export class CreateUserReqDto {
   @ApiProperty()
   @IsNotEmpty()
   readonly password: string;
+
+  @ApiPropertyOptional()
+  @Allow()
+  readonly bio?: string;
+
+  @ApiPropertyOptional()
+  @Allow()
+  readonly image?: string;
 }

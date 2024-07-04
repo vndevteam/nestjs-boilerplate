@@ -54,6 +54,8 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     if (this.debug) {
       error.stack = exception.stack;
       error.trace = exception;
+
+      this.logger.debug(error);
     }
 
     response.status(error.statusCode).json(error);
@@ -80,7 +82,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       details: this.extractValidationErrorDetails(r.message),
     };
 
-    this.logger.debug(this.logMsg(errorRes, exception));
+    this.logger.debug(exception);
 
     return errorRes;
   }
@@ -108,7 +110,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
         this.i18n.t(r.errorCode as unknown as keyof I18nTranslations),
     };
 
-    this.logger.debug(this.logMsg(errorRes, exception));
+    this.logger.debug(exception);
 
     return errorRes;
   }
@@ -127,7 +129,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       message: exception.message,
     };
 
-    this.logger.debug(this.logMsg(errorRes, exception));
+    this.logger.debug(exception);
 
     return errorRes;
   }
@@ -160,7 +162,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       message,
     } as unknown as ErrorDto;
 
-    this.logger.error(this.logMsg(errorRes, error));
+    this.logger.error(error);
 
     return errorRes;
   }
@@ -179,7 +181,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       message: this.i18n.t('common.error.entity_not_found'),
     } as unknown as ErrorDto;
 
-    this.logger.debug(this.logMsg(errorRes, error));
+    this.logger.debug(error);
 
     return errorRes;
   }
@@ -198,7 +200,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       message: error?.message || 'An unexpected error occurred',
     };
 
-    this.logger.error(this.logMsg(errorRes, error));
+    this.logger.error(error);
 
     return errorRes;
   }
@@ -236,15 +238,5 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     };
 
     return errors.flatMap((error) => extractErrors(error));
-  }
-
-  private logMsg(error: ErrorDto, exception: Error) {
-    const logMessage = `${exception.constructor.name} occurred at ${error.timestamp} - Status: ${error.statusCode}, Message: ${exception.message}`;
-
-    if (this.debug) {
-      return [logMessage, exception.stack];
-    } else {
-      return logMessage;
-    }
   }
 }
