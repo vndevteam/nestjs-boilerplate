@@ -44,6 +44,10 @@ class EnvironmentVariablesValidator {
 
   @IsBoolean()
   @IsOptional()
+  DATABASE_LOGGING: boolean;
+
+  @IsBoolean()
+  @IsOptional()
   DATABASE_SYNCHRONIZE: boolean;
 
   @IsInt()
@@ -83,6 +87,7 @@ export default registerAs<DatabaseConfig>('database', () => {
     password: process.env.DATABASE_PASSWORD,
     name: process.env.DATABASE_NAME,
     username: process.env.DATABASE_USERNAME,
+    logging: process.env.DATABASE_LOGGING === 'true',
     synchronize: process.env.DATABASE_SYNCHRONIZE === 'true',
     maxConnections: process.env.DATABASE_MAX_CONNECTIONS
       ? parseInt(process.env.DATABASE_MAX_CONNECTIONS, 10)

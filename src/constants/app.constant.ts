@@ -6,10 +6,24 @@ export enum Environment {
   TEST = 'test',
 }
 
+export enum LogService {
+  CONSOLE = 'console',
+  GOOGLE_LOGGING = 'google_logging',
+  AWS_CLOUDWATCH = 'aws_cloudwatch',
+}
+
 export enum Direction {
   ASC = 'ASC',
   DESC = 'DESC',
 }
+
+// Redact value of these paths from logs
+export const loggingRedactPaths = [
+  'req.headers.authorization',
+  'req.body.email',
+  'req.body.password',
+  'req.body.oldPassword',
+];
 
 export const DEFAULT_PAGE_LIMIT = 10;
 export const DEFAULT_CURRENT_PAGE = 1;

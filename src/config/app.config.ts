@@ -1,4 +1,4 @@
-import { Environment } from '@/constants/app.constant';
+import { Environment, LogService } from '@/constants/app.constant';
 import { registerAs } from '@nestjs/config';
 import {
   IsBoolean,
@@ -44,9 +44,10 @@ class EnvironmentVariablesValidator {
   @IsOptional()
   APP_LOG_LEVEL: string;
 
-  @IsBoolean()
+  @IsString()
+  @IsEnum(LogService)
   @IsOptional()
-  APP_LOG_PRETTY: boolean;
+  APP_LOG_SERVICE: string;
 }
 
 export default registerAs<AppConfig>('app', () => {
@@ -64,6 +65,6 @@ export default registerAs<AppConfig>('app', () => {
     apiPrefix: process.env.API_PREFIX || 'api',
     fallbackLanguage: process.env.APP_FALLBACK_LANGUAGE || 'en',
     logLevel: process.env.APP_LOG_LEVEL || 'warn',
-    logPretty: process.env.APP_LOG_PRETTY === 'true',
+    logService: process.env.APP_LOG_SERVICE || LogService.CONSOLE,
   };
 });
