@@ -55,7 +55,7 @@ export class UserController {
   }
 
   @Get()
-  @ApiPaginatedResponse(UserResDto)
+  @ApiPaginatedResponse({ type: UserResDto })
   async findAll(
     @Query() reqDto: ListUserReqDto,
   ): Promise<PaginatedDto<UserResDto>> {
