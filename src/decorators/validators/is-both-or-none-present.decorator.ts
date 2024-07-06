@@ -7,8 +7,8 @@ import {
 export function IsBothOrNonePresent(
   property: string,
   validationOptions?: ValidationOptions,
-) {
-  return function (object: any, propertyName: string) {
+): PropertyDecorator {
+  return (object: any, propertyName: string) => {
     registerDecorator({
       name: 'IsBothOrNonePresent',
       target: object.constructor,
