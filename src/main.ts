@@ -33,6 +33,18 @@ async function bootstrap() {
   const configService = app.get(ConfigService<AllConfigType>);
   const isDevelopment =
     configService.getOrThrow('app.nodeEnv', { infer: true }) === 'development';
+  const corsOrigin = configService.getOrThrow('app.corsOrigin', {
+    infer: true,
+  });
+
+  app.enableCors({
+    origin: corsOrigin,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type, Accept',
+    credentials: true,
+  });
+
+  console.log('\nCORS Origin: ', corsOrigin);
 
   // Use global prefix if you don't have subdomain
   app.setGlobalPrefix(
