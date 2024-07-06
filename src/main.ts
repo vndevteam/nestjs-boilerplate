@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
+import compression from 'compression';
 import helmet from 'helmet';
 import { Logger } from 'nestjs-pino';
 import { AppModule } from './app.module';
@@ -25,6 +26,9 @@ async function bootstrap() {
 
   // Setup security headers
   app.use(helmet());
+
+  // For high-traffic websites in production, it is strongly recommended to offload compression from the application server - typically in a reverse proxy (e.g., Nginx). In that case, you should not use compression middleware.
+  app.use(compression());
 
   const configService = app.get(ConfigService<AllConfigType>);
   const isDevelopment =
