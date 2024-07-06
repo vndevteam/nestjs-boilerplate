@@ -2,6 +2,7 @@ import { AbstractEntity } from '@/database/entities/abstract.entity';
 import { hashPassword as hashPass } from '@/utils/password.util';
 import {
   BeforeInsert,
+  BeforeUpdate,
   Column,
   DeleteDateColumn,
   Entity,
@@ -47,7 +48,10 @@ export class UserEntity extends AbstractEntity {
   deletedAt: Date;
 
   @BeforeInsert()
+  @BeforeUpdate()
   async hashPassword() {
-    this.password = await hashPass(this.password);
+    if (this.password) {
+      this.password = await hashPass(this.password);
+    }
   }
 }

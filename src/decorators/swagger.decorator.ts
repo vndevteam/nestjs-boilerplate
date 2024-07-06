@@ -1,11 +1,16 @@
 import { PaginatedDto } from '@/common/dto/paginated.dto';
 import { type Type, applyDecorators } from '@nestjs/common';
-import { ApiExtraModels, ApiOkResponse, getSchemaPath } from '@nestjs/swagger';
+import {
+  ApiExtraModels,
+  ApiOkResponse,
+  type ApiResponseOptions,
+  getSchemaPath,
+} from '@nestjs/swagger';
 
 export const ApiPaginatedResponse = <T extends Type<any>>(options: {
   type: T;
   description?: string;
-}) => {
+}): MethodDecorator => {
   return applyDecorators(
     ApiExtraModels(PaginatedDto, options.type),
     ApiOkResponse({
@@ -25,6 +30,6 @@ export const ApiPaginatedResponse = <T extends Type<any>>(options: {
           },
         ],
       },
-    }),
+    } as ApiResponseOptions | undefined),
   );
 };
