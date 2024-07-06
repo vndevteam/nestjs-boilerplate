@@ -7,4 +7,5 @@ export type AppConfig = {
   fallbackLanguage: string;
   logLevel: string;
   logService: string;
+  corsOrigin: boolean | string | RegExp | (string | RegExp)[];
 };

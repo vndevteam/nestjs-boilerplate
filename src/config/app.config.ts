@@ -48,6 +48,10 @@ class EnvironmentVariablesValidator {
   @IsEnum(LogService)
   @IsOptional()
   APP_LOG_SERVICE: string;
+
+  @IsString()
+  @IsOptional()
+  APP_CORS_ORIGIN: string;
 }
 
 export default registerAs<AppConfig>('app', () => {
@@ -66,5 +70,23 @@ export default registerAs<AppConfig>('app', () => {
     fallbackLanguage: process.env.APP_FALLBACK_LANGUAGE || 'en',
     logLevel: process.env.APP_LOG_LEVEL || 'warn',
     logService: process.env.APP_LOG_SERVICE || LogService.CONSOLE,
+    corsOrigin: getCorsOrigin() || false,
   };
 });
+
+function getCorsOrigin() {
+  const corsOrigin = process.env.APP_CORS_ORIGIN;
+  if (corsOrigin === 'true') {
+    return true;
+  }
+
+  if (corsOrigin === '*') {
+    return '*';
+  }
+
+  if (corsOrigin.includes(',')) {
+    return corsOrigin.split(',').map((origin) => origin.trim());
+  }
+
+  return false;
+}
