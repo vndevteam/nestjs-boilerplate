@@ -6,6 +6,7 @@ import {
   IsInt,
   IsOptional,
   IsString,
+  IsUrl,
   Max,
   Min,
 } from 'class-validator';
@@ -20,7 +21,11 @@ class EnvironmentVariablesValidator {
 
   @IsString()
   @IsOptional()
-  API_NAME: string;
+  APP_NAME: string;
+
+  @IsUrl({ require_tld: false })
+  @IsOptional()
+  APP_URL: string;
 
   @IsInt()
   @Min(0)
@@ -57,14 +62,17 @@ class EnvironmentVariablesValidator {
 export default registerAs<AppConfig>('app', () => {
   validateConfig(process.env, EnvironmentVariablesValidator);
 
+  const port = process.env.APP_PORT
+    ? parseInt(process.env.APP_PORT, 10)
+    : process.env.PORT
+      ? parseInt(process.env.PORT, 10)
+      : 3000;
+
   return {
     nodeEnv: process.env.NODE_ENV || Environment.DEVELOPMENT,
     name: process.env.APP_NAME || 'app',
-    port: process.env.APP_PORT
-      ? parseInt(process.env.APP_PORT, 10)
-      : process.env.PORT
-        ? parseInt(process.env.PORT, 10)
-        : 3000,
+    url: process.env.APP_URL || `http://localhost:${port}`,
+    port,
     debug: process.env.APP_DEBUG === 'true',
     apiPrefix: process.env.API_PREFIX || 'api',
     fallbackLanguage: process.env.APP_FALLBACK_LANGUAGE || 'en',

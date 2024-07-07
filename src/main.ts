@@ -47,10 +47,15 @@ async function bootstrap() {
   console.log('\nCORS Origin: ', corsOrigin);
 
   // Use global prefix if you don't have subdomain
+  // TODO: (BUG) The pino logger for request will be not available when exclude the root path ('/')
+  // https://github.com/iamolegga/nestjs-pino/issues/1849
   app.setGlobalPrefix(
     configService.getOrThrow('app.apiPrefix', { infer: true }),
     {
-      exclude: [{ method: RequestMethod.GET, path: 'health' }],
+      exclude: [
+        // { method: RequestMethod.GET, path: '/' },
+        { method: RequestMethod.GET, path: 'health' },
+      ],
     },
   );
 
