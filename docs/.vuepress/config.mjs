@@ -1,6 +1,6 @@
 import { viteBundler } from '@vuepress/bundler-vite';
-import { defaultTheme } from '@vuepress/theme-default';
 import { searchPlugin } from '@vuepress/plugin-search';
+import { defaultTheme } from '@vuepress/theme-default';
 import { defineUserConfig } from 'vuepress';
 import { en as enThemeConfig } from './config/theme/en.config.mjs';
 import { vi as viThemeConfig } from './config/theme/vi.config.mjs';
