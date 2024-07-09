@@ -19,6 +19,8 @@
 
 NestJS boilerplate for a typical project
 
+Demo: <https://nestjs-boilerplate-n27l.onrender.com>
+
 ## Getting started
 
 ```bash
@@ -56,19 +58,19 @@ $ pnpm run start:prod
 
 ## Feature
 
-- [ ] Database. Support [TypeORM](https://www.npmjs.com/package/typeorm)
+- [x] Database. Support [TypeORM](https://www.npmjs.com/package/typeorm)
 - [ ] Seeding.
-- [ ] Config Service ([@nestjs/config](https://www.npmjs.com/package/@nestjs/config)).
+- [x] Config Service ([@nestjs/config](https://www.npmjs.com/package/@nestjs/config)).
 - [ ] Mailing ([nodemailer](https://www.npmjs.com/package/nodemailer)).
 - [ ] Sign in and sign up via email.
 - [ ] Social sign in (Apple, Facebook, Google, Twitter).
 - [ ] Admin and User roles.
-- [ ] Internationalization/Translations (I18N) ([nestjs-i18n](https://www.npmjs.com/package/nestjs-i18n)).
+- [x] Internationalization/Translations (I18N) ([nestjs-i18n](https://www.npmjs.com/package/nestjs-i18n)).
 - [ ] File uploads. Support local and Amazon S3 drivers.
-- [ ] Swagger.
+- [x] Swagger.
 - [ ] E2E and units tests.
-- [ ] Docker.
-- [ ] CI (Github Actions).
+- [x] Docker.
+- [x] CI (Github Actions).
 
 ## Support
 

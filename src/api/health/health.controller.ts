@@ -32,7 +32,7 @@ export class HealthController {
             () =>
               this.http.pingCheck(
                 'api-docs',
-                `http://localhost:${this.configService.get('app.port', { infer: true })}/api`,
+                `${this.configService.get('app.url', { infer: true })}/api-docs`,
               ),
           ]
         : []),

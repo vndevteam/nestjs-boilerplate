@@ -9,8 +9,16 @@ const en = {
   sidebarDepth: 1,
   sidebar: [
     {
+      text: 'Architecture',
+      link: '/architecture.md',
+    },
+    {
       text: 'Database',
       link: '/database.md',
+    },
+    {
+      text: 'Security',
+      link: '/security.md',
     },
     {
       text: 'Convention',

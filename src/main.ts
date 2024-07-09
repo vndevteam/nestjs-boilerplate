@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
+import compression from 'compression';
 import helmet from 'helmet';
 import { Logger } from 'nestjs-pino';
 import { AppModule } from './app.module';
@@ -26,15 +27,35 @@ async function bootstrap() {
   // Setup security headers
   app.use(helmet());
 
+  // For high-traffic websites in production, it is strongly recommended to offload compression from the application server - typically in a reverse proxy (e.g., Nginx). In that case, you should not use compression middleware.
+  app.use(compression());
+
   const configService = app.get(ConfigService<AllConfigType>);
   const isDevelopment =
     configService.getOrThrow('app.nodeEnv', { infer: true }) === 'development';
+  const corsOrigin = configService.getOrThrow('app.corsOrigin', {
+    infer: true,
+  });
+
+  app.enableCors({
+    origin: corsOrigin,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type, Accept',
+    credentials: true,
+  });
+
+  console.log('\nCORS Origin: ', corsOrigin);
 
   // Use global prefix if you don't have subdomain
+  // TODO: (BUG) The pino logger for request will be not available when exclude the root path ('/')
+  // https://github.com/iamolegga/nestjs-pino/issues/1849
   app.setGlobalPrefix(
     configService.getOrThrow('app.apiPrefix', { infer: true }),
     {
-      exclude: [{ method: RequestMethod.GET, path: 'health' }],
+      exclude: [
+        // { method: RequestMethod.GET, path: '/' },
+        { method: RequestMethod.GET, path: 'health' },
+      ],
     },
   );
 

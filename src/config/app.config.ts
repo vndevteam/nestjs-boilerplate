@@ -6,6 +6,7 @@ import {
   IsInt,
   IsOptional,
   IsString,
+  IsUrl,
   Max,
   Min,
 } from 'class-validator';
@@ -20,7 +21,11 @@ class EnvironmentVariablesValidator {
 
   @IsString()
   @IsOptional()
-  API_NAME: string;
+  APP_NAME: string;
+
+  @IsUrl({ require_tld: false })
+  @IsOptional()
+  APP_URL: string;
 
   @IsInt()
   @Min(0)
@@ -48,23 +53,48 @@ class EnvironmentVariablesValidator {
   @IsEnum(LogService)
   @IsOptional()
   APP_LOG_SERVICE: string;
+
+  @IsString()
+  @IsOptional()
+  APP_CORS_ORIGIN: string;
 }
 
 export default registerAs<AppConfig>('app', () => {
   validateConfig(process.env, EnvironmentVariablesValidator);
 
+  const port = process.env.APP_PORT
+    ? parseInt(process.env.APP_PORT, 10)
+    : process.env.PORT
+      ? parseInt(process.env.PORT, 10)
+      : 3000;
+
   return {
     nodeEnv: process.env.NODE_ENV || Environment.DEVELOPMENT,
     name: process.env.APP_NAME || 'app',
-    port: process.env.APP_PORT
-      ? parseInt(process.env.APP_PORT, 10)
-      : process.env.PORT
-        ? parseInt(process.env.PORT, 10)
-        : 3000,
+    url: process.env.APP_URL || `http://localhost:${port}`,
+    port,
     debug: process.env.APP_DEBUG === 'true',
     apiPrefix: process.env.API_PREFIX || 'api',
     fallbackLanguage: process.env.APP_FALLBACK_LANGUAGE || 'en',
     logLevel: process.env.APP_LOG_LEVEL || 'warn',
     logService: process.env.APP_LOG_SERVICE || LogService.CONSOLE,
+    corsOrigin: getCorsOrigin() || true,
   };
 });
+
+function getCorsOrigin() {
+  const corsOrigin = process.env.APP_CORS_ORIGIN;
+  if (corsOrigin === 'true') {
+    return true;
+  }
+
+  if (corsOrigin === '*') {
+    return '*';
+  }
+
+  if (corsOrigin?.includes(',')) {
+    return corsOrigin.split(',').map((origin) => origin.trim());
+  }
+
+  return false;
+}
