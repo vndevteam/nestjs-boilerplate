@@ -14,6 +14,9 @@ export function IsPassword(
         validate(value: string) {
           return /^[\d!#$%&*@A-Z^a-z]*$/.test(value);
         },
+        defaultMessage() {
+          return `$property is invalid`;
+        },
       },
     });
   };
