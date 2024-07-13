@@ -1,25 +1,29 @@
-import { ApiProperty } from '@nestjs/swagger';
+import {
+  NumberField,
+  StringField,
+  StringFieldOptional,
+} from '@/decorators/field.decorators';
 import { Exclude, Expose } from 'class-transformer';
 
 @Exclude()
 export class UserResDto {
-  @ApiProperty()
+  @NumberField()
   @Expose()
   id: number;
 
-  @ApiProperty()
+  @StringField()
   @Expose()
   username: string;
 
-  @ApiProperty()
+  @StringField()
   @Expose()
   email: string;
 
-  @ApiProperty()
+  @StringFieldOptional()
   @Expose()
   bio?: string;
 
-  @ApiProperty()
+  @StringField()
   @Expose()
   image: string;
 }

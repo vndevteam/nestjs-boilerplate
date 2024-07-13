@@ -1,3 +1,6 @@
+export const IS_PUBLIC = 'isPublic';
+export const IS_AUTH_OPTIONAL = 'isAuthOptional';
+
 export enum Environment {
   LOCAL = 'local',
   DEVELOPMENT = 'development',

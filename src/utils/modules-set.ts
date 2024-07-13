@@ -1,5 +1,10 @@
+import { ApiModule } from '@/api/api.module';
+import authConfig from '@/api/auth/config/auth.config';
+import appConfig from '@/config/app.config';
 import { AllConfigType } from '@/config/config.type';
 import { Environment } from '@/constants/app.constant';
+import databaseConfig from '@/database/config/database.config';
+import { TypeOrmConfigService } from '@/database/typeorm-config.service';
 import { ModuleMetadata } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -12,17 +17,13 @@ import {
 import { LoggerModule } from 'nestjs-pino';
 import path from 'path';
 import { DataSource, DataSourceOptions } from 'typeorm';
-import { ApiModule } from '../api/api.module';
-import appConfig from '../config/app.config';
-import databaseConfig from '../database/config/database.config';
-import { TypeOrmConfigService } from '../database/typeorm-config.service';
 import loggerFactory from './logger-factory';
 
 function generateModulesSet() {
   const imports: ModuleMetadata['imports'] = [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [appConfig, databaseConfig],
+      load: [appConfig, databaseConfig, authConfig],
       envFilePath: ['.env'],
     }),
   ];
