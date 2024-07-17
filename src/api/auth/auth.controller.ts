@@ -75,6 +75,7 @@ export class AuthController {
 
   @ApiAuth({
     type: UserResDto,
+    summary: 'Get current user',
   })
   @Get('me')
   getCurrentUser(@CurrentUser() user: UserEntity): UserResDto {

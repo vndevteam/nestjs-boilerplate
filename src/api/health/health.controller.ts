@@ -3,7 +3,7 @@ import { Environment } from '@/constants/app.constant';
 import { Public } from '@/decorators/public.decorator';
 import { Controller, Get } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import {
   HealthCheck,
   HealthCheckResult,
@@ -23,6 +23,7 @@ export class HealthController {
   ) {}
 
   @Public()
+  @ApiOperation({ summary: 'Health check' })
   @Get()
   @HealthCheck()
   async check(): Promise<HealthCheckResult> {
