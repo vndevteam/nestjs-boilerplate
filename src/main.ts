@@ -12,9 +12,11 @@ import { NestFactory, Reflector } from '@nestjs/core';
 import compression from 'compression';
 import helmet from 'helmet';
 import { Logger } from 'nestjs-pino';
+import { AuthService } from './api/auth/auth.service';
 import { AppModule } from './app.module';
 import { type AllConfigType } from './config/config.type';
 import { GlobalExceptionFilter } from './filters/global-exception.filter';
+import { AuthGuard } from './guards/auth.guard';
 import setupSwagger from './utils/setup-swagger';
 
 async function bootstrap() {
@@ -31,6 +33,7 @@ async function bootstrap() {
   app.use(compression());
 
   const configService = app.get(ConfigService<AllConfigType>);
+  const reflector = app.get(Reflector);
   const isDevelopment =
     configService.getOrThrow('app.nodeEnv', { infer: true }) === 'development';
   const corsOrigin = configService.getOrThrow('app.corsOrigin', {
@@ -44,7 +47,7 @@ async function bootstrap() {
     credentials: true,
   });
 
-  console.log('\nCORS Origin: ', corsOrigin);
+  console.log('\nCORS Origin:', corsOrigin);
 
   // Use global prefix if you don't have subdomain
   // TODO: (BUG) The pino logger for request will be not available when exclude the root path ('/')
@@ -63,6 +66,7 @@ async function bootstrap() {
     type: VersioningType.URI,
   });
 
+  app.useGlobalGuards(new AuthGuard(reflector, app.get(AuthService)));
   app.useGlobalFilters(new GlobalExceptionFilter(configService));
   app.useGlobalPipes(
     new ValidationPipe({
@@ -74,7 +78,7 @@ async function bootstrap() {
       },
     }),
   );
-  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(reflector));
 
   if (isDevelopment) {
     setupSwagger(app);

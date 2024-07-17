@@ -26,7 +26,8 @@
     "^@/filters(.*)$": "<rootDir>/filters$1",
     "^@/generated(.*)$": "<rootDir>/generated$1",
     "^@/guards(.*)$": "<rootDir>/guards$1",
-    "^@/interceptors(.*)$": "<rootDir>/api$1",
+    "^@/interceptors(.*)$": "<rootDir>/interceptors$1",
+    "^@/libs(.*)$": "<rootDir>/libs$1",
     "^@/shared(.*)$": "<rootDir>/shared$1",
     "^@/utils(.*)$": "<rootDir>/utils$1"
   },

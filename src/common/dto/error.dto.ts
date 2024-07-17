@@ -20,9 +20,7 @@ export class ErrorDto {
   @ApiPropertyOptional({ type: ErrorDetailDto, isArray: true })
   details?: ErrorDetailDto[];
 
-  @ApiPropertyOptional()
   stack?: string;
 
-  @ApiPropertyOptional({ type: Error })
   trace?: Error | unknown;
 }
