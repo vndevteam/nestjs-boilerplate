@@ -1,4 +1,4 @@
-# Code Formatter
+# Linting & formatting
 
 We use `prettier` to format the code
 
