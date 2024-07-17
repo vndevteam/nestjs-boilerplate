@@ -1,14 +1,7 @@
 import { CurrentUser } from '@/decorators/current-user.decorator';
-import { Public } from '@/decorators/public.decorator';
-import {
-  Body,
-  Controller,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Post,
-} from '@nestjs/common';
-import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiAuth, ApiPublic } from '@/decorators/http.decorators';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { UserResDto } from '../user/dto/user.res.dto';
 import { UserEntity } from '../user/entities/user.entity';
 import { UserService } from '../user/user.service';
@@ -24,13 +17,16 @@ export class AuthController {
     private readonly userService: UserService,
   ) {}
 
-  @Public()
+  @ApiPublic({
+    type: LoginResDto,
+    summary: 'Sign in',
+  })
   @Post('login')
   async signIn(@Body() userLogin: LoginReqDto): Promise<LoginResDto> {
     return await this.authService.signIn(userLogin);
   }
 
-  @Public()
+  @ApiPublic()
   @Post('register')
   async register() {
     return 'register';
@@ -41,46 +37,46 @@ export class AuthController {
     return 'logout';
   }
 
-  @Public()
+  @ApiPublic()
   @Post('refresh')
   async refresh() {
     return 'refresh';
   }
 
-  @Public()
+  @ApiPublic()
   @Post('forgot-password')
   async forgotPassword() {
     return 'forgot-password';
   }
 
-  @Public()
+  @ApiPublic()
   @Post('reset-password')
   async resetPassword() {
     return 'reset-password';
   }
 
-  @Public()
+  @ApiPublic()
   @Post('change-password')
   async changePassword() {
     return 'change-password';
   }
 
-  @Public()
+  @ApiPublic()
   @Post('verify-email')
   async verifyEmail() {
     return 'verify-email';
   }
 
-  @Public()
+  @ApiPublic()
   @Post('resend-verify-email')
   async resendVerifyEmail() {
     return 'resend-verify-email';
   }
 
+  @ApiAuth({
+    type: UserResDto,
+  })
   @Get('me')
-  @HttpCode(HttpStatus.OK)
-  @ApiBearerAuth()
-  @ApiOkResponse({ type: UserResDto, description: 'Current user info' })
   getCurrentUser(@CurrentUser() user: UserEntity): UserResDto {
     return user.toDto(UserResDto);
   }
