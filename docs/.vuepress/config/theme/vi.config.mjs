@@ -16,11 +16,12 @@ const vi = {
     {
       text: 'Quy ước',
       children: [
-        '/conventions/base-coding-conventions.md',
-        '/conventions/ts-coding-conventions.md',
+        '/conventions/naming-cheatsheet.md',
+        '/conventions/styleguide.md',
+        '/vi/conventions/clean-code-typescript.md',
         '/vi/conventions/branch-conventions.md',
-        '/conventions/code-formatter.md',
         '/conventions/commit-conventions.md',
+        '/conventions/linting.md',
       ],
     },
   ],
