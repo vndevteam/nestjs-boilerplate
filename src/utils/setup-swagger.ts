@@ -13,6 +13,7 @@ function setupSwagger(app: INestApplication) {
     .setVersion('1.0')
     .setContact('Company Name', 'https://example.com', 'contact@company.com')
     .addBearerAuth()
+    .addApiKey({ type: 'apiKey', name: 'Api-Key', in: 'header' }, 'Api-Key')
     .addServer(
       configService.getOrThrow('app.url', { infer: true }),
       'Development',
@@ -20,7 +21,9 @@ function setupSwagger(app: INestApplication) {
     .addServer('https://example.com', 'Staging')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api-docs', app, document);
+  SwaggerModule.setup('api-docs', app, document, {
+    customSiteTitle: appName,
+  });
 }
 
 export default setupSwagger;
