@@ -72,6 +72,11 @@ $ pnpm run start:prod
 - [x] Docker.
 - [x] CI (Github Actions).
 
+## References
+
+- [Awesome Nest Boilerplate](https://github.com/NarHakobyan/awesome-nest-boilerplate)
+- [Brocoders NestJS Boilerplate](https://github.com/brocoders/nestjs-boilerplate)
+
 ## Support
 
 [Discuss on Github](https://github.com/vndevteam/nestjs-boilerplate/discussions)

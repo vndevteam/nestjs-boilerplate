@@ -7,7 +7,7 @@ We use **Jest** for comprehensive unit testing in our NestJS project. Below are 
 Execute all test cases across the project using:
 
 ```bash
-yarn test
+pnpm test
 ```
 
 ## Running a Specific Test File
@@ -15,9 +15,9 @@ yarn test
 To run tests in a specific file, use the following command:
 
 ```bash
-yarn test path/to/file
+pnpm test path/to/file
 
-# example: yarn test src/api/auth/auth.controller.spec.ts
+# example: pnpm test src/api/auth/auth.controller.spec.ts
 ```
 
 ## Running End-to-End (e2e) Tests
@@ -25,7 +25,7 @@ yarn test path/to/file
 End-to-end tests can be executed using:
 
 ```bash
-yarn test:e2e
+pnpm test:e2e
 ```
 
 ## Running Tests in Watch Mode
@@ -33,7 +33,7 @@ yarn test:e2e
 For continuous testing, enabling watch mode allows you to re-run tests automatically upon file changes:
 
 ```bash
-yarn test:watch
+pnpm test:watch
 ```
 
 ## Running Tests with Coverage
@@ -41,7 +41,7 @@ yarn test:watch
 To generate a code coverage report, use the command:
 
 ```bash
-yarn test:cov
+pnpm test:cov
 ```
 
 ## Running Tests in IDE
