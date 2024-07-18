@@ -1,19 +1,37 @@
 # Linting & formatting
 
-We use `prettier` to format the code
+This project uses [Typescript Eslint](https://typescript-eslint.io/), and [Prettier](https://prettier.io/) to catch errors and avoid bike-shedding by enforcing a common code style.
 
-## Prettier
+## Languages
 
-<!-- prettier-ignore-start -->
+- **Typescript** is linted by Typescript Eslint and formatted by Prettier
+- **JSON** is formatted by Prettier
 
-- Semicolons
+## Scripts
 
-```ts
-// bad ❌
-const foo = 1
+There are a few different contexts in which the linters run.
 
-// good ✅
-const foo = 1;
+### Terminal
+
+```bash
+# Lint all files, fixing many violations automatically
+pnpm lint
 ```
 
-<!-- prettier-ignore-end -->
+See `package.json` to update.
+
+### Pre-commit
+
+Staged files are automatically linted and tested before each commit. See `lint-staged.config.mjs` to update.
+
+### Editor
+
+In supported editors, all files will be linted and show under the linter errors section.
+
+## Configuration
+
+- [ESLint](https://eslint.org/docs/latest/use/configure/)
+  - `eslint.config.mjs`
+
+- [Prettier](https://prettier.io/docs/en/configuration.html)
+  - `.prettierrc`
