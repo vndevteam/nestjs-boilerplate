@@ -9,6 +9,10 @@ const en = {
   sidebarDepth: 1,
   sidebar: [
     {
+      text: 'Setup & Development',
+      link: '/development.md',
+    },
+    {
       text: 'Architecture',
       link: '/architecture.md',
     },
@@ -21,13 +25,30 @@ const en = {
       link: '/security.md',
     },
     {
+      text: 'Testing',
+      link: '/testing.md',
+    },
+    {
+      text: 'Deployment',
+      link: '/deployment.md',
+    },
+    {
+      text: 'Techniques',
+      link: '/techniques.md',
+    },
+    {
+      text: 'Troubleshooting',
+      link: '/troubleshooting.md',
+    },
+    {
       text: 'Convention',
       children: [
-        '/conventions/base-coding-conventions.md',
-        '/conventions/ts-coding-conventions.md',
+        '/conventions/naming-cheatsheet.md',
+        '/conventions/styleguide.md',
+        '/conventions/clean-code-typescript.md',
         '/conventions/branch-conventions.md',
-        '/conventions/code-formatter.md',
         '/conventions/commit-conventions.md',
+        '/conventions/linting.md',
       ],
     },
   ],

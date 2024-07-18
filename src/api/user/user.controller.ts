@@ -32,6 +32,7 @@ export class UserController {
   @Post()
   @ApiAuth({
     type: UserResDto,
+    summary: 'Create user',
     statusCode: HttpStatus.CREATED,
   })
   async create(@Body() createUserDto: CreateUserReqDto): Promise<UserResDto> {
@@ -41,6 +42,7 @@ export class UserController {
   @Get()
   @ApiAuth({
     type: UserResDto,
+    summary: 'List users',
     isPaginated: true,
   })
   async findAll(
@@ -50,13 +52,13 @@ export class UserController {
   }
 
   @Get(':id')
-  @ApiAuth({ type: UserResDto })
+  @ApiAuth({ type: UserResDto, summary: 'Find user by id' })
   async findOne(@Param('id', ParseIntPipe) id: number): Promise<UserResDto> {
     return await this.userService.findOne(id);
   }
 
   @Patch(':id')
-  @ApiAuth({ type: UserResDto })
+  @ApiAuth({ type: UserResDto, summary: 'Update user' })
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() UpdateUserReqDto: UpdateUserReqDto,
@@ -66,6 +68,7 @@ export class UserController {
 
   @Delete(':id')
   @ApiAuth({
+    summary: 'Delete user',
     errorResponses: [400, 401, 403, 404, 500],
   })
   remove(@Param('id', ParseIntPipe) id: number) {

@@ -232,17 +232,13 @@ cb(null)
 **Bad**
 
 ```ts
-if (error === null) {
-
-}
+if (error === null)
 ```
 
 **Good**
 
 ```ts
-if (error) {
-
-}
+if (error)
 ```
 
 - Use `== null` / `!= null` (not `===` / `!==`) to check for `null` / `undefined` on primitives as it works for both `null`/`undefined` but not other falsy values (like `''`, `0`, `false`) e.g.
@@ -250,17 +246,13 @@ if (error) {
 **Bad**
 
 ```ts
-if (error !== null) {
-
-} // does not rule out undefined
+if (error !== null) // does not rule out undefined
 ```
 
 **Good**
 
 ```ts
-if (error != null) {
-
-} // rules out both null and undefined
+if (error != null) // rules out both null and undefined
 ```
 
 ## Formatting
@@ -339,7 +331,7 @@ class X implements FooBar {
 }
 ```
 
-- Otherwise, use whatever makes you happy that day. I use [type](https://www.youtube.com/watch?v=IXAT3If0pGI)
+- Otherwise use whatever makes you happy that day. I use [type](https://www.youtube.com/watch?v=IXAT3If0pGI)
 
 ## `==` or `===`
 
