@@ -2,8 +2,9 @@
 
 This page contains common issues and solutions for the project.
 
-- [Troubleshooting](#troubleshooting)
-  - [Error when running the application: `An instance of EnvironmentVariablesValidator has failed the validation`](#error-when-running-the-application-an-instance-of-environmentvariablesvalidator-has-failed-the-validation)
+---
+
+[[toc]]
 
 ## Error when running the application: `An instance of EnvironmentVariablesValidator has failed the validation`
 

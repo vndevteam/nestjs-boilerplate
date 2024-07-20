@@ -1,10 +1,6 @@
 # Branch conventions
 
-- [Branch conventions](#branch-conventions)
-  - [Code Flow Branches](#code-flow-branches)
-  - [Branch names must be matched by the following regex](#branch-names-must-be-matched-by-the-following-regex)
-  - [Format](#format)
-  - [Example](#example)
+[[toc]]
 
 ## Code Flow Branches
 

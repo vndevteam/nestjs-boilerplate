@@ -2,14 +2,9 @@
 
 We use **Jest** for comprehensive unit testing in our NestJS project. Below are the various commands and methods you can use to run tests effectively.
 
-- [Testing](#testing)
-  - [Running All Tests](#running-all-tests)
-  - [Running a Specific Test File](#running-a-specific-test-file)
-  - [Running End-to-End (e2e) Tests](#running-end-to-end-e2e-tests)
-  - [Running Tests in Watch Mode](#running-tests-in-watch-mode)
-  - [Running Tests with Coverage](#running-tests-with-coverage)
-  - [Running Tests in IDE](#running-tests-in-ide)
-    - [Visual Studio Code](#visual-studio-code)
+---
+
+[[toc]]
 
 ## Running All Tests
 
