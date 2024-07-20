@@ -2,6 +2,10 @@
 
 We use convention at [here](https://www.conventionalcommits.org/en/v1.0.0/)
 
+---
+
+[[toc]]
+
 ## Commit messages must be matched by the following regex
 
 ```js

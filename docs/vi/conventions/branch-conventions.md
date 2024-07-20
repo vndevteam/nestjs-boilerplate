@@ -1,5 +1,7 @@
 # Branch conventions
 
+[[toc]]
+
 ## Code Flow Branches
 
 These branches which we expect to be permanently available on the repository follow the flow of code changes starting from development until the production.

@@ -1,10 +1,10 @@
 # Work with database
 
-- [Working with database entity (TypeORM)](#working-with-database-entity-typeorm)
-  - [Generate migration](#generate-migration)
-  - [Show migration](#show-migration)
-  - [Run migration](#run-migration)
-  - [Revert migration](#revert-migration)
+We use [TypeORM](https://typeorm.io/) as an ORM for working with databases. It supports MySQL, PostgreSQL, MariaDB, SQLite, MS SQL Server, Oracle, WebSQL databases.
+
+---
+
+[[toc]]
 
 ## Working with database entity (TypeORM)
 
@@ -35,7 +35,7 @@
 1. Next, generate migration file:
 
     ```bash
-    pnpm run migration:generate src/database/migrations/create-post-table
+    pnpm migration:generate src/database/migrations/create-post-table
     ```
 
 1. Apply this migration to database via [pnpm migration:up](#run-migration).

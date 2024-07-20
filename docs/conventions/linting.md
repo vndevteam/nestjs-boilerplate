@@ -2,6 +2,10 @@
 
 This project uses [Typescript Eslint](https://typescript-eslint.io/), and [Prettier](https://prettier.io/) to catch errors and avoid bike-shedding by enforcing a common code style.
 
+---
+
+[[toc]]
+
 ## Languages
 
 - **Typescript** is linted by Typescript Eslint and formatted by Prettier
