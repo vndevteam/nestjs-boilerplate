@@ -1,10 +1,11 @@
 # Work with database
 
-- [Working with database entity (TypeORM)](#working-with-database-entity-typeorm)
-  - [Generate migration](#generate-migration)
-  - [Show migration](#show-migration)
-  - [Run migration](#run-migration)
-  - [Revert migration](#revert-migration)
+- [Work with database](#work-with-database)
+  - [Working with database entity (TypeORM)](#working-with-database-entity-typeorm)
+    - [Generate migration](#generate-migration)
+    - [Show migration](#show-migration)
+    - [Run migration](#run-migration)
+    - [Revert migration](#revert-migration)
 
 ## Working with database entity (TypeORM)
 

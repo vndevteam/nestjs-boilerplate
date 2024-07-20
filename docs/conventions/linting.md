@@ -2,6 +2,14 @@
 
 This project uses [Typescript Eslint](https://typescript-eslint.io/), and [Prettier](https://prettier.io/) to catch errors and avoid bike-shedding by enforcing a common code style.
 
+- [Linting \& formatting](#linting--formatting)
+  - [Languages](#languages)
+  - [Scripts](#scripts)
+    - [Terminal](#terminal)
+    - [Pre-commit](#pre-commit)
+    - [Editor](#editor)
+  - [Configuration](#configuration)
+
 ## Languages
 
 - **Typescript** is linted by Typescript Eslint and formatted by Prettier

@@ -2,6 +2,11 @@
 
 We use convention at [here](https://www.conventionalcommits.org/en/v1.0.0/)
 
+- [Commit conventions](#commit-conventions)
+  - [Commit messages must be matched by the following regex](#commit-messages-must-be-matched-by-the-following-regex)
+  - [Format](#format)
+  - [Example](#example)
+
 ## Commit messages must be matched by the following regex
 
 ```js
