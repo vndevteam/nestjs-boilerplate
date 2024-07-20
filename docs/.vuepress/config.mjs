@@ -11,6 +11,11 @@ export default defineUserConfig({
   description: 'NestJS boilerplate',
   base: '/nestjs-boilerplate/',
   bundler: viteBundler(),
+  markdown: {
+    toc: {
+      level: [2, 3, 4, 5],
+    },
+  },
   locales: {
     '/': {
       lang: 'en-US',

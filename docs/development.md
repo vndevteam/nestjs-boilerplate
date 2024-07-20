@@ -2,16 +2,7 @@
 
 This guide explains how to set up the project and start the development server.
 
-- [Setup \& Development](#setup--development)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-    - [Configuration](#configuration)
-      - [Environment variables](#environment-variables)
-      - [Application variables](#application-variables)
-      - [Database variables](#database-variables)
-      - [Authentication variables](#authentication-variables)
-    - [Dev server](#dev-server)
-  - [Upgrade](#upgrade)
+[[toc]]
 
 ## Prerequisites
 
