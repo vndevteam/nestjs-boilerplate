@@ -1,5 +1,18 @@
 # Setup & Development
 
+This guide explains how to set up the project and start the development server.
+
+- [Setup \& Development](#setup--development)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+    - [Configuration](#configuration)
+      - [Environment variables](#environment-variables)
+      - [Application variables](#application-variables)
+      - [Database variables](#database-variables)
+      - [Authentication variables](#authentication-variables)
+    - [Dev server](#dev-server)
+  - [Upgrade](#upgrade)
+
 ## Prerequisites
 
 Ensure you have the following installed:
@@ -24,7 +37,7 @@ Before running the app, create a `.env` file in the root directory by copying th
 cp .env.example .env
 ```
 
-#### .env.example
+::: details Example `.env.example` file
 
 ```env
 ##== Environment
@@ -68,6 +81,8 @@ AUTH_FORGOT_TOKEN_EXPIRES_IN=30m
 AUTH_CONFIRM_EMAIL_SECRET=secret_for_confirm_email
 AUTH_CONFIRM_EMAIL_TOKEN_EXPIRES_IN=1d
 ```
+
+:::
 
 #### Environment variables
 

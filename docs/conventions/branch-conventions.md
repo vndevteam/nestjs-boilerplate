@@ -1,5 +1,11 @@
 # Branch conventions
 
+- [Branch conventions](#branch-conventions)
+  - [Code Flow Branches](#code-flow-branches)
+  - [Branch names must be matched by the following regex](#branch-names-must-be-matched-by-the-following-regex)
+  - [Format](#format)
+  - [Example](#example)
+
 ## Code Flow Branches
 
 These branches which we expect to be permanently available on the repository follow the flow of code changes starting from development until the production.
