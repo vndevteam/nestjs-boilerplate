@@ -47,16 +47,16 @@ When you use this template, try follow the checklist to update your info properl
 
 ```bash
 # development
-$ pnpm run start
+$ pnpm start
 
 # watch mode
-$ pnpm run start:dev
+$ pnpm start:dev
 
 # production mode
-$ pnpm run start:prod
+$ pnpm start:prod
 ```
 
-## Feature
+## Features
 
 - [x] Database. Support [TypeORM](https://www.npmjs.com/package/typeorm)
 - [ ] Seeding.
@@ -71,6 +71,10 @@ $ pnpm run start:prod
 - [ ] E2E and units tests.
 - [x] Docker.
 - [x] CI (Github Actions).
+
+## More documentations
+
+Please read the [docs](docs/README.md). It contains the details about the project structure, conventions, and more.
 
 ## References
 

@@ -1,5 +1,7 @@
 # NestJS Boilerplate Documentation
 
+This is a boilerplate for NestJS projects. It is a starting point for building a RESTful API with NestJS.
+
 - [Setup & Development](development.md)
 - [Architecture](architecture.md)
 - [Database](database.md)
