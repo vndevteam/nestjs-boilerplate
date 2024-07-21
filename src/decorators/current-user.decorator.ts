@@ -2,9 +2,10 @@ import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { Request } from 'express';
 
 export const CurrentUser = createParamDecorator(
-  (_data: unknown, ctx: ExecutionContext) => {
+  (data: string, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest<Request>();
+    const user = request['user']; // request['user'] is set in the AuthGuard
 
-    return request['user'];
+    return data ? user?.[data] : user;
   },
 );

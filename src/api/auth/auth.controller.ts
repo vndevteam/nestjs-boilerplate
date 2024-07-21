@@ -1,46 +1,54 @@
 import { CurrentUser } from '@/decorators/current-user.decorator';
 import { ApiAuth, ApiPublic } from '@/decorators/http.decorators';
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { UserResDto } from '../user/dto/user.res.dto';
-import { UserEntity } from '../user/entities/user.entity';
-import { UserService } from '../user/user.service';
 import { AuthService } from './auth.service';
 import { LoginReqDto } from './dto/login.req.dto';
 import { LoginResDto } from './dto/login.res.dto';
+import { RefreshReqDto } from './dto/refresh.req.dto';
+import { RefreshResDto } from './dto/refresh.res.dto';
+import { RegisterReqDto } from './dto/register.req.dto';
+import { RegisterResDto } from './dto/register.res.dto';
 
 @ApiTags('auth')
-@Controller('auth')
+@Controller({
+  path: 'auth',
+  version: '1',
+})
 export class AuthController {
-  constructor(
-    private readonly authService: AuthService,
-    private readonly userService: UserService,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   @ApiPublic({
     type: LoginResDto,
     summary: 'Sign in',
   })
-  @Post('login')
+  @Post('email/login')
   async signIn(@Body() userLogin: LoginReqDto): Promise<LoginResDto> {
     return await this.authService.signIn(userLogin);
   }
 
   @ApiPublic()
-  @Post('register')
-  async register() {
-    return 'register';
+  @Post('email/register')
+  async register(@Body() dto: RegisterReqDto): Promise<RegisterResDto> {
+    return await this.authService.register(dto);
   }
 
+  @ApiAuth({
+    summary: 'Logout',
+    errorResponses: [400, 401, 403, 500],
+  })
   @Post('logout')
-  async logout() {
-    return 'logout';
+  async logout(@CurrentUser('sessionId') sessionId: string): Promise<void> {
+    await this.authService.logout(sessionId);
   }
 
-  @ApiPublic()
+  @ApiPublic({
+    type: RefreshResDto,
+    summary: 'Refresh token',
+  })
   @Post('refresh')
-  async refresh() {
-    return 'refresh';
+  async refresh(@Body() dto: RefreshReqDto): Promise<RefreshResDto> {
+    return await this.authService.refreshToken(dto);
   }
 
   @ApiPublic()
@@ -50,35 +58,26 @@ export class AuthController {
   }
 
   @ApiPublic()
+  @Post('verify/forgot-password')
+  async verifyForgotPassword() {
+    return 'verify-forgot-password';
+  }
+
+  @ApiPublic()
   @Post('reset-password')
   async resetPassword() {
     return 'reset-password';
   }
 
   @ApiPublic()
-  @Post('change-password')
-  async changePassword() {
-    return 'change-password';
-  }
-
-  @ApiPublic()
-  @Post('verify-email')
+  @Post('verify/email')
   async verifyEmail() {
     return 'verify-email';
   }
 
   @ApiPublic()
-  @Post('resend-verify-email')
+  @Post('verify/email/resend')
   async resendVerifyEmail() {
     return 'resend-verify-email';
-  }
-
-  @ApiAuth({
-    type: UserResDto,
-    summary: 'Get current user',
-  })
-  @Get('me')
-  getCurrentUser(@CurrentUser() user: UserEntity): UserResDto {
-    return user.toDto(UserResDto);
   }
 }

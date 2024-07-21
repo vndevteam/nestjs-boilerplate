@@ -6,7 +6,7 @@ export class CreateUserTable1720105653064 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
             CREATE TABLE "user" (
-                "id" SERIAL NOT NULL,
+                "id" uuid NOT NULL DEFAULT uuid_generate_v4(),
                 "username" character varying NOT NULL,
                 "email" character varying NOT NULL,
                 "password" character varying NOT NULL,
@@ -21,21 +21,21 @@ export class CreateUserTable1720105653064 implements MigrationInterface {
             )
         `);
     await queryRunner.query(`
-            CREATE UNIQUE INDEX "UQ_IDX_user_username" ON "user" ("username")
+            CREATE UNIQUE INDEX "UQ_user_username" ON "user" ("username")
             WHERE "deleted_at" IS NULL
         `);
     await queryRunner.query(`
-            CREATE UNIQUE INDEX "UQ_IDX_user_email" ON "user" ("email")
+            CREATE UNIQUE INDEX "UQ_user_email" ON "user" ("email")
             WHERE "deleted_at" IS NULL
         `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
-            DROP INDEX "public"."UQ_IDX_user_email"
+            DROP INDEX "UQ_user_email"
         `);
     await queryRunner.query(`
-            DROP INDEX "public"."UQ_IDX_user_username"
+            DROP INDEX "UQ_user_username"
         `);
     await queryRunner.query(`
             DROP TABLE "user"

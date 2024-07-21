@@ -5,6 +5,7 @@ import {
   IsBoolean,
   IsEmail,
   IsInt,
+  IsJWT,
   IsNumber,
   IsOptional,
   IsPositive,
@@ -41,6 +42,8 @@ interface IStringFieldOptions extends IFieldOptions {
 }
 
 type IBooleanFieldOptions = IFieldOptions;
+
+type ITokenFieldOptions = IFieldOptions;
 
 export function NumberField(
   options: Omit<ApiPropertyOptions, 'type'> & INumberFieldOptions = {},
@@ -119,6 +122,26 @@ export function StringField(
 
   if (options.toUpperCase) {
     decorators.push(ToUpperCase());
+  }
+
+  return applyDecorators(...decorators);
+}
+
+export function TokenField(
+  options: Omit<ApiPropertyOptions, 'type'> & ITokenFieldOptions = {},
+): PropertyDecorator {
+  const decorators = [Type(() => String), IsJWT({ each: options.each })];
+
+  if (options.nullable) {
+    decorators.push(IsNullable({ each: options.each }));
+  } else {
+    decorators.push(NotEquals(null, { each: options.each }));
+  }
+
+  if (options.swagger !== false) {
+    decorators.push(
+      ApiProperty({ type: String, ...options, isArray: options.each }),
+    );
   }
 
   return applyDecorators(...decorators);

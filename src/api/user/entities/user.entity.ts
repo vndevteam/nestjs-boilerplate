@@ -7,8 +7,10 @@ import {
   DeleteDateColumn,
   Entity,
   Index,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { SessionEntity } from './session.entity';
 
 @Entity('user')
 export class UserEntity extends AbstractEntity {
@@ -17,18 +19,18 @@ export class UserEntity extends AbstractEntity {
     Object.assign(this, data);
   }
 
-  @PrimaryGeneratedColumn({ primaryKeyConstraintName: 'PK_user_id' })
-  id!: number;
+  @PrimaryGeneratedColumn('uuid', { primaryKeyConstraintName: 'PK_user_id' })
+  id!: string;
 
   @Column()
-  @Index('UQ_IDX_user_username', {
+  @Index('UQ_user_username', {
     where: '"deleted_at" IS NULL',
     unique: true,
   })
   username!: string;
 
   @Column()
-  @Index('UQ_IDX_user_email', { where: '"deleted_at" IS NULL', unique: true })
+  @Index('UQ_user_email', { where: '"deleted_at" IS NULL', unique: true })
   email!: string;
 
   @Column()
@@ -38,7 +40,7 @@ export class UserEntity extends AbstractEntity {
   bio?: string;
 
   @Column({ default: '' })
-  image: string;
+  image?: string;
 
   @DeleteDateColumn({
     name: 'deleted_at',
@@ -46,6 +48,9 @@ export class UserEntity extends AbstractEntity {
     default: null,
   })
   deletedAt: Date;
+
+  @OneToMany(() => SessionEntity, (session) => session.user)
+  sessions?: SessionEntity[];
 
   @BeforeInsert()
   @BeforeUpdate()
