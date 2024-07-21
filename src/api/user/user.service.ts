@@ -5,6 +5,7 @@ import { ErrorCode } from '@/constants/error-code.constant';
 import { ValidationException } from '@/exceptions/validation.exception';
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import assert from 'assert';
 import { plainToInstance } from 'class-transformer';
 import { FindOptionsOrder, Repository } from 'typeorm';
 import { CreateUserReqDto } from './dto/create-user.req.dto';
@@ -72,24 +73,24 @@ export class UserService {
     return new PaginatedDto(plainToInstance(UserResDto, users), pageDto);
   }
 
-  async findOne(id: number): Promise<UserResDto> {
+  async findOne(id: string): Promise<UserResDto> {
+    assert(id, 'id is required');
     const user = await this.userRepository.findOneByOrFail({ id });
 
     return user.toDto(UserResDto);
   }
 
-  async update(id: number, updateUserDto: UpdateUserReqDto) {
+  async update(id: string, updateUserDto: UpdateUserReqDto) {
     const user = await this.userRepository.findOneByOrFail({ id });
 
     user.bio = updateUserDto.bio;
     user.image = updateUserDto.image;
-    user.password = updateUserDto.password;
     user.updatedBy = SYSTEM_USER_ID;
 
     await this.userRepository.save(user);
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     await this.userRepository.findOneByOrFail({ id });
     await this.userRepository.softDelete(id);
   }

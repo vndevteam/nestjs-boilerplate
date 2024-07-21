@@ -1,15 +1,25 @@
 import { AllConfigType } from '@/config/config.type';
+import { SYSTEM_USER_ID } from '@/constants/app.constant';
 import { verifyPassword } from '@/utils/password.util';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { randomStringGenerator } from '@nestjs/common/utils/random-string-generator.util';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { plainToInstance } from 'class-transformer';
+import crypto from 'crypto';
 import ms from 'ms';
 import { Repository } from 'typeorm';
+import { SessionEntity } from '../user/entities/session.entity';
 import { UserEntity } from '../user/entities/user.entity';
 import { LoginReqDto } from './dto/login.req.dto';
 import { LoginResDto } from './dto/login.res.dto';
+import { RefreshReqDto } from './dto/refresh.req.dto';
+import { RefreshResDto } from './dto/refresh.res.dto';
+import { RegisterReqDto } from './dto/register.req.dto';
+import { RegisterResDto } from './dto/register.res.dto';
+import { JwtPayloadType } from './types/jwt-payload.type';
+import { JwtRefreshPayloadType } from './types/jwt-refresh-payload.type';
 
 type Token = {
   accessToken: string;
@@ -45,7 +55,24 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const token = await this.createToken(user);
+    const hash = crypto
+      .createHash('sha256')
+      .update(randomStringGenerator())
+      .digest('hex');
+
+    const session = new SessionEntity({
+      hash,
+      userId: user.id,
+      createdBy: SYSTEM_USER_ID,
+      updatedBy: SYSTEM_USER_ID,
+    });
+    await session.save();
+
+    const token = await this.createToken({
+      id: user.id,
+      sessionId: session.id,
+      hash,
+    });
 
     return plainToInstance(LoginResDto, {
       userId: user.id,
@@ -53,40 +80,105 @@ export class AuthService {
     });
   }
 
-  async verifyAccessToken(accessToken: string): Promise<UserEntity> {
-    let email: string;
+  async register(_dto: RegisterReqDto): Promise<RegisterResDto> {
+    throw new Error('Method not implemented.');
+  }
+
+  async logout(sessionId: string): Promise<void> {
+    await SessionEntity.delete(sessionId);
+  }
+
+  async refreshToken(dto: RefreshReqDto): Promise<RefreshResDto> {
+    const { sessionId, hash } = this.verifyRefreshToken(dto.refreshToken);
+    const session = await SessionEntity.findOneBy({ id: sessionId });
+
+    if (!session || session.hash !== hash) {
+      throw new UnauthorizedException();
+    }
+
+    const user = await this.userRepository.findOneOrFail({
+      where: { id: session.userId },
+      select: ['id'],
+    });
+
+    const newHash = crypto
+      .createHash('sha256')
+      .update(randomStringGenerator())
+      .digest('hex');
+
+    SessionEntity.update(session.id, SessionEntity.create({ hash: newHash }));
+
+    return await this.createToken({
+      id: user.id,
+      sessionId: session.id,
+      hash: newHash,
+    });
+  }
+
+  verifyAccessToken(token: string): JwtPayloadType {
     try {
-      const payload = this.jwtService.verify(accessToken, {
+      const payload = this.jwtService.verify(token, {
         secret: this.configService.getOrThrow('auth.secret', { infer: true }),
       });
 
-      email = payload.email;
+      return payload;
     } catch {
       throw new UnauthorizedException();
     }
 
-    return await this.userRepository.findOneByOrFail({ email });
+    // For force logout feature
+    // Call in-memory DB to check if the session exists in the blacklist.
+    // If it exists, throw UnauthorizedException.
   }
 
-  private async createToken(user: UserEntity): Promise<Token> {
-    const payload = { sub: user.id, email: user.email };
+  private verifyRefreshToken(token: string): JwtRefreshPayloadType {
+    try {
+      return this.jwtService.verify(token, {
+        secret: this.configService.getOrThrow('auth.refreshSecret', {
+          infer: true,
+        }),
+      });
+    } catch {
+      throw new UnauthorizedException();
+    }
+  }
+
+  private async createToken(data: {
+    id: string;
+    sessionId: string;
+    hash: string;
+  }): Promise<Token> {
     const tokenExpiresIn = this.configService.getOrThrow('auth.expires', {
       infer: true,
     });
     const tokenExpires = Date.now() + ms(tokenExpiresIn);
+
     const [accessToken, refreshToken] = await Promise.all([
-      await this.jwtService.signAsync(payload, {
-        secret: this.configService.getOrThrow('auth.secret', { infer: true }),
-        expiresIn: tokenExpiresIn,
-      }),
-      await this.jwtService.signAsync(payload, {
-        secret: this.configService.getOrThrow('auth.refreshSecret', {
-          infer: true,
-        }),
-        expiresIn: this.configService.getOrThrow('auth.refreshExpires', {
-          infer: true,
-        }),
-      }),
+      await this.jwtService.signAsync(
+        {
+          id: data.id,
+          role: '', // TODO: add role
+          sessionId: data.sessionId,
+        },
+        {
+          secret: this.configService.getOrThrow('auth.secret', { infer: true }),
+          expiresIn: tokenExpiresIn,
+        },
+      ),
+      await this.jwtService.signAsync(
+        {
+          sessionId: data.sessionId,
+          hash: data.hash,
+        },
+        {
+          secret: this.configService.getOrThrow('auth.refreshSecret', {
+            infer: true,
+          }),
+          expiresIn: this.configService.getOrThrow('auth.refreshExpires', {
+            infer: true,
+          }),
+        },
+      ),
     ]);
     return {
       accessToken,
