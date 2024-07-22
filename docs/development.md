@@ -120,7 +120,7 @@ AUTH_CONFIRM_EMAIL_TOKEN_EXPIRES_IN=1d
 - `AUTH_CONFIRM_EMAIL_SECRET`: The email confirmation token secret key.
 - `AUTH_CONFIRM_EMAIL_TOKEN_EXPIRES_IN`: Email confirmation token expiration time. Should be short for security.
 
-### Dev server
+### Running the project
 
 ```bash
 # Start the development server

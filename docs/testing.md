@@ -6,15 +6,9 @@ We use **Jest** for comprehensive unit testing in our NestJS project. Below are 
 
 [[toc]]
 
-## Running All Tests
+## Unit Testing
 
-Execute all test cases across the project using:
-
-```bash
-pnpm test
-```
-
-## Running a Specific Test File
+### Running a Specific Test File
 
 To run tests in a specific file, use the following command:
 
@@ -24,7 +18,13 @@ pnpm test path/to/file
 # example: pnpm test src/api/auth/auth.controller.spec.ts
 ```
 
-## Running End-to-End (e2e) Tests
+## Integration Testing
+
+// TODO: Add details on integration testing.
+
+## End-to-End (E2E) Testing
+
+### Running End-to-End (e2e) Tests
 
 End-to-end tests can be executed using:
 
@@ -32,7 +32,17 @@ End-to-end tests can be executed using:
 pnpm test:e2e
 ```
 
-## Running Tests in Watch Mode
+## All Tests
+
+### Running All Tests
+
+Execute all test cases across the project using:
+
+```bash
+pnpm test
+```
+
+### Running Tests in Watch Mode
 
 For continuous testing, enabling watch mode allows you to re-run tests automatically upon file changes:
 
@@ -40,7 +50,7 @@ For continuous testing, enabling watch mode allows you to re-run tests automatic
 pnpm test:watch
 ```
 
-## Running Tests with Coverage
+### Running Tests with Coverage
 
 To generate a code coverage report, use the command:
 
@@ -48,7 +58,7 @@ To generate a code coverage report, use the command:
 pnpm test:cov
 ```
 
-## Running Tests in IDE
+## Testing in IDE
 
 ### Visual Studio Code
 
