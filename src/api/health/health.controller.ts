@@ -12,7 +12,7 @@ import {
   TypeOrmHealthIndicator,
 } from '@nestjs/terminus';
 
-@ApiTags('HealthCheck')
+@ApiTags('health')
 @Controller('health')
 export class HealthController {
   constructor(

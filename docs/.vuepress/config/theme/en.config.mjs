@@ -13,8 +13,16 @@ const en = {
       link: '/development.md',
     },
     {
+      text: 'Technologies',
+      link: '/technologies.md',
+    },
+    {
       text: 'Architecture',
       link: '/architecture.md',
+    },
+    {
+      text: 'API',
+      link: '/api.md',
     },
     {
       text: 'Database',
@@ -33,12 +41,12 @@ const en = {
       link: '/deployment.md',
     },
     {
-      text: 'Techniques',
-      link: '/techniques.md',
-    },
-    {
       text: 'Troubleshooting',
       link: '/troubleshooting.md',
+    },
+    {
+      text: 'FAQ',
+      link: '/faq.md',
     },
     {
       text: 'Convention',
@@ -48,7 +56,7 @@ const en = {
         '/conventions/clean-code-typescript.md',
         '/conventions/branch-conventions.md',
         '/conventions/commit-conventions.md',
-        '/conventions/linting.md',
+        '/conventions/linting-and-formatting.md',
       ],
     },
   ],

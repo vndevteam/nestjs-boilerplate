@@ -41,6 +41,10 @@ This document outlines the steps required to deploy the application to a product
 7. **Monitor the Application**:
    - Set up monitoring and alerting tools to keep track of the application's health and performance.
 
+## CI/CD Pipeline
+
+// TODO: Add details on setting up a CI/CD pipeline for automated deployments.
+
 ## Rollback Plan
 
 In case of any issues, have a rollback plan ready:

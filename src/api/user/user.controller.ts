@@ -1,4 +1,5 @@
 import { PaginatedDto } from '@/common/dto/paginated.dto';
+import { CurrentUser } from '@/decorators/current-user.decorator';
 import { ApiAuth } from '@/decorators/http.decorators';
 import {
   Body,
@@ -6,9 +7,8 @@ import {
   Delete,
   Get,
   HttpStatus,
-  Logger,
   Param,
-  ParseIntPipe,
+  ParseUUIDPipe,
   Patch,
   Post,
   Query,
@@ -26,8 +26,16 @@ import { UserService } from './user.service';
   version: '1',
 })
 export class UserController {
-  private readonly logger = new Logger(UserController.name);
   constructor(private readonly userService: UserService) {}
+
+  @ApiAuth({
+    type: UserResDto,
+    summary: 'Get current user',
+  })
+  @Get('me')
+  async getCurrentUser(@CurrentUser('id') userId: string): Promise<UserResDto> {
+    return await this.userService.findOne(userId);
+  }
 
   @Post()
   @ApiAuth({
@@ -53,14 +61,14 @@ export class UserController {
 
   @Get(':id')
   @ApiAuth({ type: UserResDto, summary: 'Find user by id' })
-  async findOne(@Param('id', ParseIntPipe) id: number): Promise<UserResDto> {
+  async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<UserResDto> {
     return await this.userService.findOne(id);
   }
 
   @Patch(':id')
   @ApiAuth({ type: UserResDto, summary: 'Update user' })
   update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseUUIDPipe) id: string,
     @Body() UpdateUserReqDto: UpdateUserReqDto,
   ) {
     return this.userService.update(id, UpdateUserReqDto);
@@ -71,7 +79,13 @@ export class UserController {
     summary: 'Delete user',
     errorResponses: [400, 401, 403, 404, 500],
   })
-  remove(@Param('id', ParseIntPipe) id: number) {
+  remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.remove(id);
+  }
+
+  @ApiAuth()
+  @Post('me/change-password')
+  async changePassword() {
+    return 'change-password';
   }
 }

@@ -1,29 +1,26 @@
+import {
+  EmailField,
+  PasswordField,
+  StringField,
+  StringFieldOptional,
+} from '@/decorators/field.decorators';
 import { lowerCaseTransformer } from '@/utils/transformers/lower-case.transformer';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { Allow, IsEmail, IsNotEmpty } from 'class-validator';
 
 export class CreateUserReqDto {
-  @ApiProperty()
-  @IsNotEmpty()
+  @StringField()
   @Transform(lowerCaseTransformer)
   readonly username: string;
 
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsEmail()
-  @Transform(lowerCaseTransformer)
+  @EmailField()
   readonly email: string;
 
-  @ApiProperty()
-  @IsNotEmpty()
+  @PasswordField()
   readonly password: string;
 
-  @ApiPropertyOptional()
-  @Allow()
+  @StringFieldOptional()
   readonly bio?: string;
 
-  @ApiPropertyOptional()
-  @Allow()
+  @StringFieldOptional()
   readonly image?: string;
 }

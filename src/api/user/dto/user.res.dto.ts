@@ -1,5 +1,4 @@
 import {
-  NumberField,
   StringField,
   StringFieldOptional,
 } from '@/decorators/field.decorators';
@@ -7,9 +6,9 @@ import { Exclude, Expose } from 'class-transformer';
 
 @Exclude()
 export class UserResDto {
-  @NumberField()
+  @StringField()
   @Expose()
-  id: number;
+  id: string;
 
   @StringField()
   @Expose()

@@ -39,7 +39,7 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException();
     }
 
-    request['user'] = await this.authService.verifyAccessToken(accessToken);
+    request['user'] = this.authService.verifyAccessToken(accessToken);
 
     return true;
   }

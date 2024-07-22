@@ -2,13 +2,15 @@
 
 This is a boilerplate for NestJS projects. It is a starting point for building a RESTful API with NestJS.
 
+## Detail Documentation
+
 - [Setup & Development](development.md)
 - [Architecture](architecture.md)
 - [Database](database.md)
 - [Security](security.md)
 - [Testing](testing.md)
 - [Deployment](deployment.md)
-- [Techniques](techniques.md)
+- [Technologies](technologies.md)
 - [Troubleshooting](troubleshooting.md)
 - Convention
   - [Naming cheatsheet](conventions/naming-cheatsheet.md)
@@ -17,3 +19,11 @@ This is a boilerplate for NestJS projects. It is a starting point for building a
   - [Branch conventions](conventions/branch-conventions.md)
   - [Commit conventions](conventions/commit-conventions.md)
   - [Linting & formatting](conventions/linting.md)
+
+## Features
+
+// TODO: Add features
+
+## References
+
+// TODO: Add references
