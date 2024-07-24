@@ -15,7 +15,7 @@ export enum LogService {
   AWS_CLOUDWATCH = 'aws_cloudwatch',
 }
 
-export enum Direction {
+export enum Order {
   ASC = 'ASC',
   DESC = 'DESC',
 }

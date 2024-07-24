@@ -1,21 +1,23 @@
 import { DEFAULT_CURRENT_PAGE } from '@/constants/app.constant';
 import { ListUserSort } from '@/constants/sort.enum';
-import { ApiPropertyOptional } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { IsEnum, IsInt, IsOptional, Min } from 'class-validator';
+import {
+  NumberFieldOptional,
+  StringFieldOptional,
+} from '@/decorators/field.decorators';
+import { IsEnum } from 'class-validator';
 import { PageOptions } from '../page-options';
 
 export class PageBasedOptions extends PageOptions {
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsInt()
-  @Min(1)
-  @Type(() => Number)
+  @NumberFieldOptional({
+    minimum: 1,
+    default: DEFAULT_CURRENT_PAGE,
+    int: true,
+  })
   readonly page?: number = DEFAULT_CURRENT_PAGE;
 
-  @ApiPropertyOptional({ enum: ListUserSort })
+  @StringFieldOptional()
   @IsEnum(ListUserSort)
-  declare orderBy?: string;
+  readonly orderBy?: string;
 
   get offset() {
     return this.page ? (this.page - 1) * this.limit : 0;

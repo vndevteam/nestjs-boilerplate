@@ -1,29 +1,26 @@
-import { DEFAULT_PAGE_LIMIT, Direction } from '@/constants/app.constant';
-import { IsBothOrNonePresent } from '@/decorators/validators/is-both-or-none-present.decorator';
+import { DEFAULT_PAGE_LIMIT, Order } from '@/constants/app.constant';
+import {
+  NumberFieldOptional,
+  StringFieldOptional,
+} from '@/decorators/field.decorators';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsEnum, IsInt, IsOptional, Min } from 'class-validator';
+import { IsEnum, IsOptional } from 'class-validator';
 
 export abstract class PageOptions {
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsInt()
-  @Min(1)
   @Type(() => Number)
+  @NumberFieldOptional({
+    minimum: 1,
+    default: DEFAULT_PAGE_LIMIT,
+    int: true,
+  })
   readonly limit?: number = DEFAULT_PAGE_LIMIT;
 
-  @ApiPropertyOptional()
-  @IsOptional()
+  @StringFieldOptional()
   readonly q?: string;
 
-  @ApiPropertyOptional({ enum: Direction })
-  @IsEnum(Direction)
+  @ApiPropertyOptional({ enum: Order })
+  @IsEnum(Order)
   @IsOptional()
-  @IsBothOrNonePresent('orderBy')
-  readonly order?: Direction;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsBothOrNonePresent('order')
-  readonly orderBy?: string;
+  readonly order?: Order = Order.ASC;
 }
