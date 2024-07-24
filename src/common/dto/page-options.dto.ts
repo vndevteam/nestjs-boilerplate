@@ -7,7 +7,7 @@ import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsEnum, IsOptional } from 'class-validator';
 
-export abstract class PageOptions {
+export abstract class PageOptionsDto {
   @Type(() => Number)
   @NumberFieldOptional({
     minimum: 1,
