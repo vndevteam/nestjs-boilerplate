@@ -1,4 +1,4 @@
-import { PaginatedDto } from '@/common/dto/paginated.dto';
+import { PaginatedDto } from '@/common/dto/offset-pagination/paginated.dto';
 import { Uuid } from '@/common/types/common.type';
 import { SYSTEM_USER_ID } from '@/constants/app.constant';
 import { ErrorCode } from '@/constants/error-code.constant';

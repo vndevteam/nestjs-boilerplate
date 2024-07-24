@@ -1,4 +1,4 @@
-import { PaginatedDto } from '@/common/dto/paginated.dto';
+import { PaginatedDto } from '@/common/dto/offset-pagination/paginated.dto';
 import { type Type, applyDecorators } from '@nestjs/common';
 import {
   ApiExtraModels,

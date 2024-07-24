@@ -1,15 +1,15 @@
-import { PageBasedOptionsDto } from '@/common/dto/page-based-pagination/page-based-options.dto';
-import { PageBasedPaginationDto } from '@/common/dto/page-based-pagination/page-based-pagination.dto';
+import { PageOptionsDto } from '@/common/dto/offset-pagination/page-options.dto';
+import { PaginationDto } from '@/common/dto/offset-pagination/pagination.dto';
 import { SelectQueryBuilder } from 'typeorm';
 
 export async function paginate<T>(
   builder: SelectQueryBuilder<T>,
-  pageOptionsDto: PageBasedOptionsDto,
+  pageOptionsDto: PageOptionsDto,
   options?: Partial<{
     skipCount: boolean;
     takeAll: boolean;
   }>,
-): Promise<[T[], PageBasedPaginationDto]> {
+): Promise<[T[], PaginationDto]> {
   if (!options?.takeAll) {
     builder.skip(pageOptionsDto.offset).take(pageOptionsDto.limit);
   }
@@ -22,7 +22,7 @@ export async function paginate<T>(
     count = await builder.getCount();
   }
 
-  const metaDto = new PageBasedPaginationDto(count, pageOptionsDto);
+  const metaDto = new PaginationDto(count, pageOptionsDto);
 
   return [entities, metaDto];
 }

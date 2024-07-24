@@ -1,9 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
-import { PaginationDto } from '../pagination.dto';
-import { PageBasedOptionsDto } from './page-based-options.dto';
+import { PageOptionsDto } from './page-options.dto';
 
-export class PageBasedPaginationDto extends PaginationDto {
+export class PaginationDto {
+  @ApiProperty()
+  @Expose()
+  readonly limit: number;
+
   @ApiProperty()
   @Expose()
   readonly currentPage: number;
@@ -16,8 +19,16 @@ export class PageBasedPaginationDto extends PaginationDto {
   @Expose()
   readonly previousPage?: number;
 
-  constructor(totalRecords: number, pageOptions: PageBasedOptionsDto) {
-    super(totalRecords, pageOptions);
+  @ApiProperty()
+  @Expose()
+  readonly totalRecords: number;
+
+  @ApiProperty()
+  @Expose()
+  readonly totalPages: number;
+
+  constructor(totalRecords: number, pageOptions: PageOptionsDto) {
+    this.limit = pageOptions.limit;
     this.currentPage = pageOptions.page;
     this.nextPage =
       this.currentPage < this.totalPages ? this.currentPage + 1 : undefined;
@@ -25,5 +36,8 @@ export class PageBasedPaginationDto extends PaginationDto {
       this.currentPage > 1 && this.currentPage - 1 < this.totalPages
         ? this.currentPage - 1
         : undefined;
+    this.totalRecords = totalRecords;
+    this.totalPages =
+      this.limit > 0 ? Math.ceil(totalRecords / pageOptions.limit) : 0;
   }
 }

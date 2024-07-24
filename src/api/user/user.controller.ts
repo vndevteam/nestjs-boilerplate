@@ -1,4 +1,4 @@
-import { PaginatedDto } from '@/common/dto/paginated.dto';
+import { PaginatedDto } from '@/common/dto/offset-pagination/paginated.dto';
 import { Uuid } from '@/common/types/common.type';
 import { CurrentUser } from '@/decorators/current-user.decorator';
 import { ApiAuth } from '@/decorators/http.decorators';
