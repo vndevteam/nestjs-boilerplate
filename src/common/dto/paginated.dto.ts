@@ -5,7 +5,7 @@ import { PaginationDto } from './pagination.dto';
 export class PaginatedDto<TData> {
   @ApiProperty({ type: [Object] })
   @Expose()
-  data: TData[];
+  readonly data: TData[];
 
   @ApiProperty()
   @Expose()

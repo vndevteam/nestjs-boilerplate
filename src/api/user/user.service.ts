@@ -1,13 +1,13 @@
-import { PageBasedPaginationDto } from '@/common/dto/page-based-pagination/pagination.dto';
 import { PaginatedDto } from '@/common/dto/paginated.dto';
 import { SYSTEM_USER_ID } from '@/constants/app.constant';
 import { ErrorCode } from '@/constants/error-code.constant';
 import { ValidationException } from '@/exceptions/validation.exception';
+import { paginate } from '@/utils/paginate';
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import assert from 'assert';
 import { plainToInstance } from 'class-transformer';
-import { FindOptionsOrder, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreateUserReqDto } from './dto/create-user.req.dto';
 import { ListUserReqDto } from './dto/list-user.req.dto';
 import { UpdateUserReqDto } from './dto/update-user.req.dto';
@@ -59,18 +59,12 @@ export class UserService {
   }
 
   async findAll(reqDto: ListUserReqDto): Promise<PaginatedDto<UserResDto>> {
-    let order: FindOptionsOrder<UserEntity> = { createdAt: 'DESC' };
-    if (reqDto.orderBy && reqDto.order) {
-      order = { [reqDto.orderBy]: reqDto.order, ...order };
-    }
-    const [users, count] = await this.userRepository.findAndCount({
-      order,
-      skip: reqDto.offset,
-      take: reqDto.limit,
+    const query = this.userRepository.createQueryBuilder('user');
+    const [users, metaDto] = await paginate<UserEntity>(query, reqDto, {
+      skipCount: false,
+      takeAll: false,
     });
-
-    const pageDto = new PageBasedPaginationDto(count, reqDto);
-    return new PaginatedDto(plainToInstance(UserResDto, users), pageDto);
+    return new PaginatedDto(plainToInstance(UserResDto, users), metaDto);
   }
 
   async findOne(id: string): Promise<UserResDto> {
