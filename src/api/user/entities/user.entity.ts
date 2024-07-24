@@ -1,3 +1,4 @@
+import { Uuid } from '@/common/types/common.type';
 import { AbstractEntity } from '@/database/entities/abstract.entity';
 import { hashPassword as hashPass } from '@/utils/password.util';
 import {
@@ -20,7 +21,7 @@ export class UserEntity extends AbstractEntity {
   }
 
   @PrimaryGeneratedColumn('uuid', { primaryKeyConstraintName: 'PK_user_id' })
-  id!: string;
+  id!: Uuid;
 
   @Column()
   @Index('UQ_user_username', {
