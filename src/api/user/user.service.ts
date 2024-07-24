@@ -1,4 +1,5 @@
 import { PaginatedDto } from '@/common/dto/paginated.dto';
+import { Uuid } from '@/common/types/common.type';
 import { SYSTEM_USER_ID } from '@/constants/app.constant';
 import { ErrorCode } from '@/constants/error-code.constant';
 import { ValidationException } from '@/exceptions/validation.exception';
@@ -69,14 +70,14 @@ export class UserService {
     return new PaginatedDto(plainToInstance(UserResDto, users), metaDto);
   }
 
-  async findOne(id: string): Promise<UserResDto> {
+  async findOne(id: Uuid): Promise<UserResDto> {
     assert(id, 'id is required');
     const user = await this.userRepository.findOneByOrFail({ id });
 
     return user.toDto(UserResDto);
   }
 
-  async update(id: string, updateUserDto: UpdateUserReqDto) {
+  async update(id: Uuid, updateUserDto: UpdateUserReqDto) {
     const user = await this.userRepository.findOneByOrFail({ id });
 
     user.bio = updateUserDto.bio;
@@ -86,7 +87,7 @@ export class UserService {
     await this.userRepository.save(user);
   }
 
-  async remove(id: string) {
+  async remove(id: Uuid) {
     await this.userRepository.findOneByOrFail({ id });
     await this.userRepository.softDelete(id);
   }
