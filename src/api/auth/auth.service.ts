@@ -106,7 +106,7 @@ export class AuthService {
       .update(randomStringGenerator())
       .digest('hex');
 
-    SessionEntity.update(session.id, SessionEntity.create({ hash: newHash }));
+    SessionEntity.update(session.id, { hash: newHash });
 
     return await this.createToken({
       id: user.id,
