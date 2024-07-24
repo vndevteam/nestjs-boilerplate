@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
-import { PageOptions } from './page-options';
+import { PageOptionsDto } from './page-options.dto';
 
 export abstract class PaginationDto {
   @ApiProperty()
@@ -15,7 +15,7 @@ export abstract class PaginationDto {
   @Expose()
   readonly limit: number;
 
-  constructor(totalRecords: number, pageOptions: PageOptions) {
+  constructor(totalRecords: number, pageOptions: PageOptionsDto) {
     this.totalRecords = totalRecords;
     this.limit = pageOptions.limit;
     this.totalPages =

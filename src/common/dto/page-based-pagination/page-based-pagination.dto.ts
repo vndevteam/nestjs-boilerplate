@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 import { PaginationDto } from '../pagination.dto';
-import { PageBasedOptions } from './page-based-options';
+import { PageBasedOptionsDto } from './page-based-options.dto';
 
 export class PageBasedPaginationDto extends PaginationDto {
   @ApiProperty()
@@ -16,7 +16,7 @@ export class PageBasedPaginationDto extends PaginationDto {
   @Expose()
   readonly previousPage?: number;
 
-  constructor(totalRecords: number, pageOptions: PageBasedOptions) {
+  constructor(totalRecords: number, pageOptions: PageBasedOptionsDto) {
     super(totalRecords, pageOptions);
     this.currentPage = pageOptions.page;
     this.nextPage =

@@ -59,7 +59,9 @@ export class UserService {
   }
 
   async findAll(reqDto: ListUserReqDto): Promise<PaginatedDto<UserResDto>> {
-    const query = this.userRepository.createQueryBuilder('user');
+    const query = this.userRepository
+      .createQueryBuilder('user')
+      .orderBy('user.createdAt', 'DESC');
     const [users, metaDto] = await paginate<UserEntity>(query, reqDto, {
       skipCount: false,
       takeAll: false,
