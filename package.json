@@ -61,7 +61,7 @@
   "devDependencies": {
     "@commitlint/cli": "19.3.0",
     "@commitlint/config-conventional": "19.2.2",
-    "@eslint/js": "9.7.0",
+    "@eslint/js": "9.8.0",
     "@nestjs/cli": "10.4.2",
     "@nestjs/schematics": "10.1.3",
     "@nestjs/testing": "10.3.10",
@@ -80,7 +80,7 @@
     "@vuepress/plugin-search": "2.0.0-rc.40",
     "@vuepress/theme-default": "2.0.0-rc.40",
     "env-cmd": "10.1.0",
-    "eslint": "9.7.0",
+    "eslint": "9.8.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-prettier": "5.2.1",
     "husky": "9.1.3",
