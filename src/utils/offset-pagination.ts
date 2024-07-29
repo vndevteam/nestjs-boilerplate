@@ -1,5 +1,5 @@
+import { OffsetPaginationDto } from '@/common/dto/offset-pagination/offset-pagination.dto';
 import { PageOptionsDto } from '@/common/dto/offset-pagination/page-options.dto';
-import { PaginationDto } from '@/common/dto/offset-pagination/pagination.dto';
 import { SelectQueryBuilder } from 'typeorm';
 
 export async function paginate<T>(
@@ -9,7 +9,7 @@ export async function paginate<T>(
     skipCount: boolean;
     takeAll: boolean;
   }>,
-): Promise<[T[], PaginationDto]> {
+): Promise<[T[], OffsetPaginationDto]> {
   if (!options?.takeAll) {
     builder.skip(pageOptionsDto.offset).take(pageOptionsDto.limit);
   }
@@ -22,7 +22,7 @@ export async function paginate<T>(
     count = await builder.getCount();
   }
 
-  const metaDto = new PaginationDto(count, pageOptionsDto);
+  const metaDto = new OffsetPaginationDto(count, pageOptionsDto);
 
   return [entities, metaDto];
 }

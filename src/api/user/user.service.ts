@@ -1,9 +1,12 @@
-import { PaginatedDto } from '@/common/dto/offset-pagination/paginated.dto';
+import { CursorPaginationDto } from '@/common/dto/cursor-pagination/cursor-pagination.dto';
+import { CursorPaginatedDto } from '@/common/dto/cursor-pagination/paginated.dto';
+import { OffsetPaginatedDto } from '@/common/dto/offset-pagination/paginated.dto';
 import { Uuid } from '@/common/types/common.type';
 import { SYSTEM_USER_ID } from '@/constants/app.constant';
 import { ErrorCode } from '@/constants/error-code.constant';
 import { ValidationException } from '@/exceptions/validation.exception';
-import { paginate } from '@/utils/paginate';
+import { buildPaginator } from '@/utils/cursor-pagination';
+import { paginate } from '@/utils/offset-pagination';
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import assert from 'assert';
@@ -11,6 +14,7 @@ import { plainToInstance } from 'class-transformer';
 import { Repository } from 'typeorm';
 import { CreateUserReqDto } from './dto/create-user.req.dto';
 import { ListUserReqDto } from './dto/list-user.req.dto';
+import { LoadMoreUsersReqDto } from './dto/load-more-users.req.dto';
 import { UpdateUserReqDto } from './dto/update-user.req.dto';
 import { UserResDto } from './dto/user.res.dto';
 import { UserEntity } from './entities/user.entity';
@@ -59,7 +63,9 @@ export class UserService {
     return plainToInstance(UserResDto, savedUser);
   }
 
-  async findAll(reqDto: ListUserReqDto): Promise<PaginatedDto<UserResDto>> {
+  async findAll(
+    reqDto: ListUserReqDto,
+  ): Promise<OffsetPaginatedDto<UserResDto>> {
     const query = this.userRepository
       .createQueryBuilder('user')
       .orderBy('user.createdAt', 'DESC');
@@ -67,7 +73,38 @@ export class UserService {
       skipCount: false,
       takeAll: false,
     });
-    return new PaginatedDto(plainToInstance(UserResDto, users), metaDto);
+    return new OffsetPaginatedDto(plainToInstance(UserResDto, users), metaDto);
+  }
+
+  async loadMoreUsers(
+    reqDto: LoadMoreUsersReqDto,
+  ): Promise<CursorPaginatedDto<UserResDto>> {
+    const queryBuilder = this.userRepository
+      .createQueryBuilder('user')
+      .addOrderBy('user.id', 'ASC')
+      .addOrderBy('user.createdAt', 'ASC');
+    const paginator = buildPaginator({
+      entity: UserEntity,
+      alias: 'user',
+      paginationKeys: ['id', 'createdAt'],
+      query: {
+        limit: reqDto.limit,
+        usingDefaultOrder: false,
+        afterCursor: reqDto.afterCursor,
+        beforeCursor: reqDto.beforeCursor,
+      },
+    });
+
+    const { data, cursor } = await paginator.paginate(queryBuilder);
+
+    const metaDto = new CursorPaginationDto(
+      data.length,
+      cursor.afterCursor,
+      cursor.beforeCursor,
+      reqDto,
+    );
+
+    return new CursorPaginatedDto(plainToInstance(UserResDto, data), metaDto);
   }
 
   async findOne(id: Uuid): Promise<UserResDto> {

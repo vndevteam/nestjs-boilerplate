@@ -1,4 +1,5 @@
-import { PaginatedDto } from '@/common/dto/offset-pagination/paginated.dto';
+import { CursorPaginatedDto } from '@/common/dto/cursor-pagination/paginated.dto';
+import { OffsetPaginatedDto } from '@/common/dto/offset-pagination/paginated.dto';
 import { Uuid } from '@/common/types/common.type';
 import { CurrentUser } from '@/decorators/current-user.decorator';
 import { ApiAuth } from '@/decorators/http.decorators';
@@ -17,6 +18,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { CreateUserReqDto } from './dto/create-user.req.dto';
 import { ListUserReqDto } from './dto/list-user.req.dto';
+import { LoadMoreUsersReqDto } from './dto/load-more-users.req.dto';
 import { UpdateUserReqDto } from './dto/update-user.req.dto';
 import { UserResDto } from './dto/user.res.dto';
 import { UserService } from './user.service';
@@ -56,8 +58,21 @@ export class UserController {
   })
   async findAll(
     @Query() reqDto: ListUserReqDto,
-  ): Promise<PaginatedDto<UserResDto>> {
+  ): Promise<OffsetPaginatedDto<UserResDto>> {
     return await this.userService.findAll(reqDto);
+  }
+
+  @Get('/load-more')
+  @ApiAuth({
+    type: UserResDto,
+    summary: 'Load more users',
+    isPaginated: true,
+    paginationType: 'cursor',
+  })
+  async loadMoreUsers(
+    @Query() reqDto: LoadMoreUsersReqDto,
+  ): Promise<CursorPaginatedDto<UserResDto>> {
+    return await this.userService.loadMoreUsers(reqDto);
   }
 
   @Get(':id')
