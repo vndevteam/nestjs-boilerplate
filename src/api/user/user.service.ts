@@ -79,17 +79,14 @@ export class UserService {
   async loadMoreUsers(
     reqDto: LoadMoreUsersReqDto,
   ): Promise<CursorPaginatedDto<UserResDto>> {
-    const queryBuilder = this.userRepository
-      .createQueryBuilder('user')
-      .addOrderBy('user.id', 'ASC')
-      .addOrderBy('user.createdAt', 'ASC');
+    const queryBuilder = this.userRepository.createQueryBuilder('user');
     const paginator = buildPaginator({
       entity: UserEntity,
       alias: 'user',
-      paginationKeys: ['id', 'createdAt'],
+      paginationKeys: ['createdAt'],
       query: {
         limit: reqDto.limit,
-        usingDefaultOrder: false,
+        order: 'DESC',
         afterCursor: reqDto.afterCursor,
         beforeCursor: reqDto.beforeCursor,
       },
