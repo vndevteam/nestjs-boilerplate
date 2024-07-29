@@ -9,7 +9,7 @@ import {
   StringFieldOptional,
 } from '@/decorators/field.decorators';
 
-export abstract class PageOptionsDto {
+export class PageOptionsDto {
   @NumberFieldOptional({
     minimum: 1,
     default: DEFAULT_PAGE_LIMIT,

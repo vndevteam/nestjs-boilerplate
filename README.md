@@ -65,6 +65,7 @@ $ pnpm start:prod
 - [ ] Sign in and sign up via email.
 - [ ] Social sign in (Apple, Facebook, Google, Twitter).
 - [ ] Admin and User roles.
+- [x] Pagination: Offset and Cursor (Clone from [typeorm-cursor-pagination](https://github.com/benjamin658/typeorm-cursor-pagination) and add more features).
 - [x] Internationalization/Translations (I18N) ([nestjs-i18n](https://www.npmjs.com/package/nestjs-i18n)).
 - [ ] File uploads. Support local and Amazon S3 drivers.
 - [x] Swagger.
