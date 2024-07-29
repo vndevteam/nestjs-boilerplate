@@ -36,10 +36,6 @@ export function buildPaginator<Entity extends ObjectLiteral>(
     paginator.setOrder(query.order as Order);
   }
 
-  if (query.usingDefaultOrder !== undefined) {
-    paginator.setUsingDefaultOrder(query.usingDefaultOrder);
-  }
-
   return paginator;
 }
 
@@ -57,8 +53,6 @@ export default class Paginator<Entity extends ObjectLiteral> {
   private limit = 100;
 
   private order: Order = Order.DESC;
-
-  private usingDefaultOrder: boolean = true;
 
   public constructor(
     private entity: ObjectType<Entity>,
@@ -85,10 +79,6 @@ export default class Paginator<Entity extends ObjectLiteral> {
 
   public setOrder(order: Order): void {
     this.order = order;
-  }
-
-  public setUsingDefaultOrder(usingDefaultOrder: boolean) {
-    this.usingDefaultOrder = usingDefaultOrder;
   }
 
   public async paginate(
@@ -147,21 +137,23 @@ export default class Paginator<Entity extends ObjectLiteral> {
 
     clonedBuilder.take(this.limit + 1);
 
-    console.log(this.usingDefaultOrder);
-    if (this.usingDefaultOrder) {
-      const paginationKeyOrders = this.buildOrder();
-      Object.keys(paginationKeyOrders).forEach((orderKey) => {
-        clonedBuilder.addOrderBy(
-          orderKey,
-          paginationKeyOrders[orderKey] === 'ASC' ? 'ASC' : 'DESC',
-        );
-      });
-    }
+    const paginationKeyOrders = this.buildOrder();
+    Object.keys(paginationKeyOrders).forEach((orderKey) => {
+      clonedBuilder.addOrderBy(
+        orderKey,
+        paginationKeyOrders[orderKey] === 'ASC' ? 'ASC' : 'DESC',
+      );
+    });
 
     return clonedBuilder;
   }
 
-  private buildCursorQuery(
+  /**
+   * Original method from the library
+   * @param where WhereExpressionBuilder
+   * @param cursors CursorParam
+   */
+  private _buildCursorQuery(
     where: WhereExpressionBuilder,
     cursors: CursorParam,
   ): void {
@@ -175,29 +167,36 @@ export default class Paginator<Entity extends ObjectLiteral> {
     });
   }
 
-  // FIXME: Support date_trunc
-  // async buildCursorQuery(where: WhereExpressionBuilder, cursors: CursorParam) {
-  //   const operator = this.getOperator();
-  //   const params = {};
-  //   let query = '';
-  //   for (const key of this.paginationKeys) {
-  //     params[key] = cursors[key];
-  //     const isTimestamp = await this.isTimestampColumn(this.alias, key);
-  //     if (isTimestamp) {
-  //       where.orWhere(
-  //         `${query}date_trunc('milliseconds', ${this.alias}.${key}) ${operator} :${key}`,
-  //         params,
-  //       );
-  //       query = `${query}date_trunc('milliseconds', ${this.alias}.${key}) = :${key} AND `;
-  //     } else {
-  //       where.orWhere(
-  //         `${query}${this.alias}.${key} ${operator} :${key}`,
-  //         params,
-  //       );
-  //       query = `${query}${this.alias}.${key} = :${key} AND `;
-  //     }
-  //   }
-  // }
+  /**
+   * Only support PostgreSQL
+   * @param where WhereExpressionBuilder
+   * @param cursors CursorParam
+   */
+  private async buildCursorQuery(
+    where: WhereExpressionBuilder,
+    cursors: CursorParam,
+  ) {
+    const operator = this.getOperator();
+    const params: CursorParam = {};
+    let query = '';
+    for (const key of this.paginationKeys) {
+      params[key] = cursors[key];
+      const type = this.getEntityPropertyType(key);
+      if (type === 'date') {
+        where.orWhere(
+          `${query}date_trunc('milliseconds', ${this.alias}.${key}) ${operator} :${key}`,
+          params,
+        );
+        query = `${query}date_trunc('milliseconds', ${this.alias}.${key}) = :${key} AND `;
+      } else {
+        where.orWhere(
+          `${query}${this.alias}.${key} ${operator} :${key}`,
+          params,
+        );
+        query = `${query}${this.alias}.${key} = :${key} AND `;
+      }
+    }
+  }
 
   private getOperator(): string {
     if (this.hasAfterCursor()) {
@@ -284,7 +283,6 @@ export interface PagingQuery {
   beforeCursor?: string;
   limit?: number;
   order?: Order | 'ASC' | 'DESC';
-  usingDefaultOrder?: boolean;
 }
 
 export interface PaginationOptions<Entity> {
@@ -323,18 +321,6 @@ export type OrderByCondition = {
         nulls?: 'NULLS FIRST' | 'NULLS LAST';
       };
 };
-
-// async function isColumnType(
-//   entityAlias: string,
-//   columnName: string,
-//   columnType: string = 'timestamp',
-// ): Promise<boolean> {
-//   const metadata: EntityMetadata = AppDataSource.getMetadata(entityAlias);
-//   const column = metadata.columns.find(
-//     (col) => col.propertyName === columnName,
-//   );
-//   return column && column.type === columnType;
-// }
 
 function atob(value: string): string {
   return Buffer.from(value, 'base64').toString();
