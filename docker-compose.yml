@@ -28,9 +28,21 @@ services:
       - "25432:5432"
     networks:
       - nestjs-boilerplate-network
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    ports:
+      - "18080:80"
+    volumes:
+      - pgadmin_data:/root/.pgadmin
+    env_file:
+      - .env
+    networks:
+      - nestjs-boilerplate-network
 
 volumes:
   postgres_data:
+  pgadmin_data:
 
 networks:
   nestjs-boilerplate-network:
