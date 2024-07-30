@@ -24,6 +24,10 @@
     "migration:show": "pnpm typeorm migration:show",
     "migration:create": "typeorm migration:create",
     "migration:generate": "pnpm typeorm migration:generate --pretty",
+    "db:create": "env-cmd ts-node ./node_modules/typeorm-extension/bin/cli.cjs db:create",
+    "db:drop": "env-cmd ts-node ./node_modules/typeorm-extension/bin/cli.cjs db:drop",
+    "seed:run": "env-cmd ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:run",
+    "seed:create": "env-cmd ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:create",
     "prepare": "husky",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
@@ -56,6 +60,7 @@
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.1",
     "typeorm": "0.3.20",
+    "typeorm-extension": "3.6.0",
     "uuid": "10.0.0"
   },
   "devDependencies": {

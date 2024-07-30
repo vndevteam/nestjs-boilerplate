@@ -59,7 +59,7 @@ $ pnpm start:prod
 ## Features
 
 - [x] Database. Support [TypeORM](https://www.npmjs.com/package/typeorm)
-- [ ] Seeding.
+- [x] Seeding.
 - [x] Config Service ([@nestjs/config](https://www.npmjs.com/package/@nestjs/config)).
 - [ ] Mailing ([nodemailer](https://www.npmjs.com/package/nodemailer)).
 - [ ] Sign in and sign up via email.
