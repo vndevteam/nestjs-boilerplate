@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { DataSource, DataSourceOptions } from 'typeorm';
+import { SeederOptions } from 'typeorm-extension';
 
 export const AppDataSource = new DataSource({
   type: process.env.DATABASE_TYPE,
@@ -31,4 +32,7 @@ export const AppDataSource = new DataSource({
           cert: process.env.DATABASE_CERT ?? undefined,
         }
       : undefined,
-} as DataSourceOptions);
+  seeds: [__dirname + '/seeds/**/*{.ts,.js}'],
+  seedTracking: true,
+  factories: [__dirname + '/factories/**/*{.ts,.js}'],
+} as DataSourceOptions & SeederOptions);
