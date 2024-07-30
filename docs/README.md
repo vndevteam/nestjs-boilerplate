@@ -26,4 +26,18 @@ This is a boilerplate for NestJS projects. It is a starting point for building a
 
 ## References
 
-// TODO: Add references
+- [TypeScript](https://www.typescriptlang.org/)
+- [NestJS](https://docs.nestjs.com/)
+- [TypeORM](https://typeorm.io/)
+- [TypeORM Extension](https://typeorm-extension.tada5hi.net/)
+- [Jest](https://jestjs.io/)
+- [PNPM](https://pnpm.io/)
+- [ESLint](https://eslint.org/)
+- [TypeScript ESLint](https://typescript-eslint.io/)
+- [Prettier](https://prettier.io/)
+- [Husky](https://typicode.github.io/husky/)
+- [Lint Staged](https://github.com/lint-staged/lint-staged)
+- [Commitlint](https://commitlint.js.org/)
+- [Conventional Commits](https://www.conventionalcommits.org/)
+- [Commitizen](https://commitizen-tools.github.io/commitizen/)
+- [Renovate](https://docs.renovatebot.com/)
