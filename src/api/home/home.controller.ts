@@ -1,10 +1,12 @@
+import { ApiPublic } from '@/decorators/http.decorators';
+import { Public } from '@/decorators/public.decorator';
 import { Controller, Get } from '@nestjs/common';
-import { ApiOperation } from '@nestjs/swagger';
 
 @Controller('/')
 export class HomeController {
-  @ApiOperation({ summary: 'Home' })
   @Get()
+  @Public()
+  @ApiPublic({ summary: 'Home' })
   home() {
     return 'Welcome to the API';
   }
