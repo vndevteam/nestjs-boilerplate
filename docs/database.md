@@ -67,7 +67,7 @@ pnpm migration:down
 1. Create seed file with `pnpm seed:create` command:
 
     ```bash
-    pnpm seed:create src/database/seeds/post-seeder
+    pnpm seed:create -n src/database/seeds/post-seeder
     ```
 
 2. Go to `src/database/seeds/xxxtimestampxxx-post-seeder.ts` and write your seed data:
