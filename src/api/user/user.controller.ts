@@ -1,4 +1,6 @@
-import { PaginatedDto } from '@/common/dto/paginated.dto';
+import { CursorPaginatedDto } from '@/common/dto/cursor-pagination/paginated.dto';
+import { OffsetPaginatedDto } from '@/common/dto/offset-pagination/paginated.dto';
+import { Uuid } from '@/common/types/common.type';
 import { CurrentUser } from '@/decorators/current-user.decorator';
 import { ApiAuth } from '@/decorators/http.decorators';
 import {
@@ -16,6 +18,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { CreateUserReqDto } from './dto/create-user.req.dto';
 import { ListUserReqDto } from './dto/list-user.req.dto';
+import { LoadMoreUsersReqDto } from './dto/load-more-users.req.dto';
 import { UpdateUserReqDto } from './dto/update-user.req.dto';
 import { UserResDto } from './dto/user.res.dto';
 import { UserService } from './user.service';
@@ -33,7 +36,7 @@ export class UserController {
     summary: 'Get current user',
   })
   @Get('me')
-  async getCurrentUser(@CurrentUser('id') userId: string): Promise<UserResDto> {
+  async getCurrentUser(@CurrentUser('id') userId: Uuid): Promise<UserResDto> {
     return await this.userService.findOne(userId);
   }
 
@@ -55,20 +58,33 @@ export class UserController {
   })
   async findAll(
     @Query() reqDto: ListUserReqDto,
-  ): Promise<PaginatedDto<UserResDto>> {
+  ): Promise<OffsetPaginatedDto<UserResDto>> {
     return await this.userService.findAll(reqDto);
+  }
+
+  @Get('/load-more')
+  @ApiAuth({
+    type: UserResDto,
+    summary: 'Load more users',
+    isPaginated: true,
+    paginationType: 'cursor',
+  })
+  async loadMoreUsers(
+    @Query() reqDto: LoadMoreUsersReqDto,
+  ): Promise<CursorPaginatedDto<UserResDto>> {
+    return await this.userService.loadMoreUsers(reqDto);
   }
 
   @Get(':id')
   @ApiAuth({ type: UserResDto, summary: 'Find user by id' })
-  async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<UserResDto> {
+  async findOne(@Param('id', ParseUUIDPipe) id: Uuid): Promise<UserResDto> {
     return await this.userService.findOne(id);
   }
 
   @Patch(':id')
   @ApiAuth({ type: UserResDto, summary: 'Update user' })
   update(
-    @Param('id', ParseUUIDPipe) id: string,
+    @Param('id', ParseUUIDPipe) id: Uuid,
     @Body() UpdateUserReqDto: UpdateUserReqDto,
   ) {
     return this.userService.update(id, UpdateUserReqDto);
@@ -79,7 +95,7 @@ export class UserController {
     summary: 'Delete user',
     errorResponses: [400, 401, 403, 404, 500],
   })
-  remove(@Param('id', ParseUUIDPipe) id: string) {
+  remove(@Param('id', ParseUUIDPipe) id: Uuid) {
     return this.userService.remove(id);
   }
 

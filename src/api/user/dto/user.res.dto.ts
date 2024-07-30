@@ -1,4 +1,5 @@
 import {
+  ClassField,
   StringField,
   StringFieldOptional,
 } from '@/decorators/field.decorators';
@@ -25,4 +26,12 @@ export class UserResDto {
   @StringField()
   @Expose()
   image: string;
+
+  @ClassField(() => Date)
+  @Expose()
+  createdAt: Date;
+
+  @ClassField(() => Date)
+  @Expose()
+  updatedAt: Date;
 }

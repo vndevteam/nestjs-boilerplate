@@ -1,3 +1,4 @@
+import { Uuid } from '@/common/types/common.type';
 import { AbstractEntity } from '@/database/entities/abstract.entity';
 import {
   Column,
@@ -18,7 +19,7 @@ export class SessionEntity extends AbstractEntity {
   @PrimaryGeneratedColumn('uuid', {
     primaryKeyConstraintName: 'PK_session_id',
   })
-  id!: string;
+  id!: Uuid;
 
   @Column({
     name: 'hash',
@@ -31,7 +32,7 @@ export class SessionEntity extends AbstractEntity {
     name: 'user_id',
     type: 'uuid',
   })
-  userId: string;
+  userId: Uuid;
 
   @JoinColumn({
     name: 'user_id',

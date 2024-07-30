@@ -8,7 +8,7 @@ import { vi as viThemeConfig } from './config/theme/vi.config.mjs';
 export default defineUserConfig({
   lang: 'en-US',
   title: 'NestJS boilerplate',
-  description: 'NestJS boilerplate',
+  description: 'NestJS boilerplate with best practices',
   base: '/nestjs-boilerplate/',
   bundler: viteBundler(),
   markdown: {
@@ -19,11 +19,11 @@ export default defineUserConfig({
   locales: {
     '/': {
       lang: 'en-US',
-      title: 'NestJS boilerplate',
+      title: 'NestJS boilerplate 🎉',
     },
     '/vi/': {
       lang: 'vi-VN',
-      title: 'NestJS boilerplate',
+      title: 'NestJS boilerplate 🎉',
     },
   },
   theme: defaultTheme({

@@ -1,3 +1,4 @@
+import { Branded } from '@/common/types/types';
 import { AllConfigType } from '@/config/config.type';
 import { SYSTEM_USER_ID } from '@/constants/app.constant';
 import { verifyPassword } from '@/utils/password.util';
@@ -21,11 +22,14 @@ import { RegisterResDto } from './dto/register.res.dto';
 import { JwtPayloadType } from './types/jwt-payload.type';
 import { JwtRefreshPayloadType } from './types/jwt-refresh-payload.type';
 
-type Token = {
-  accessToken: string;
-  refreshToken: string;
-  tokenExpires: number;
-};
+type Token = Branded<
+  {
+    accessToken: string;
+    refreshToken: string;
+    tokenExpires: number;
+  },
+  'token'
+>;
 
 @Injectable()
 export class AuthService {
@@ -106,7 +110,7 @@ export class AuthService {
       .update(randomStringGenerator())
       .digest('hex');
 
-    SessionEntity.update(session.id, SessionEntity.create({ hash: newHash }));
+    SessionEntity.update(session.id, { hash: newHash });
 
     return await this.createToken({
       id: user.id,

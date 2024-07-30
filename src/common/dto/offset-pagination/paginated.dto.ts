@@ -1,17 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
-import { PaginationDto } from './pagination.dto';
+import { OffsetPaginationDto } from './offset-pagination.dto';
 
-export class PaginatedDto<TData> {
+export class OffsetPaginatedDto<TData> {
   @ApiProperty({ type: [Object] })
   @Expose()
-  data: TData[];
+  readonly data: TData[];
 
   @ApiProperty()
   @Expose()
-  pagination: PaginationDto;
+  pagination: OffsetPaginationDto;
 
-  constructor(data: TData[], meta: PaginationDto) {
+  constructor(data: TData[], meta: OffsetPaginationDto) {
     this.data = data;
     this.pagination = meta;
   }

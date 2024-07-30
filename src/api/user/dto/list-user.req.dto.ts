@@ -1,3 +1,3 @@
-import { PageBasedOptions } from '@/common/dto/page-based-pagination/page-options';
+import { PageOptionsDto } from '@/common/dto/offset-pagination/page-options.dto';
 
-export class ListUserReqDto extends PageBasedOptions {}
+export class ListUserReqDto extends PageOptionsDto {}

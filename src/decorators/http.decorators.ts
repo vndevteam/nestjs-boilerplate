@@ -20,6 +20,7 @@ import { ApiPaginatedResponse } from './swagger.decorators';
 
 type ApiResponseType = number;
 type ApiAuthType = 'basic' | 'api-key' | 'jwt';
+type PaginationType = 'offset' | 'cursor';
 
 interface IApiOptions<T extends Type<any>> {
   type?: T;
@@ -28,6 +29,7 @@ interface IApiOptions<T extends Type<any>> {
   errorResponses?: ApiResponseType[];
   statusCode?: HttpStatus;
   isPaginated?: boolean;
+  paginationType?: PaginationType;
 }
 
 interface IApiPublicOptions extends IApiOptions<Type<any>> {}
@@ -49,6 +51,7 @@ export const ApiPublic = (options: IApiPublicOptions = {}): MethodDecorator => {
   const ok = {
     type: options.type,
     description: options?.description ?? 'OK',
+    paginationType: options.paginationType || 'offset',
   };
 
   const errorResponses = (options.errorResponses || defaultErrorResponses)?.map(
@@ -83,6 +86,7 @@ export const ApiAuth = (options: IApiAuthOptions = {}): MethodDecorator => {
   const ok = {
     type: options.type,
     description: options?.description ?? 'OK',
+    paginationType: options.paginationType || 'offset',
   };
   const auths = options.auths || ['jwt'];
 
