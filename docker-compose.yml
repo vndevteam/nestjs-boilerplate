@@ -35,8 +35,9 @@ services:
       - "18080:80"
     volumes:
       - pgadmin_data:/root/.pgadmin
-    env_file:
-      - .env
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: 12345678
     networks:
       - nestjs-boilerplate-network
 
