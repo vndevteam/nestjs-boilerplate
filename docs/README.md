@@ -28,6 +28,7 @@ This is a boilerplate for NestJS projects. It is a starting point for building a
 
 - [TypeScript](https://www.typescriptlang.org/)
 - [NestJS](https://docs.nestjs.com/)
+- [NestJS I18n](https://nestjs-i18n.com/)
 - [TypeORM](https://typeorm.io/)
 - [TypeORM Extension](https://typeorm-extension.tada5hi.net/)
 - [Jest](https://jestjs.io/)
