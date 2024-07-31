@@ -18,10 +18,10 @@ export class PostEntity extends AbstractEntity {
   id!: Uuid;
 
   @Column()
-  slug!: string;
+  title!: string;
 
   @Column()
-  title!: string;
+  slug!: string;
 
   @Column({ nullable: true })
   description?: string;
