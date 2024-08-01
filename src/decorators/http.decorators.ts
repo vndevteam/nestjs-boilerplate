@@ -32,7 +32,7 @@ interface IApiOptions<T extends Type<any>> {
   paginationType?: PaginationType;
 }
 
-interface IApiPublicOptions extends IApiOptions<Type<any>> {}
+type IApiPublicOptions = IApiOptions<Type<any>>;
 
 interface IApiAuthOptions extends IApiOptions<Type<any>> {
   auths?: ApiAuthType[];
