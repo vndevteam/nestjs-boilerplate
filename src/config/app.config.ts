@@ -60,6 +60,7 @@ class EnvironmentVariablesValidator {
 }
 
 export default registerAs<AppConfig>('app', () => {
+  console.info(`Register AppConfig from environment variables`);
   validateConfig(process.env, EnvironmentVariablesValidator);
 
   const port = process.env.APP_PORT

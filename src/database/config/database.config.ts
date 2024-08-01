@@ -76,6 +76,7 @@ class EnvironmentVariablesValidator {
 }
 
 export default registerAs<DatabaseConfig>('database', () => {
+  console.info(`Register DatabaseConfig from environment variables`);
   validateConfig(process.env, EnvironmentVariablesValidator);
 
   return {

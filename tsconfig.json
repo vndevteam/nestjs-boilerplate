@@ -35,6 +35,7 @@
       "@/guards/*": ["src/guards/*"],
       "@/interceptors/*": ["src/interceptors/*"],
       "@/libs/*": ["src/libs/*"],
+      "@/mail/*": ["src/mail/*"],
       "@/shared/*": ["src/shared/*"],
       "@/utils/*": ["src/utils/*"]
     }
