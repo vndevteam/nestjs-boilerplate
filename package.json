@@ -45,7 +45,7 @@
     "@nestjs/terminus": "10.2.3",
     "@nestjs/typeorm": "10.0.2",
     "argon2": "0.40.3",
-    "axios": "1.7.2",
+    "axios": "1.7.3",
     "class-transformer": "0.5.1",
     "class-validator": "0.14.1",
     "compression": "1.7.4",
