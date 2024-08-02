@@ -1,6 +1,7 @@
 import { Branded } from '@/common/types/types';
 import { AllConfigType } from '@/config/config.type';
 import { SYSTEM_USER_ID } from '@/constants/app.constant';
+import { MailService } from '@/mail/mail.service';
 import { verifyPassword } from '@/utils/password.util';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { randomStringGenerator } from '@nestjs/common/utils/random-string-generator.util';
@@ -36,6 +37,7 @@ export class AuthService {
   constructor(
     private readonly configService: ConfigService<AllConfigType>,
     private readonly jwtService: JwtService,
+    private readonly mailService: MailService,
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
   ) {}
@@ -84,8 +86,10 @@ export class AuthService {
     });
   }
 
-  async register(_dto: RegisterReqDto): Promise<RegisterResDto> {
-    throw new Error('Method not implemented.');
+  async register(dto: RegisterReqDto): Promise<RegisterResDto> {
+    this.mailService.sendEmailVerification(dto.email, 'test'); // TODO: Update logic when sending email verification
+
+    return null;
   }
 
   async logout(sessionId: string): Promise<void> {

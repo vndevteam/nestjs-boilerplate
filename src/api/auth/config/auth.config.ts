@@ -30,6 +30,7 @@ class EnvironmentVariablesValidator {
 }
 
 export default registerAs<AuthConfig>('auth', () => {
+  console.info(`Register AuthConfig from environment variables`);
   validateConfig(process.env, EnvironmentVariablesValidator);
 
   return {
