@@ -59,10 +59,10 @@ $ pnpm start:prod
 ## Features
 
 - [x] Database. Support [TypeORM](https://www.npmjs.com/package/typeorm)
-- [x] Seeding.
+- [x] Seeding ([Typeorm Extension](https://www.npmjs.com/package/typeorm-extension)).
 - [x] Config Service ([@nestjs/config](https://www.npmjs.com/package/@nestjs/config)).
-- [ ] Mailing ([nodemailer](https://www.npmjs.com/package/nodemailer)).
-- [ ] Sign in and sign up via email.
+- [x] Mailing ([@nestjs-modules/mailer](https://www.npmjs.com/package/@nestjs-modules/mailer) & [nodemailer](https://www.npmjs.com/package/nodemailer)).
+- [x] Sign in and sign up via email.
 - [ ] Social sign in (Apple, Facebook, Google, Twitter).
 - [ ] Admin and User roles.
 - [x] Pagination: Offset and Cursor (Clone from [typeorm-cursor-pagination](https://github.com/benjamin658/typeorm-cursor-pagination) and add more features).

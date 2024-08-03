@@ -9,7 +9,7 @@ export class MailService {
   async sendEmailVerification(email: string, token: string) {
     const url = `example.com/auth/verify-email?token=${token}`;
 
-    this.mailerService
+    await this.mailerService
       .sendMail({
         to: email,
         subject: 'Email Verification',

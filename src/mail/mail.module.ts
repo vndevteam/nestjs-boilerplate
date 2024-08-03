@@ -17,14 +17,14 @@ import { MailService } from './mail.service';
           ignoreTLS: config.get('mail.ignoreTLS', { infer: true }),
           requireTLS: config.get('mail.requireTLS', { infer: true }),
           secure: config.get('mail.secure', { infer: true }),
-          logger: true, // TODO: Implement custom Logger
+          logger: false, // false: disable logger, to enable set true or MailerCustomLogger.getInstance() (custom logger using NestJS Logger)
           auth: {
             user: config.get('mail.user', { infer: true }),
             pass: config.get('mail.password', { infer: true }),
           },
         },
         defaults: {
-          from: `"No Reply" <${config.get('mail.defaultEmail', { infer: true })}>`,
+          from: `"${config.get('mail.defaultName', { infer: true })}" <${config.get('mail.defaultEmail', { infer: true })}>`,
         },
         template: {
           dir: join(__dirname, 'templates'),
