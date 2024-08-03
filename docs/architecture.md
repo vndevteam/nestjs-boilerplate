@@ -166,7 +166,11 @@ Commitlint configuration file, see [the commitlint doc](https://commitlint.js.or
 
 ## `docker-compose.yml`
 
-Docker compose configuration file, see [the docker docs](https://docs.docker.com/compose/compose-file/) for more.
+Docker compose configuration file for development, see [the docker docs](https://docs.docker.com/compose/compose-file/) for more.
+
+## `docker-compose.local.yml`
+
+Docker compose configuration file for local development.
 
 ## `Dockerfile`
 
