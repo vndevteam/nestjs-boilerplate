@@ -62,13 +62,25 @@ DATABASE_CA=
 DATABASE_KEY=
 DATABASE_CERT=
 
+##== Mailer
+MAIL_HOST=localhost
+MAIL_PORT=1025
+MAIL_USER=
+MAIL_PASSWORD=
+MAIL_IGNORE_TLS=true
+MAIL_SECURE=false
+MAIL_REQUIRE_TLS=false
+MAIL_DEFAULT_EMAIL=noreply@example.com
+MAIL_DEFAULT_NAME=No Reply
+MAIL_CLIENT_PORT=1080
+
 ##== Authentication
 AUTH_JWT_SECRET=secret
-AUTH_JWT_TOKEN_EXPIRES_IN=15m
+AUTH_JWT_TOKEN_EXPIRES_IN=1d
 AUTH_REFRESH_SECRET=secret_for_refresh
 AUTH_REFRESH_TOKEN_EXPIRES_IN=365d
 AUTH_FORGOT_SECRET=secret_for_forgot
-AUTH_FORGOT_TOKEN_EXPIRES_IN=30m
+AUTH_FORGOT_TOKEN_EXPIRES_IN=7d
 AUTH_CONFIRM_EMAIL_SECRET=secret_for_confirm_email
 AUTH_CONFIRM_EMAIL_TOKEN_EXPIRES_IN=1d
 ```
@@ -108,6 +120,19 @@ AUTH_CONFIRM_EMAIL_TOKEN_EXPIRES_IN=1d
 - `DATABASE_CA`: The database CA certificate. Optional for local development.
 - `DATABASE_KEY`: The database key. Optional for local development.
 - `DATABASE_CERT`: The database certificate. Optional for local development.
+
+### Mailer variables
+
+- `MAIL_HOST`: The mail server host.
+- `MAIL_PORT`: The mail server port.
+- `MAIL_USER`: The mail server username.
+- `MAIL_PASSWORD`: The mail server password.
+- `MAIL_IGNORE_TLS`: Ignore TLS for the mail server. Options: `true`, `false`.
+- `MAIL_SECURE`: Secure the mail server connection. Options: `true`, `false`.
+- `MAIL_REQUIRE_TLS`: Require TLS for the mail server. Options: `true`, `false`.
+- `MAIL_DEFAULT_EMAIL`: The default email address.
+- `MAIL_DEFAULT_NAME`: The default email name.
+- `MAIL_CLIENT_PORT`: The mail client port. Used for testing with maildev.
 
 #### Authentication variables
 
