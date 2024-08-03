@@ -126,6 +126,10 @@ Where we are keep [interceptors](https://docs.nestjs.com/interceptors).
 
 Where we keep all common modules. See [NestJS modules documentation](https://docs.nestjs.com/modules) for more.
 
+### `mail`
+
+Includes a mailer service, implement the logic to send emails, use [nodemailer](https://nodemailer.com/about/) and handlebars for templating.
+
 ### `shared`
 
 Shared module with global singleton services.
@@ -179,6 +183,10 @@ Jest configuration file, see [the jest doc](https://jestjs.io/) for more.
 ## `lint-staged.config.mjs`
 
 The configuration of the lint-staged, see [the lint-staged doc](https://github.com/lint-staged/lint-staged) for more.
+
+## `maildev.Dockefile`
+
+Dockerfile for the maildev service. Used for development & testing.
 
 ## `nest-cli.json`
 
