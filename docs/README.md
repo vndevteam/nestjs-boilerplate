@@ -22,7 +22,20 @@ This is a boilerplate for NestJS projects. It is a starting point for building a
 
 ## Features
 
-// TODO: Add features
+- [x] Database. Support [TypeORM](https://www.npmjs.com/package/typeorm)
+- [x] Seeding ([Typeorm Extension](https://www.npmjs.com/package/typeorm-extension)).
+- [x] Config Service ([@nestjs/config](https://www.npmjs.com/package/@nestjs/config)).
+- [x] Mailing ([@nestjs-modules/mailer](https://www.npmjs.com/package/@nestjs-modules/mailer) & [nodemailer](https://www.npmjs.com/package/nodemailer)).
+- [x] Sign in and sign up via email.
+- [ ] Social sign in (Apple, Facebook, Google, Twitter).
+- [ ] Admin and User roles.
+- [x] Pagination: Offset and Cursor (Clone from [typeorm-cursor-pagination](https://github.com/benjamin658/typeorm-cursor-pagination) and add more features).
+- [x] Internationalization/Translations (I18N) ([nestjs-i18n](https://www.npmjs.com/package/nestjs-i18n)).
+- [ ] File uploads. Support local and Amazon S3 drivers.
+- [x] Swagger.
+- [ ] E2E and units tests.
+- [x] Docker.
+- [x] CI (Github Actions).
 
 ## References
 
@@ -31,6 +44,8 @@ This is a boilerplate for NestJS projects. It is a starting point for building a
 - [NestJS I18n](https://nestjs-i18n.com/)
 - [TypeORM](https://typeorm.io/)
 - [TypeORM Extension](https://typeorm-extension.tada5hi.net/)
+- [Nodemailer](https://nodemailer.com/)
+- [NestJS Mailer](https://nest-modules.github.io/mailer/)
 - [Jest](https://jestjs.io/)
 - [PNPM](https://pnpm.io/)
 - [ESLint](https://eslint.org/)

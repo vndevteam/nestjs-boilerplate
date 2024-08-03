@@ -46,8 +46,7 @@ async function bootstrap() {
     allowedHeaders: 'Content-Type, Accept',
     credentials: true,
   });
-
-  console.log('\nCORS Origin:', corsOrigin);
+  console.info('CORS Origin:', corsOrigin);
 
   // Use global prefix if you don't have subdomain
   // TODO: (BUG) The pino logger for request will be not available when exclude the root path ('/')

@@ -28,6 +28,15 @@ services:
       - "25432:5432"
     networks:
       - nestjs-boilerplate-network
+
+  maildev:
+    build:
+      context: .
+      dockerfile: maildev.Dockerfile
+    ports:
+      - ${MAIL_CLIENT_PORT}:1080
+      - ${MAIL_PORT}:1025
+
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4
@@ -35,8 +44,11 @@ services:
       - "18080:80"
     volumes:
       - pgadmin_data:/root/.pgadmin
-    env_file:
-      - .env
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: 12345678
+      PGADMIN_CONFIG_WTF_CSRF_ENABLED: "False"
+      PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: "False"
     networks:
       - nestjs-boilerplate-network
 

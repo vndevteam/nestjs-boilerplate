@@ -6,6 +6,9 @@
     "builder": "swc",
     "typeCheck": true,
     "deleteOutDir": true,
-    "assets": [{ "include": "i18n/**/*", "watchAssets": true }]
+    "assets": [
+      { "include": "i18n/**/*", "watchAssets": true },
+      { "include": "**/*.hbs", "watchAssets": true }
+    ]
   }
 }
