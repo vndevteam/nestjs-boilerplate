@@ -1,7 +1,7 @@
 services:
   nestjs-boilerplate-api:
-    image: nestjs-boilerplate-api
-    container_name: nestjs-boilerplate-api
+    image: nestjs-boilerplate-api-local
+    container_name: nestjs-boilerplate-api-local
     restart: always
     build:
       context: .
@@ -12,7 +12,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - .:/app
+      - ./src:/app/src
     command: pnpm start:dev
     networks:
       - nestjs-boilerplate-network

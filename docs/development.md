@@ -182,7 +182,7 @@ To start the application in watch mode for local development:
 2. Run the command:
 
 ```bash
-docker compose -f docker-compose.local.yml up -d
+docker compose -f docker-compose.local.yml up --build -d
 ```
 
 ### Running in Development Mode
@@ -193,7 +193,7 @@ To run the application on a development server:
 2. Run the command:
 
 ```bash
-docker compose up -d
+docker compose up --build -d
 ```
 
 > Note: The application will run on port 3000 (<http://localhost:3000>)

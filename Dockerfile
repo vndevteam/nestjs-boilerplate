@@ -13,6 +13,7 @@ RUN npm install -g pnpm
 
 FROM base As development
 WORKDIR /app
+RUN chown -R node:node /app
 
 COPY --chown=node:node package*.json pnpm-lock.yaml ./
 
