@@ -158,6 +158,46 @@ pnpm start:dev
 pnpm start:debug
 ```
 
+## Docker
+
+Set up your application and database effortlessly using [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose).
+
+### Installing Docker
+
+Get Docker from the official site for your operating system:
+
+- Mac: [Install Docker for Mac](https://docs.docker.com/docker-for-mac/install/)
+- Windows: [Install Docker for Windows](https://docs.docker.com/docker-for-windows/install/)
+- Ubuntu: [Install Docker on Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
+
+### Installing Docker Compose
+
+Download Docker Compose from [official website](https://docs.docker.com/compose/install).
+
+### Running in Watch Mode (Local Development)
+
+To start the application in watch mode for local development:
+
+1. Open your terminal and navigate to the project directory.
+2. Run the command:
+
+```bash
+docker compose -f docker-compose.local.yml up -d
+```
+
+### Running in Development Mode
+
+To run the application on a development server:
+
+1. Open your terminal and navigate to the project directory.
+2. Run the command:
+
+```bash
+docker compose up -d
+```
+
+> Note: The application will run on port 3000 (<http://localhost:3000>)
+
 ## Upgrade
 
 To upgrade the dependencies to the latest version, run:

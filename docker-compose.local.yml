@@ -6,10 +6,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      target: development
     env_file:
       - .env.docker
     ports:
       - "3000:3000"
+    volumes:
+      - .:/app
+    command: pnpm start:dev
     networks:
       - nestjs-boilerplate-network
 

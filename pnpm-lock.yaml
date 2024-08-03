@@ -89,6 +89,9 @@ importers:
       rxjs:
         specifier: 7.8.1
         version: 7.8.1
+      tslib:
+        specifier: 2.6.3
+        version: 2.6.3
       typeorm:
         specifier: 0.3.20
         version: 0.3.20(pg@8.12.0)(ts-node@10.9.2(@swc/core@1.7.5)(@types/node@20.14.14)(typescript@5.5.4))
@@ -204,9 +207,6 @@ importers:
       tsconfig-paths:
         specifier: 4.2.0
         version: 4.2.0
-      tslib:
-        specifier: 2.6.3
-        version: 2.6.3
       typescript:
         specifier: 5.5.4
         version: 5.5.4
