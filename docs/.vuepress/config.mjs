@@ -2,6 +2,7 @@ import { viteBundler } from '@vuepress/bundler-vite';
 import { searchPlugin } from '@vuepress/plugin-search';
 import { defaultTheme } from '@vuepress/theme-default';
 import { defineUserConfig } from 'vuepress';
+import { mdEnhancePlugin } from 'vuepress-plugin-md-enhance';
 import { en as enThemeConfig } from './config/theme/en.config.mjs';
 import { vi as viThemeConfig } from './config/theme/vi.config.mjs';
 
@@ -47,6 +48,15 @@ export default defineUserConfig({
           placeholder: 'Tìm kiếm',
         },
       },
+    }),
+    // guides: https://plugin-md-enhance.vuejs.press/guide/
+    mdEnhancePlugin({
+      tasklist: true,
+      imgLazyload: true,
+      imgSize: true,
+      figure: true,
+      tabs: true,
+      align: true,
     }),
   ],
 });
