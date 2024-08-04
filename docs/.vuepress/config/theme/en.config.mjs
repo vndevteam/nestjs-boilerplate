@@ -37,6 +37,10 @@ const en = {
       link: '/testing.md',
     },
     {
+      text: 'Benchmarking',
+      link: '/benchmarking.md',
+    },
+    {
       text: 'Deployment',
       link: '/deployment.md',
     },
