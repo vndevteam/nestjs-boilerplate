@@ -121,7 +121,11 @@ AUTH_CONFIRM_EMAIL_TOKEN_EXPIRES_IN=1d
 - `DATABASE_KEY`: The database key. Optional for local development.
 - `DATABASE_CERT`: The database certificate. Optional for local development.
 
-### Mailer variables
+> Note: The `DATABASE_CA`, `DATABASE_KEY`, and `DATABASE_CERT` variables are required for secure connections. For local development, you can skip these variables.
+
+Follow the [Docker](#running-additional-services) section to set up the database using Docker.
+
+#### Mailer variables
 
 - `MAIL_HOST`: The mail server host.
 - `MAIL_PORT`: The mail server port.
@@ -133,6 +137,8 @@ AUTH_CONFIRM_EMAIL_TOKEN_EXPIRES_IN=1d
 - `MAIL_DEFAULT_EMAIL`: The default email address.
 - `MAIL_DEFAULT_NAME`: The default email name.
 - `MAIL_CLIENT_PORT`: The mail client port. Used for testing with maildev.
+
+For local development, you can use [MailDev](https://github.com/maildev/maildev) as a fake SMTP server. It's included in the Docker Compose file. Follow the [Docker](#running-additional-services) section to set up MailDev.
 
 #### Authentication variables
 
@@ -174,7 +180,17 @@ Get Docker from the official site for your operating system:
 
 Download Docker Compose from [official website](https://docs.docker.com/compose/install).
 
-### Running in Watch Mode (Local Development)
+### Running additional services
+
+To run additional services like the database, mail server, pgadmin, etc., use the `docker-compose` command:
+
+```bash
+docker compose up -d db maildev pgadmin
+```
+
+### Quick run
+
+#### Running the app in Watch Mode (Local Development)
 
 To start the application in watch mode for local development:
 
@@ -185,7 +201,7 @@ To start the application in watch mode for local development:
 docker compose -f docker-compose.local.yml up --build -d
 ```
 
-### Running in Development Mode
+#### Running the app in Development Mode
 
 To run the application on a development server:
 
