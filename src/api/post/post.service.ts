@@ -1,9 +1,11 @@
 import { OffsetPaginatedDto } from '@/common/dto/offset-pagination/paginated.dto';
 import { Uuid } from '@/common/types/common.type';
 import { paginate } from '@/utils/offset-pagination';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import assert from 'assert';
 import { plainToInstance } from 'class-transformer';
+import { Repository } from 'typeorm';
 import { ListUserReqDto } from '../user/dto/list-user.req.dto';
 import { CreatePostReqDto } from './dto/create-post.req.dto';
 import { PostResDto } from './dto/post.res.dto';
@@ -12,7 +14,12 @@ import { PostEntity } from './entities/post.entity';
 
 @Injectable()
 export class PostService {
-  constructor() {}
+  private readonly logger = new Logger(PostService.name);
+
+  constructor(
+    @InjectRepository(PostEntity)
+    private readonly postRepository: Repository<PostEntity>,
+  ) {}
 
   async findMany(
     reqDto: ListUserReqDto,
@@ -36,8 +43,11 @@ export class PostService {
     return post.toDto(PostResDto);
   }
 
-  create(_reqDto: CreatePostReqDto) {
-    throw new Error('Method not implemented.');
+  async create(reqDto: CreatePostReqDto) {
+    const savedPost = await this.postRepository.save(new PostEntity(reqDto));
+    this.logger.debug(savedPost);
+
+    return plainToInstance(PostResDto, savedPost);
   }
 
   update(_id: Uuid, _reqDto: UpdatePostReqDto) {
