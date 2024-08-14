@@ -69,7 +69,7 @@ $ pnpm start:prod
 - [x] Internationalization/Translations (I18N) ([nestjs-i18n](https://www.npmjs.com/package/nestjs-i18n)).
 - [ ] File uploads. Support local and Amazon S3 drivers.
 - [x] Swagger.
-- [ ] E2E and units tests.
+- [x] E2E and units tests.
 - [x] Docker.
 - [x] CI (Github Actions).
 
