@@ -103,7 +103,7 @@
     "tsconfig-paths": "4.2.0",
     "typescript": "5.5.4",
     "typescript-eslint": "8.1.0",
-    "vue": "3.4.37",
+    "vue": "3.4.38",
     "vuepress": "2.0.0-rc.14",
     "vuepress-plugin-md-enhance": "2.0.0-rc.52"
   }
