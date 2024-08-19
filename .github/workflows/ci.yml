@@ -35,14 +35,14 @@ jobs:
         working-directory: ./
     strategy:
       matrix:
-        node-version: [20.10.0]
+        node-version: [20.16.0]
     steps:
       - name: Copy repository
         uses: actions/checkout@v4
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 9.7.0
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
