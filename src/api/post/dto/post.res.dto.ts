@@ -1,4 +1,7 @@
+import { UserResDto } from '@/api/user/dto/user.res.dto';
+import { WrapperType } from '@/common/types/types';
 import {
+  ClassField,
   DateField,
   StringField,
   StringFieldOptional,
@@ -27,6 +30,10 @@ export class PostResDto {
   @StringFieldOptional()
   @Expose()
   content?: string;
+
+  @ClassField(() => UserResDto)
+  @Expose()
+  user: WrapperType<UserResDto>;
 
   @StringField()
   @Expose()

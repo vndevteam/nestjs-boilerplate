@@ -11,6 +11,10 @@ export function getOrder(
   propertyKey: string | symbol,
   defaultVal = 0,
 ) {
+  if (typeof target !== 'object' || target === null) {
+    return defaultVal;
+  }
+
   const result = Reflect.getMetadata(ORDER_KEY, target, propertyKey);
   if (typeof result === 'number') {
     return result;
