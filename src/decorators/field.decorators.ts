@@ -339,8 +339,7 @@ export function EnumField<TEnum extends object>(
   options: Omit<ApiPropertyOptions, 'type' | 'enum' | 'isArray'> &
     IEnumFieldOptions = {},
 ): PropertyDecorator {
-  const enumValue = getEnum();
-  const decorators = [IsEnum(enumValue, { each: options.each })];
+  const decorators = [IsEnum(getEnum(), { each: options.each })];
 
   if (options.nullable) {
     decorators.push(IsNullable());
@@ -352,7 +351,7 @@ export function EnumField<TEnum extends object>(
     decorators.push(
       ApiProperty({
         type: 'enum',
-        enum: enumValue,
+        enum: getEnum(),
         isArray: options.each,
         ...options,
       }),
@@ -377,10 +376,8 @@ export function ClassField<TClass extends Constructor>(
   getClass: () => TClass,
   options: Omit<ApiPropertyOptions, 'type'> & IClassFieldOptions = {},
 ): PropertyDecorator {
-  const classValue = getClass();
-
   const decorators = [
-    Type(() => classValue),
+    Type(() => getClass()),
     ValidateNested({ each: options.each }),
   ];
 
@@ -397,7 +394,7 @@ export function ClassField<TClass extends Constructor>(
   if (options.swagger !== false) {
     decorators.push(
       ApiProperty({
-        type: () => classValue,
+        type: () => getClass(),
         ...options,
       }),
     );

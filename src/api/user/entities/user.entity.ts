@@ -1,3 +1,4 @@
+import { PostEntity } from '@/api/post/entities/post.entity';
 import { Uuid } from '@/common/types/common.type';
 import { AbstractEntity } from '@/database/entities/abstract.entity';
 import { hashPassword as hashPass } from '@/utils/password.util';
@@ -10,6 +11,7 @@ import {
   Index,
   OneToMany,
   PrimaryGeneratedColumn,
+  Relation,
 } from 'typeorm';
 import { SessionEntity } from './session.entity';
 
@@ -52,6 +54,9 @@ export class UserEntity extends AbstractEntity {
 
   @OneToMany(() => SessionEntity, (session) => session.user)
   sessions?: SessionEntity[];
+
+  @OneToMany(() => PostEntity, (post) => post.user)
+  posts: Relation<PostEntity[]>;
 
   @BeforeInsert()
   @BeforeUpdate()
