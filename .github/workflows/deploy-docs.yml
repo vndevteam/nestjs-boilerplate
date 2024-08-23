@@ -37,8 +37,6 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          # choose pnpm version to use
-          version: 9
           # install deps with pnpm
           run_install: true
 
