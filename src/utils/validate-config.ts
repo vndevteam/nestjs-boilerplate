@@ -16,7 +16,7 @@ function validateConfig<T extends object>(
     const errorMsg = errors
       .map(
         (error) =>
-          `\nError in ${error.property}: \n` +
+          `\nError in ${error.property}:\n` +
           Object.entries(error.constraints)
             .map(([key, value]) => `+ ${key}: ${value}`)
             .join('\n'),

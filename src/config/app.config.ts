@@ -7,6 +7,7 @@ import {
   IsOptional,
   IsString,
   IsUrl,
+  Matches,
   Max,
   Min,
 } from 'class-validator';
@@ -33,6 +34,12 @@ class EnvironmentVariablesValidator {
   @IsOptional()
   APP_PORT: number;
 
+  @IsInt()
+  @Min(0)
+  @Max(65535)
+  @IsOptional()
+  PORT: number;
+
   @IsBoolean()
   @IsOptional()
   APP_DEBUG: boolean;
@@ -55,6 +62,9 @@ class EnvironmentVariablesValidator {
   APP_LOG_SERVICE: string;
 
   @IsString()
+  @Matches(
+    /^(true|false|\*|([\w]+:\/\/)?([\w.-]+)(:[0-9]+)?)?(,([\w]+:\/\/)?([\w.-]+)(:[0-9]+)?)*$/,
+  )
   @IsOptional()
   APP_CORS_ORIGIN: string;
 }
@@ -79,7 +89,7 @@ export default registerAs<AppConfig>('app', () => {
     fallbackLanguage: process.env.APP_FALLBACK_LANGUAGE || 'en',
     logLevel: process.env.APP_LOG_LEVEL || 'warn',
     logService: process.env.APP_LOG_SERVICE || LogService.CONSOLE,
-    corsOrigin: getCorsOrigin() || true,
+    corsOrigin: getCorsOrigin(),
   };
 });
 
@@ -87,7 +97,7 @@ function getCorsOrigin() {
   const corsOrigin = process.env.APP_CORS_ORIGIN;
   if (corsOrigin === 'true') return true;
   if (corsOrigin === '*') return '*';
-  return corsOrigin?.includes(',')
-    ? corsOrigin.split(',').map((origin) => origin.trim())
-    : false;
+  if (!corsOrigin || corsOrigin === 'false') return false;
+
+  return corsOrigin.split(',').map((origin) => origin.trim());
 }
