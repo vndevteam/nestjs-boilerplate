@@ -4,6 +4,7 @@ import {
   IsBoolean,
   IsInt,
   IsOptional,
+  IsPositive,
   IsString,
   Max,
   Min,
@@ -51,6 +52,7 @@ class EnvironmentVariablesValidator {
   DATABASE_SYNCHRONIZE: boolean;
 
   @IsInt()
+  @IsPositive()
   @IsOptional()
   DATABASE_MAX_CONNECTIONS: number;
 

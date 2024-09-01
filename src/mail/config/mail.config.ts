@@ -4,6 +4,7 @@ import {
   IsBoolean,
   IsEmail,
   IsInt,
+  IsNotEmpty,
   IsOptional,
   IsString,
   Max,
@@ -14,6 +15,7 @@ import { MailConfig } from './mail-config.type';
 
 class EnvironmentVariablesValidator {
   @IsString()
+  @IsNotEmpty()
   MAIL_HOST: string;
 
   @IsInt()
