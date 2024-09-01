@@ -10,17 +10,17 @@ import { Transform } from 'class-transformer';
 export class CreateUserReqDto {
   @StringField()
   @Transform(lowerCaseTransformer)
-  readonly username: string;
+  username: string;
 
   @EmailField()
-  readonly email: string;
+  email: string;
 
   @PasswordField()
-  readonly password: string;
+  password: string;
 
   @StringFieldOptional()
-  readonly bio?: string;
+  bio?: string;
 
   @StringFieldOptional()
-  readonly image?: string;
+  image?: string;
 }
