@@ -43,7 +43,7 @@ importers:
         version: 10.0.2(@nestjs/common@10.4.1(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/core@10.4.1(@nestjs/common@10.4.1(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/platform-express@10.4.1)(encoding@0.1.13)(reflect-metadata@0.2.2)(rxjs@7.8.1))(reflect-metadata@0.2.2)(rxjs@7.8.1)(typeorm@0.3.20(pg@8.12.0)(ts-node@10.9.2(@swc/core@1.7.18)(@types/node@20.16.1)(typescript@5.5.4)))
       argon2:
         specifier: ^0.41.0
-        version: 0.41.0
+        version: 0.41.1
       axios:
         specifier: ^1.7.4
         version: 1.7.5
@@ -2130,8 +2130,8 @@ packages:
   arg@5.0.2:
     resolution: {integrity: sha512-PYjyFOLKQ9y57JvQ6QLo8dAgNqswh8M1RMJYdQduT6xbWSgK36P/Z/v+p888pM69jMMfS8Xd8F6I1kQ/I9HUGg==}
 
-  argon2@0.41.0:
-    resolution: {integrity: sha512-3LEs/lMujSxvzMdKeF4pf41zPMVctpXLvAzrOcfi2clrULeNCNwaAIjMTKKnC8iU+g48+LnH2XbGwh1P/5pwHg==}
+  argon2@0.41.1:
+    resolution: {integrity: sha512-dqCW8kJXke8Ik+McUcMDltrbuAWETPyU6iq+4AhxqKphWi7pChB/Zgd/Tp/o8xRLbg8ksMj46F/vph9wnxpTzQ==}
     engines: {node: '>=16.17.0'}
 
   argparse@1.0.10:
@@ -4478,8 +4478,8 @@ packages:
       encoding:
         optional: true
 
-  node-gyp-build@4.8.1:
-    resolution: {integrity: sha512-OSs33Z9yWr148JZcbZd5WiAXhh/n9z8TxQcdMhIOlpN9AhWpLfvVFO73+m77bBABQMaY9XSvIa+qk0jlI7Gcaw==}
+  node-gyp-build@4.8.2:
+    resolution: {integrity: sha512-IRUxE4BVsHWXkV/SFOut4qTlagw2aM8T5/vnTsmrHJvVoKueJHRc/JaFND7QDDc61kLYUJ6qlZM3sqTSyx2dTw==}
     hasBin: true
 
   node-int64@0.4.0:
@@ -8275,11 +8275,11 @@ snapshots:
 
   arg@5.0.2: {}
 
-  argon2@0.41.0:
+  argon2@0.41.1:
     dependencies:
       '@phc/format': 1.0.0
       node-addon-api: 8.1.0
-      node-gyp-build: 4.8.1
+      node-gyp-build: 4.8.2
 
   argparse@1.0.10:
     dependencies:
@@ -11198,7 +11198,7 @@ snapshots:
   nice-napi@1.0.2:
     dependencies:
       node-addon-api: 3.2.1
-      node-gyp-build: 4.8.1
+      node-gyp-build: 4.8.2
     optional: true
 
   nice-try@1.0.5:
@@ -11231,7 +11231,7 @@ snapshots:
     optionalDependencies:
       encoding: 0.1.13
 
-  node-gyp-build@4.8.1: {}
+  node-gyp-build@4.8.2: {}
 
   node-int64@0.4.0: {}
 
