@@ -1,17 +1,34 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserModule } from '../user/user.module';
 import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
 
-describe.skip('AuthController', () => {
+describe('AuthController', () => {
   let controller: AuthController;
+  let authServiceValue: Partial<Record<keyof AuthService, jest.Mock>>;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
+    authServiceValue = {
+      signIn: jest.fn(),
+      register: jest.fn(),
+      logout: jest.fn(),
+      refreshToken: jest.fn(),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
-      imports: [UserModule],
       controllers: [AuthController],
+      providers: [
+        {
+          provide: AuthService,
+          useValue: authServiceValue,
+        },
+      ],
     }).compile();
 
     controller = module.get<AuthController>(AuthController);
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should be defined', () => {
