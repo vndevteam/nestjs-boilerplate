@@ -1,19 +1,17 @@
 import appConfig from './app.config';
 
 describe('AppConfig', () => {
+  const originalEnv = { ...process.env };
+
   beforeEach(() => {
-    // Clear environment variables before each test
-    delete process.env.NODE_ENV;
-    delete process.env.APP_NAME;
-    delete process.env.APP_URL;
-    delete process.env.APP_PORT;
-    delete process.env.PORT;
-    delete process.env.APP_DEBUG;
-    delete process.env.API_PREFIX;
-    delete process.env.APP_FALLBACK_LANGUAGE;
-    delete process.env.APP_LOG_LEVEL;
-    delete process.env.APP_LOG_SERVICE;
-    delete process.env.APP_CORS_ORIGIN;
+    // Reset process.env to its original state before each test
+    process.env = { ...originalEnv };
+  });
+
+  beforeAll(() => {
+    jest.spyOn(console, 'warn').mockImplementation();
+    jest.spyOn(console, 'error').mockImplementation();
+    jest.spyOn(console, 'info').mockImplementation();
   });
 
   describe('nodeEnv', () => {
