@@ -12,7 +12,7 @@ describe('UserController', () => {
   let service: UserService;
   let userServiceValue: Partial<Record<keyof UserService, jest.Mock>>;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     userServiceValue = {
       findOne: jest.fn(),
       create: jest.fn(),
@@ -30,6 +30,10 @@ describe('UserController', () => {
 
     controller = module.get<UserController>(UserController);
     service = module.get<UserService>(UserService);
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should be defined', () => {
