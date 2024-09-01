@@ -46,7 +46,9 @@ export class UserController {
     summary: 'Create user',
     statusCode: HttpStatus.CREATED,
   })
-  async create(@Body() createUserDto: CreateUserReqDto): Promise<UserResDto> {
+  async createUser(
+    @Body() createUserDto: CreateUserReqDto,
+  ): Promise<UserResDto> {
     return await this.userService.create(createUserDto);
   }
 
@@ -56,7 +58,7 @@ export class UserController {
     summary: 'List users',
     isPaginated: true,
   })
-  async findAll(
+  async findAllUsers(
     @Query() reqDto: ListUserReqDto,
   ): Promise<OffsetPaginatedDto<UserResDto>> {
     return await this.userService.findAll(reqDto);
@@ -78,14 +80,14 @@ export class UserController {
   @Get(':id')
   @ApiAuth({ type: UserResDto, summary: 'Find user by id' })
   @ApiParam({ name: 'id', type: 'String' })
-  async findOne(@Param('id', ParseUUIDPipe) id: Uuid): Promise<UserResDto> {
+  async findUser(@Param('id', ParseUUIDPipe) id: Uuid): Promise<UserResDto> {
     return await this.userService.findOne(id);
   }
 
   @Patch(':id')
   @ApiAuth({ type: UserResDto, summary: 'Update user' })
   @ApiParam({ name: 'id', type: 'String' })
-  update(
+  updateUser(
     @Param('id', ParseUUIDPipe) id: Uuid,
     @Body() reqDto: UpdateUserReqDto,
   ) {
@@ -98,7 +100,7 @@ export class UserController {
     errorResponses: [400, 401, 403, 404, 500],
   })
   @ApiParam({ name: 'id', type: 'String' })
-  remove(@Param('id', ParseUUIDPipe) id: Uuid) {
+  removeUser(@Param('id', ParseUUIDPipe) id: Uuid) {
     return this.userService.remove(id);
   }
 
