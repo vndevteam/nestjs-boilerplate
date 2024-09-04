@@ -97,27 +97,29 @@ async function loggerFactory(
   const logService = configService.get('app.logService', { infer: true });
   const isDebug = configService.get('app.debug', { infer: true });
 
+  const pinoHttpOptions: Options = {
+    level: logLevel,
+    genReqId: isDebug ? genReqId : undefined,
+    serializers: isDebug
+      ? {
+          req: (req) => {
+            req.body = req.raw.body;
+            return req;
+          },
+        }
+      : undefined,
+    customSuccessMessage,
+    customReceivedMessage,
+    customErrorMessage,
+    redact: {
+      paths: loggingRedactPaths,
+      censor: '**GDPR COMPLIANT**',
+    }, // Redact sensitive information
+    ...logServiceConfig(logService),
+  };
+
   return {
-    pinoHttp: {
-      level: logLevel,
-      genReqId: isDebug ? genReqId : undefined,
-      serializers: isDebug
-        ? {
-            req: (req) => {
-              req.body = req.raw.body;
-              return req;
-            },
-          }
-        : undefined,
-      customSuccessMessage,
-      customReceivedMessage,
-      customErrorMessage,
-      redact: {
-        paths: loggingRedactPaths,
-        censor: '**GDPR COMPLIANT**',
-      }, // Redact sensitive information
-      ...logServiceConfig(logService),
-    },
+    pinoHttp: pinoHttpOptions,
   };
 }
 
