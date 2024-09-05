@@ -33,6 +33,21 @@ services:
     networks:
       - nestjs-boilerplate-network
 
+  redis:
+    image: redis/redis-stack:latest
+    restart: always
+    ports:
+      - "6379:6379"
+      - "8001:8001"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+    environment:
+      REDIS_ARGS: "--requirepass redispass"
+    networks:
+      - nestjs-boilerplate-network
+
   maildev:
     build:
       context: .
@@ -61,6 +76,7 @@ services:
 volumes:
   postgres_data:
   pgadmin_data:
+  redis_data:
 
 networks:
   nestjs-boilerplate-network:
