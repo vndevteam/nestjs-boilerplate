@@ -1,4 +1,4 @@
-import { MailService } from '@/mail/mail.service';
+import { getQueueToken } from '@nestjs/bullmq';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
@@ -11,7 +11,6 @@ describe('AuthService', () => {
   let service: AuthService;
   let configServiceValue: Partial<Record<keyof ConfigService, jest.Mock>>;
   let jwtServiceValue: Partial<Record<keyof JwtService, jest.Mock>>;
-  let mailServiceValue: Partial<Record<keyof MailService, jest.Mock>>;
   let userRepositoryValue: Partial<
     Record<keyof Repository<UserEntity>, jest.Mock>
   >;
@@ -24,10 +23,6 @@ describe('AuthService', () => {
     jwtServiceValue = {
       sign: jest.fn(),
       verify: jest.fn(),
-    };
-
-    mailServiceValue = {
-      sendEmailVerification: jest.fn(),
     };
 
     userRepositoryValue = {
@@ -46,12 +41,14 @@ describe('AuthService', () => {
           useValue: jwtServiceValue,
         },
         {
-          provide: MailService,
-          useValue: mailServiceValue,
-        },
-        {
           provide: getRepositoryToken(UserEntity),
           useValue: userRepositoryValue,
+        },
+        {
+          provide: getQueueToken('email'),
+          useValue: {
+            add: jest.fn(),
+          },
         },
       ],
     }).compile();

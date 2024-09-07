@@ -1,13 +1,19 @@
 import { Branded } from '@/common/types/types';
 import { AllConfigType } from '@/config/config.type';
 import { SYSTEM_USER_ID } from '@/constants/app.constant';
-import { MailService } from '@/mail/mail.service';
+import { JobName, QueueName } from '@/constants/job.constant';
 import { verifyPassword } from '@/utils/password.util';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { InjectQueue } from '@nestjs/bullmq';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { randomStringGenerator } from '@nestjs/common/utils/random-string-generator.util';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Queue } from 'bullmq';
 import { plainToInstance } from 'class-transformer';
 import crypto from 'crypto';
 import ms from 'ms';
@@ -37,9 +43,10 @@ export class AuthService {
   constructor(
     private readonly configService: ConfigService<AllConfigType>,
     private readonly jwtService: JwtService,
-    private readonly mailService: MailService,
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
+    @InjectQueue(QueueName.EMAIL)
+    private readonly emailQueue: Queue,
   ) {}
 
   /**
@@ -87,9 +94,33 @@ export class AuthService {
   }
 
   async register(dto: RegisterReqDto): Promise<RegisterResDto> {
-    this.mailService.sendEmailVerification(dto.email, 'test'); // TODO: Update logic when sending email verification
+    const existUser = await UserEntity.findOne({ where: { email: dto.email } });
 
-    return null;
+    if (existUser) {
+      throw new BadRequestException('Account with this email already exists');
+    }
+
+    const user = new UserEntity({
+      username: dto.email.split('@')[0],
+      email: dto.email,
+      password: dto.password,
+      createdBy: SYSTEM_USER_ID,
+      updatedBy: SYSTEM_USER_ID,
+    });
+
+    await user.save();
+
+    await this.emailQueue.add(
+      JobName.EMAIL_VERIFICATION,
+      {
+        email: dto.email,
+      },
+      { attempts: 3, backoff: { type: 'exponential', delay: 60000 } },
+    );
+
+    return plainToInstance(RegisterResDto, {
+      userId: user.id,
+    });
   }
 
   async logout(sessionId: string): Promise<void> {

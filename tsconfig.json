@@ -24,6 +24,7 @@
     "importHelpers": true,
     "paths": {
       "@/api/*": ["src/api/*"],
+      "@/background/*": ["src/background/*"],
       "@/common/*": ["src/common/*"],
       "@/config/*": ["src/config/*"],
       "@/constants/*": ["src/constants/*"],
@@ -36,6 +37,7 @@
       "@/interceptors/*": ["src/interceptors/*"],
       "@/libs/*": ["src/libs/*"],
       "@/mail/*": ["src/mail/*"],
+      "@/redis/*": ["src/redis/*"],
       "@/shared/*": ["src/shared/*"],
       "@/utils/*": ["src/utils/*"]
     }

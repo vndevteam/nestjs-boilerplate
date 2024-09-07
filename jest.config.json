@@ -16,6 +16,7 @@
   "testEnvironment": "node",
   "moduleNameMapper": {
     "^@/api(.*)$": "<rootDir>/api$1",
+    "^@/background(.*)$": "<rootDir>/background$1",
     "^@/common(.*)$": "<rootDir>/common$1",
     "^@/config(.*)$": "<rootDir>/config$1",
     "^@/constants(.*)$": "<rootDir>/constants$1",
@@ -28,6 +29,7 @@
     "^@/interceptors(.*)$": "<rootDir>/interceptors$1",
     "^@/libs(.*)$": "<rootDir>/libs$1",
     "^@/mail(.*)$": "<rootDir>/mail$1",
+    "^@/redis(.*)$": "<rootDir>/redis$1",
     "^@/shared(.*)$": "<rootDir>/shared$1",
     "^@/utils(.*)$": "<rootDir>/utils$1"
   },
