@@ -1,3 +1,4 @@
+import { IVerifyEmailJob } from '@/common/interfaces/job.interface';
 import { MailService } from '@/mail/mail.service';
 import { Injectable, Logger } from '@nestjs/common';
 
@@ -7,10 +8,8 @@ export class EmailQueueService {
 
   constructor(private readonly mailService: MailService) {}
 
-  async sendEmailVerification(data: any): Promise<void> {
+  async sendEmailVerification(data: IVerifyEmailJob): Promise<void> {
     this.logger.debug(`Sending email verification to ${data.email}`);
-    await this.mailService.sendEmailVerification(data.email, 'test'); // TODO: Update logic when sending email verification
-
-    return null;
+    await this.mailService.sendEmailVerification(data.email, data.token);
   }
 }

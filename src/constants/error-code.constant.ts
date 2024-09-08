@@ -9,4 +9,5 @@ export enum ErrorCode {
   // Error
   E001 = 'user.error.username_or_email_exists',
   E002 = 'user.error.not_found',
+  E003 = 'user.error.email_exists',
 }

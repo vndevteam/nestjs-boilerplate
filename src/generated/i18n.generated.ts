@@ -23,6 +23,7 @@ export type I18nTranslations = {
         };
         "error": {
             "username_or_email_exists": string;
+            "email_exists": string;
             "not_found": string;
             "invalid_password": string;
             "invalid_token": string;

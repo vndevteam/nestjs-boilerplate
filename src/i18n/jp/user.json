@@ -5,5 +5,12 @@
   },
   "validation": {
     "is_empty": "は必須です"
+  },
+  "error": {
+    "username_or_email_exists": "ユーザー名またはメールアドレスは既に存在します",
+    "email_exists": "このメールアドレスを持つアカウントは既に存在します",
+    "not_found": "ユーザーが見つかりません",
+    "invalid_password": "無効なパスワード",
+    "invalid_token": "無効なトークン"
   }
 }

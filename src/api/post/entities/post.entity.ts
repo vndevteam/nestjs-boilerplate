@@ -5,6 +5,7 @@ import {
   Column,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   Relation,
@@ -32,6 +33,14 @@ export class PostEntity extends AbstractEntity {
   @Column({ nullable: true })
   content?: string;
 
+  @Column({ name: 'user_id' })
+  userId!: Uuid;
+
+  @JoinColumn({
+    name: 'user_id',
+    referencedColumnName: 'id',
+    foreignKeyConstraintName: 'FK_post_user_id',
+  })
   @ManyToOne(() => UserEntity, (user) => user.posts)
   user: Relation<UserEntity>;
 
