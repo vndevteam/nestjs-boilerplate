@@ -25,12 +25,15 @@ export class UserEntity extends AbstractEntity {
   @PrimaryGeneratedColumn('uuid', { primaryKeyConstraintName: 'PK_user_id' })
   id!: Uuid;
 
-  @Column()
+  @Column({
+    length: 50,
+    nullable: true,
+  })
   @Index('UQ_user_username', {
     where: '"deleted_at" IS NULL',
     unique: true,
   })
-  username!: string;
+  username: string;
 
   @Column()
   @Index('UQ_user_email', { where: '"deleted_at" IS NULL', unique: true })

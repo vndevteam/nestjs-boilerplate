@@ -1,19 +1,20 @@
+import { IEmailJob, IVerifyEmailJob } from '@/common/interfaces/job.interface';
 import { Branded } from '@/common/types/types';
 import { AllConfigType } from '@/config/config.type';
 import { SYSTEM_USER_ID } from '@/constants/app.constant';
+import { ErrorCode } from '@/constants/error-code.constant';
 import { JobName, QueueName } from '@/constants/job.constant';
+import { ValidationException } from '@/exceptions/validation.exception';
 import { verifyPassword } from '@/utils/password.util';
 import { InjectQueue } from '@nestjs/bullmq';
-import {
-  BadRequestException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { randomStringGenerator } from '@nestjs/common/utils/random-string-generator.util';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Queue } from 'bullmq';
+import { Cache } from 'cache-manager';
 import { plainToInstance } from 'class-transformer';
 import crypto from 'crypto';
 import ms from 'ms';
@@ -46,7 +47,9 @@ export class AuthService {
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
     @InjectQueue(QueueName.EMAIL)
-    private readonly emailQueue: Queue,
+    private readonly emailQueue: Queue<IEmailJob, any, string>,
+    @Inject(CACHE_MANAGER)
+    private readonly cacheManager: Cache,
   ) {}
 
   /**
@@ -94,14 +97,17 @@ export class AuthService {
   }
 
   async register(dto: RegisterReqDto): Promise<RegisterResDto> {
-    const existUser = await UserEntity.findOne({ where: { email: dto.email } });
+    // Check if the user already exists
+    const isExistUser = await UserEntity.exists({
+      where: { email: dto.email },
+    });
 
-    if (existUser) {
-      throw new BadRequestException('Account with this email already exists');
+    if (isExistUser) {
+      throw new ValidationException(ErrorCode.E003);
     }
 
+    // Register user
     const user = new UserEntity({
-      username: dto.email.split('@')[0],
       email: dto.email,
       password: dto.password,
       createdBy: SYSTEM_USER_ID,
@@ -110,11 +116,25 @@ export class AuthService {
 
     await user.save();
 
+    // Send email verification
+    const token = await this.createVerificationToken({ id: user.id });
+    const tokenExpiresIn = this.configService.getOrThrow(
+      'auth.confirmEmailExpires',
+      {
+        infer: true,
+      },
+    );
+    await this.cacheManager.set(
+      `auth:token:${user.id}:email-verification`,
+      token,
+      ms(tokenExpiresIn),
+    );
     await this.emailQueue.add(
       JobName.EMAIL_VERIFICATION,
       {
         email: dto.email,
-      },
+        token,
+      } as IVerifyEmailJob,
       { attempts: 3, backoff: { type: 'exponential', delay: 60000 } },
     );
 
@@ -180,6 +200,22 @@ export class AuthService {
     } catch {
       throw new UnauthorizedException();
     }
+  }
+
+  private async createVerificationToken(data: { id: string }): Promise<string> {
+    return await this.jwtService.signAsync(
+      {
+        id: data.id,
+      },
+      {
+        secret: this.configService.getOrThrow('auth.confirmEmailSecret', {
+          infer: true,
+        }),
+        expiresIn: this.configService.getOrThrow('auth.confirmEmailExpires', {
+          infer: true,
+        }),
+      },
+    );
   }
 
   private async createToken(data: {

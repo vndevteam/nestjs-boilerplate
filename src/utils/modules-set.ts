@@ -10,9 +10,11 @@ import mailConfig from '@/mail/config/mail.config';
 import { MailModule } from '@/mail/mail.module';
 import redisConfig from '@/redis/config/redis.config';
 import { BullModule } from '@nestjs/bullmq';
+import { CacheModule } from '@nestjs/cache-manager';
 import { ModuleMetadata } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { redisStore } from 'cache-manager-redis-yet';
 import {
   AcceptLanguageResolver,
   HeaderResolver,
@@ -100,6 +102,23 @@ function generateModulesSet() {
     useFactory: loggerFactory,
   });
 
+  const cacheModule = CacheModule.registerAsync({
+    imports: [ConfigModule],
+    useFactory: async (configService: ConfigService<AllConfigType>) => {
+      return {
+        store: await redisStore({
+          socket: {
+            host: configService.getOrThrow('redis.host', { infer: true }),
+            port: configService.getOrThrow('redis.port', { infer: true }),
+          },
+          password: configService.get('redis.password', { infer: true }),
+        }),
+      };
+    },
+    isGlobal: true,
+    inject: [ConfigService],
+  });
+
   const modulesSet = process.env.MODULES_SET || 'monolith';
 
   switch (modulesSet) {
@@ -108,6 +127,7 @@ function generateModulesSet() {
         ApiModule,
         bullModule,
         BackgroundModule,
+        cacheModule,
         dbModule,
         i18nModule,
         loggerModule,
@@ -118,6 +138,7 @@ function generateModulesSet() {
       customModules = [
         ApiModule,
         bullModule,
+        cacheModule,
         dbModule,
         i18nModule,
         loggerModule,
@@ -128,6 +149,7 @@ function generateModulesSet() {
       customModules = [
         bullModule,
         BackgroundModule,
+        cacheModule,
         dbModule,
         i18nModule,
         loggerModule,
