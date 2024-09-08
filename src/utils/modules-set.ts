@@ -14,7 +14,7 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { ModuleMetadata } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { redisStore } from 'cache-manager-redis-yet';
+import { redisStore } from 'cache-manager-ioredis-yet';
 import {
   AcceptLanguageResolver,
   HeaderResolver,
@@ -107,11 +107,16 @@ function generateModulesSet() {
     useFactory: async (configService: ConfigService<AllConfigType>) => {
       return {
         store: await redisStore({
-          socket: {
-            host: configService.getOrThrow('redis.host', { infer: true }),
-            port: configService.getOrThrow('redis.port', { infer: true }),
-          },
-          password: configService.get('redis.password', { infer: true }),
+          host: configService.getOrThrow('redis.host', {
+            infer: true,
+          }),
+          port: configService.getOrThrow('redis.port', {
+            infer: true,
+          }),
+          password: configService.getOrThrow('redis.password', {
+            infer: true,
+          }),
+          tls: configService.get('redis.tlsEnabled', { infer: true }),
         }),
       };
     },
