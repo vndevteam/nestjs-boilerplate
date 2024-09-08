@@ -2,9 +2,11 @@ import { IEmailJob, IVerifyEmailJob } from '@/common/interfaces/job.interface';
 import { Branded } from '@/common/types/types';
 import { AllConfigType } from '@/config/config.type';
 import { SYSTEM_USER_ID } from '@/constants/app.constant';
+import { CacheKey } from '@/constants/cache.constant';
 import { ErrorCode } from '@/constants/error-code.constant';
 import { JobName, QueueName } from '@/constants/job.constant';
 import { ValidationException } from '@/exceptions/validation.exception';
+import { createCacheKey } from '@/utils/cache.util';
 import { verifyPassword } from '@/utils/password.util';
 import { InjectQueue } from '@nestjs/bullmq';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
@@ -125,7 +127,7 @@ export class AuthService {
       },
     );
     await this.cacheManager.set(
-      `auth:token:${user.id}:email-verification`,
+      createCacheKey(CacheKey.EMAIL_VERIFICATION, user.id),
       token,
       ms(tokenExpiresIn),
     );
@@ -143,8 +145,13 @@ export class AuthService {
     });
   }
 
-  async logout(sessionId: string): Promise<void> {
-    await SessionEntity.delete(sessionId);
+  async logout(userToken: JwtPayloadType): Promise<void> {
+    await this.cacheManager.store.set<boolean>(
+      createCacheKey(CacheKey.SESSION_BLACKLIST, userToken.sessionId),
+      true,
+      userToken.exp * 1000 - Date.now(),
+    );
+    await SessionEntity.delete(userToken.sessionId);
   }
 
   async refreshToken(dto: RefreshReqDto): Promise<RefreshResDto> {
@@ -174,20 +181,26 @@ export class AuthService {
     });
   }
 
-  verifyAccessToken(token: string): JwtPayloadType {
+  async verifyAccessToken(token: string): Promise<JwtPayloadType> {
+    let payload: JwtPayloadType;
     try {
-      const payload = this.jwtService.verify(token, {
+      payload = this.jwtService.verify(token, {
         secret: this.configService.getOrThrow('auth.secret', { infer: true }),
       });
-
-      return payload;
     } catch {
       throw new UnauthorizedException();
     }
 
-    // For force logout feature
-    // Call in-memory DB to check if the session exists in the blacklist.
-    // If it exists, throw UnauthorizedException.
+    // Force logout if the session is in the blacklist
+    const isSessionBlacklisted = await this.cacheManager.store.get<boolean>(
+      createCacheKey(CacheKey.SESSION_BLACKLIST, payload.sessionId),
+    );
+
+    if (isSessionBlacklisted) {
+      throw new UnauthorizedException();
+    }
+
+    return payload;
   }
 
   private verifyRefreshToken(token: string): JwtRefreshPayloadType {

@@ -9,6 +9,7 @@ import { RefreshReqDto } from './dto/refresh.req.dto';
 import { RefreshResDto } from './dto/refresh.res.dto';
 import { RegisterReqDto } from './dto/register.req.dto';
 import { RegisterResDto } from './dto/register.res.dto';
+import { JwtPayloadType } from './types/jwt-payload.type';
 
 @ApiTags('auth')
 @Controller({
@@ -38,8 +39,8 @@ export class AuthController {
     errorResponses: [400, 401, 403, 500],
   })
   @Post('logout')
-  async logout(@CurrentUser('sessionId') sessionId: string): Promise<void> {
-    await this.authService.logout(sessionId);
+  async logout(@CurrentUser() userToken: JwtPayloadType): Promise<void> {
+    await this.authService.logout(userToken);
   }
 
   @ApiPublic({
