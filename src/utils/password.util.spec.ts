@@ -4,6 +4,10 @@ import { hashPassword, verifyPassword } from './password.util';
 jest.mock('argon2');
 
 describe('Password Utility Functions', () => {
+  beforeAll(() => {
+    jest.spyOn(console, 'error').mockImplementation();
+  });
+
   describe('hashPassword', () => {
     it('should return a hashed password', async () => {
       const password = 'testPassword';
