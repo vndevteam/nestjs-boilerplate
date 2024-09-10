@@ -59,7 +59,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       this.logger.debug(error);
     }
 
-    response.status(error.statusCode).json(error);
+    response.status(error.statusCode).send(error);
   }
 
   /**

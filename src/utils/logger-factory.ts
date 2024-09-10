@@ -76,7 +76,7 @@ function googleLoggingConfig(): Options {
   };
 }
 
-function consoleLoggingConfig(): Options {
+export function consoleLoggingConfig(): Options {
   return {
     messageKey: 'msg',
     transport: {

@@ -9,22 +9,34 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from '@nestjs/platform-fastify';
 import compression from 'compression';
 import helmet from 'helmet';
-import { Logger } from 'nestjs-pino';
 import { AuthService } from './api/auth/auth.service';
 import { AppModule } from './app.module';
 import { type AllConfigType } from './config/config.type';
 import { GlobalExceptionFilter } from './filters/global-exception.filter';
 import { AuthGuard } from './guards/auth.guard';
+import { consoleLoggingConfig } from './utils/logger-factory';
 import setupSwagger from './utils/setup-swagger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
-    bufferLogs: true,
-  });
+  const envToLogger = {
+    development: consoleLoggingConfig(),
+    production: true,
+    test: false,
+  };
 
-  app.useLogger(app.get(Logger));
+  const app = await NestFactory.create<NestFastifyApplication>(
+    AppModule,
+    new FastifyAdapter({ logger: envToLogger[process.env.NODE_ENV] ?? true }),
+    {
+      bufferLogs: true,
+    },
+  );
 
   // Setup security headers
   app.use(helmet());
