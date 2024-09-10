@@ -22,6 +22,7 @@ This is a boilerplate for NestJS projects. It is a starting point for building a
 
 ## Features
 
+- [x] Fastify support. (Checkout the [`feature.fastify`](https://github.com/vndevteam/nestjs-boilerplate/tree/feature.fastify) branch)
 - [x] Database. Support [TypeORM](https://www.npmjs.com/package/typeorm)
 - [x] Seeding ([Typeorm Extension](https://www.npmjs.com/package/typeorm-extension)).
 - [x] Config Service ([@nestjs/config](https://www.npmjs.com/package/@nestjs/config)).
