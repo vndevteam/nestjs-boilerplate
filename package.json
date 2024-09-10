@@ -112,5 +112,5 @@
     "vuepress": "^2.0.0-rc.15",
     "vuepress-plugin-md-enhance": "^2.0.0-rc.52"
   },
-  "packageManager": "pnpm@9.9.0"
+  "packageManager": "pnpm@9.10.0+sha256.355a8ab8dbb6ad41befbef39bc4fd6b5df85e12761d2724bd01f13e878de4b13"
 }
