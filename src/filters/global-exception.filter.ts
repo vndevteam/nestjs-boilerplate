@@ -16,7 +16,6 @@ import {
   ValidationError,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { type Response } from 'express';
 import { STATUS_CODES } from 'http';
 import { I18nContext } from 'nestjs-i18n';
 import { EntityNotFoundError, QueryFailedError } from 'typeorm';
@@ -30,10 +29,12 @@ export class GlobalExceptionFilter implements ExceptionFilter {
   constructor(private readonly configService: ConfigService<AllConfigType>) {}
 
   catch(exception: any, host: ArgumentsHost): void {
-    this.i18n = I18nContext.current<I18nTranslations>(host);
-    this.debug = this.configService.getOrThrow('app.debug', { infer: true });
     const ctx = host.switchToHttp();
-    const response = ctx.getResponse<Response>();
+    const response = ctx.getResponse();
+    const request = ctx.getRequest();
+
+    this.i18n = request.i18nContext;
+    this.debug = this.configService.getOrThrow('app.debug', { infer: true });
 
     let error: ErrorDto;
 
