@@ -18,7 +18,7 @@ services:
       - nestjs-boilerplate-network
 
   db:
-    image: postgres:16
+    image: postgres:17
     container_name: nestjs-boilerplate-postgres
     restart: always
     volumes:
