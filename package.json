@@ -91,8 +91,8 @@
     "@vuepress/bundler-vite": "2.0.0-rc.17",
     "@vuepress/plugin-markdown-image": "2.0.0-rc.52",
     "@vuepress/plugin-markdown-tab": "2.0.0-rc.52",
-    "@vuepress/plugin-search": "2.0.0-rc.52",
-    "@vuepress/theme-default": "2.0.0-rc.52",
+    "@vuepress/plugin-search": "2.0.0-rc.55",
+    "@vuepress/theme-default": "2.0.0-rc.55",
     "env-cmd": "^10.1.0",
     "eslint": "^9.12.0",
     "eslint-config-prettier": "^9.1.0",
@@ -112,7 +112,7 @@
     "typescript": "^5.6.2",
     "typescript-eslint": "^8.8.0",
     "vue": "^3.5.11",
-    "vuepress": "2.0.0-rc.17",
+    "vuepress": "2.0.0-rc.18",
     "vuepress-plugin-md-enhance": "2.0.0-rc.57"
   },
   "packageManager": "pnpm@9.12.0+sha256.a61b67ff6cc97af864564f4442556c22a04f2e5a7714fbee76a1011361d9b726"
