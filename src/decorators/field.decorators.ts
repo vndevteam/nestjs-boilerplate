@@ -48,9 +48,12 @@ interface IStringFieldOptions extends IFieldOptions {
   toUpperCase?: boolean;
 }
 
+interface IEnumFieldOptions extends IFieldOptions {
+  enumName?: string;
+}
+
 type IBooleanFieldOptions = IFieldOptions;
 type ITokenFieldOptions = IFieldOptions;
-type IEnumFieldOptions = IFieldOptions;
 type IClassFieldOptions = IFieldOptions;
 
 export function NumberField(
@@ -65,7 +68,10 @@ export function NumberField(
   }
 
   if (options.swagger !== false) {
-    decorators.push(ApiProperty({ type: Number, ...options }));
+    const { required = true, ...restOptions } = options;
+    decorators.push(
+      ApiProperty({ type: Number, required: !!required, ...restOptions }),
+    );
   }
 
   if (options.int) {
@@ -111,8 +117,14 @@ export function StringField(
   }
 
   if (options.swagger !== false) {
+    const { required = true, ...restOptions } = options;
     decorators.push(
-      ApiProperty({ type: String, ...options, isArray: options.each }),
+      ApiProperty({
+        type: String,
+        required: !!required,
+        ...restOptions,
+        isArray: options.each,
+      }),
     );
   }
 
@@ -147,8 +159,14 @@ export function TokenField(
   }
 
   if (options.swagger !== false) {
+    const { required = true, ...restOptions } = options;
     decorators.push(
-      ApiProperty({ type: String, ...options, isArray: options.each }),
+      ApiProperty({
+        type: String,
+        required: !!required,
+        ...restOptions,
+        isArray: options.each,
+      }),
     );
   }
 
@@ -202,7 +220,10 @@ export function BooleanField(
   }
 
   if (options.swagger !== false) {
-    decorators.push(ApiProperty({ type: Boolean, ...options }));
+    const { required = true, ...restOptions } = options;
+    decorators.push(
+      ApiProperty({ type: Boolean, required: !!required, ...restOptions }),
+    );
   }
 
   return applyDecorators(...decorators);
@@ -233,7 +254,10 @@ export function EmailField(
   }
 
   if (options.swagger !== false) {
-    decorators.push(ApiProperty({ type: String, ...options }));
+    const { required = true, ...restOptions } = options;
+    decorators.push(
+      ApiProperty({ type: String, required: !!required, ...restOptions }),
+    );
   }
 
   return applyDecorators(...decorators);
@@ -261,12 +285,14 @@ export function UUIDField(
   }
 
   if (options.swagger !== false) {
+    const { required = true, ...restOptions } = options;
     decorators.push(
       ApiProperty({
         type: options.each ? [String] : String,
         format: 'uuid',
         isArray: options.each,
-        ...options,
+        required: !!required,
+        ...restOptions,
       }),
     );
   }
@@ -319,7 +345,10 @@ export function DateField(
   }
 
   if (options.swagger !== false) {
-    decorators.push(ApiProperty({ type: Date, ...options }));
+    const { required = true, ...restOptions } = options;
+    decorators.push(
+      ApiProperty({ type: Date, required: !!required, ...restOptions }),
+    );
   }
 
   return applyDecorators(...decorators);
@@ -348,12 +377,14 @@ export function EnumField<TEnum extends object>(
   }
 
   if (options.swagger !== false) {
+    const { required = true, ...restOptions } = options;
     decorators.push(
       ApiProperty({
-        type: 'enum',
         enum: getEnum(),
+        enumName: options.enumName || getVariableName(getEnum),
         isArray: options.each,
-        ...options,
+        required: !!required,
+        ...restOptions,
       }),
     );
   }
@@ -392,10 +423,12 @@ export function ClassField<TClass extends Constructor>(
   }
 
   if (options.swagger !== false) {
+    const { required = true, ...restOptions } = options;
     decorators.push(
       ApiProperty({
         type: () => getClass(),
-        ...options,
+        required: !!required,
+        ...restOptions,
       }),
     );
   }
@@ -412,4 +445,8 @@ export function ClassFieldOptional<TClass extends Constructor>(
     IsOptional({ each: options.each }),
     ClassField(getClass, { required: false, ...options }),
   );
+}
+
+function getVariableName(variableFunction: () => any) {
+  return variableFunction.toString().split('.').pop();
 }
