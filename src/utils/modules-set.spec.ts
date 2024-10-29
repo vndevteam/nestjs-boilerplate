@@ -20,9 +20,11 @@ describe('generateModulesSet', () => {
     const modules = generateModulesSet();
     expect(modules).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({
-          module: ConfigModule,
-        }),
+        expect.objectContaining(
+          Promise.resolve({
+            module: ConfigModule,
+          }),
+        ), // ConfigModule
         ApiModule,
         expect.any(Object), // BullModule
         expect.any(Object), // BackgroundModule
@@ -39,9 +41,11 @@ describe('generateModulesSet', () => {
     const modules = generateModulesSet();
     expect(modules).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({
-          module: ConfigModule,
-        }),
+        expect.objectContaining(
+          Promise.resolve({
+            module: ConfigModule,
+          }),
+        ), // ConfigModule
       ]),
     );
   });
@@ -51,9 +55,11 @@ describe('generateModulesSet', () => {
     const modules = generateModulesSet();
     expect(modules).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({
-          module: ConfigModule,
-        }),
+        expect.objectContaining(
+          Promise.resolve({
+            module: ConfigModule,
+          }),
+        ), // ConfigModule
         ApiModule,
         expect.any(Object), // BullModule
         expect.any(Object), // BackgroundModule
@@ -87,9 +93,11 @@ describe('generateModulesSet', () => {
     const modules = generateModulesSet();
     expect(modules).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({
-          module: ConfigModule,
-        }),
+        expect.objectContaining(
+          Promise.resolve({
+            module: ConfigModule,
+          }),
+        ), // ConfigModule
       ]),
     );
     expect(consoleErrorSpy).toHaveBeenCalledWith(
