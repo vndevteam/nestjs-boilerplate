@@ -12,6 +12,7 @@ on:
       - '!docs/**'
   pull_request:
     branches: [ 'main' ]
+    types: [opened, synchronize]
     paths:
       - 'src/**'
       - 'test/**'
@@ -25,6 +26,8 @@ permissions:
 
 jobs:
   build-and-test:
+    name: Build and test
+    timeout-minutes: 15
     # skip ci if PR has label 'skip-ci' or 'skip-actions'
     if: |
       !contains(github.event.pull_request.labels.*.name, 'skip-ci') &&
@@ -39,19 +42,40 @@ jobs:
     steps:
       - name: Copy repository
         uses: actions/checkout@v4
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Install Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-          cache-dependency-path: ./pnpm-lock.yaml
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: false
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
       - name: Install dependencies
         run: pnpm install
+
       - name: Lint code
         run: pnpm lint
+
       - name: Build project
         run: pnpm build
+
+      - name: Build docs
+        run: pnpm docs:build
+
       - name: Run UT tests
         run: pnpm test
