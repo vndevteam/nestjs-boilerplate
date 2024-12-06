@@ -12,7 +12,7 @@ export class PageOptionsDto {
   beforeCursor?: string;
 
   @NumberFieldOptional({
-    minimum: 1,
+    min: 1,
     default: DEFAULT_PAGE_LIMIT,
     int: true,
   })
