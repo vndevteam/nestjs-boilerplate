@@ -88,7 +88,7 @@
     "@types/nodemailer": "^6.4.16",
     "@types/supertest": "^6.0.2",
     "@types/uuid": "^10.0.0",
-    "@vuepress/bundler-vite": "2.0.0-rc.17",
+    "@vuepress/bundler-vite": "2.0.0-rc.19",
     "@vuepress/plugin-markdown-image": "2.0.0-rc.52",
     "@vuepress/plugin-markdown-tab": "2.0.0-rc.52",
     "@vuepress/plugin-search": "2.0.0-rc.52",
