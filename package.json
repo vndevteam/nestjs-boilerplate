@@ -90,7 +90,7 @@
     "@types/uuid": "^10.0.0",
     "@vuepress/bundler-vite": "2.0.0-rc.17",
     "@vuepress/plugin-markdown-image": "2.0.0-rc.52",
-    "@vuepress/plugin-markdown-tab": "2.0.0-rc.52",
+    "@vuepress/plugin-markdown-tab": "2.0.0-rc.66",
     "@vuepress/plugin-search": "2.0.0-rc.52",
     "@vuepress/theme-default": "2.0.0-rc.52",
     "env-cmd": "^10.1.0",
