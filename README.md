@@ -19,7 +19,7 @@
 
 NestJS boilerplate for a typical project
 
-Demo: <https://nestjs-boilerplate-n27l.onrender.com/api-docs>
+Demo: <https://nestjs-boilerplate-diuf.onrender.com/api-docs>
 
 ## Getting started
 
